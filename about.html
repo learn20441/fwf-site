@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About Us | FWF NGO</title>
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Nunito:wght@300;600;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    :root {
+      --primary: #F97316;
+      --primary-dark: #EA580C;
+      --accent-gradient: linear-gradient(135deg, #fb923c 10%, #f43f5e 100%);
+      --background: #f9fafb;
+      --surface: #fff;
+      --shadow: 0 8px 24px rgba(0,0,0,.08);
+      --border-radius: 18px;
+      --blur: blur(8px);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Inter', 'Nunito', sans-serif;
+      background: var(--background);
+      color: #1f2937;
+      line-height: 1.7;
+      letter-spacing: 0.01em;
+    }
+    h1,h2,h3 {
+      color: #111827;
+      font-weight: 800;
+      font-family: 'Nunito', 'Inter', sans-serif;
+      letter-spacing: 0.02em;
+    }
+    a { text-decoration: none; }
+    .hero {
+      background: var(--accent-gradient);
+      color: #fff;
+      padding: 110px 20px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-bottom-left-radius: 60px;
+      border-bottom-right-radius: 60px;
+    }
+    .hero::before, .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -40px;
+      left: 10%;
+      width: 80%;
+      height: 80px;
+      background:rgba(251,146,60,.15);
+      z-index:0;
+      border-radius: 60px 60px 0 0;
+      filter: blur(8px);
+    }
+    .hero h1 { font-size: 2.8rem; margin-bottom: 10px; z-index:1; position: relative; }
+    .hero p { font-size: 1.25rem; opacity: .95; z-index:1; position: relative; }
+    .container {
+      max-width:1150px; margin:0 auto; padding: 60px 20px 0;
+      position: relative; z-index: 1;
+    }
+    .section { margin-bottom: 64px; }
+    .grid {
+      display: grid;
+      gap: 32px;
+    }
+    .grid-2 {
+      grid-template-columns: repeat(auto-fit, minmax(320px,1fr));
+    }
+    .card {
+      background: rgba(255,255,255,0.83);
+      backdrop-filter: blur(4.5px);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      padding: 32px 28px;
+      transition: transform .28s cubic-bezier(.46,1,.57,1.18), box-shadow .2s;
+      border: 1.5px solid #f3f4f6;
+      position: relative;
+    }
+    .card:hover {
+      transform: translateY(-8px) scale(1.018);
+      box-shadow: 0 16px 48px rgba(249,115,22,.11);
+      border-color: var(--primary);
+    }
+    .card h3 { display:flex; align-items:center; font-size:1.3rem; gap:8px; }
+    .card i { font-size:1.3em; color: var(--primary); margin-right: 5px; }
+    .stats {
+      display: flex;
+      gap: 36px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 32px;
+    }
+    .stat {
+      background:rgba(255,255,255,0.88);
+      box-shadow:0 2px 12px rgba(0,0,0,.06);
+      padding: 26px 36px;
+      border-radius: var(--border-radius);
+      text-align: center;
+      border:1.5px solid #f3f4f6;
+      transition: box-shadow .2s;
+    }
+    .stat:hover { box-shadow:0 8px 32px rgba(249,115,22,.09); border-color:var(--primary); }
+    .stat h2 { color: var(--primary); font-size: 2.2rem; margin-bottom: 5px;}
+    .stat p {color:#374151;font-weight:600;}
+    .cta {
+      background: var(--accent-gradient);
+      color:#fff;text-align:center;padding:70px 20px 60px;border-radius:28px;
+      margin:56px 8px 0; position:relative; overflow:hidden;
+      box-shadow:0 8px 32px rgba(249,115,22,.10);
+    }
+    .cta h2 { font-size:2.3rem;margin-bottom:24px; }
+    .cta a {
+      display:inline-block;margin:12px;padding:14px 30px;border-radius:8px;
+      font-weight:600;color: var(--primary);background:#fff;transition:.3s;
+      font-size:1.07rem;letter-spacing:0.01em;
+      box-shadow:0 2px 8px rgba(249,115,22,.11);
+    }
+    .cta a:hover { background: #fef3c7; color:var(--primary-dark); transform: scale(1.07);}
+    /* HEADER & FOOTER (projects.html style) */
+    .header {
+      position:fixed; left:0; right:0; top:0; height:74px; z-index:200;
+      display:flex; align-items:center; justify-content:center;
+      background:rgba(255,255,255,.88); backdrop-filter:blur(14px) saturate(140%);
+      border-bottom:1px solid #c7d0e4;
+    }
+    .H {
+      max-width:1240px;width:100%;padding:0 20px;display:flex;align-items:center;gap:15px;
+    }
+    .brand {
+      display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;border-radius:18px;padding:8px;
+    }
+    .brand img {
+      width:56px;height:56px;display:block;object-fit:contain;border-radius:14px;
+    }
+    nav {
+      flex:1;display:flex;justify-content:center;
+    }
+    nav ul {
+      display:flex;align-items:center;gap:14px;margin:0;padding:0;list-style:none;
+    }
+    nav li {display:flex;align-items:center;}
+    nav a {
+      display:inline-flex;align-items:center;padding:10px 16px;border-radius:14px;font-weight:700;text-decoration:none;color:#0f172a;line-height:1;
+    }
+    nav a:not(.btn-join):not(.btn-donate):hover{background:rgba(15,23,42,.06)}
+    .lang-switch {
+      display:inline-flex;align-items:center;height:44px;border:1px solid #64748b;border-radius:14px;overflow:hidden;background:#fff;
+    }
+    .lang-switch button {
+      border:0;background:transparent;padding:0 12px;height:100%;display:inline-flex;align-items:center;font-weight:800;letter-spacing:.08em;cursor:pointer;color:#475569;
+    }
+    .lang-switch button.active {
+      background:linear-gradient(90deg,#60a5fa22,#a78bfa22);color:#111827;
+    }
+    .lang-sep {width:1px;background:#334155}
+    .footer-modern {
+      background: linear-gradient(120deg,#181f2a 60%,#1e293b 100%);
+      color: #e5e7eb;
+      padding: 48px 0 0;
+      font-family: 'Inter', 'Nunito', sans-serif;
+      margin-top: 64px;
+      border-top-left-radius: 32px;
+      border-top-right-radius: 32px;
+      box-shadow: 0 -2px 24px #0f172a22;
+    }
+    .footer-main {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px 32px;
+      gap: 48px;
+      justify-content: space-between;
+    }
+    .footer-col {
+      flex: 1 1 260px;
+      min-width: 220px;
+      margin-bottom: 18px;
+    }
+    .brand-col img { margin-bottom: 18px; }
+    .footer-lead {
+      margin-bottom: 18px;
+      font-size: 1.08em;
+      color: #f3f4f6;
+    }
+    .footer-subscribe {
+      display: flex;
+      gap: 0;
+      margin-bottom: 18px;
+    }
+    .footer-subscribe input {
+      flex:1;
+      padding: 12px 16px;
+      border-radius: 12px 0 0 12px;
+      border: none;
+      background: #23293a;
+      color: #e5e7eb;
+      font-size: 1em;
+      outline: none;
+    }
+    .footer-subscribe button {
+      padding: 0 22px;
+      border-radius: 0 12px 12px 0;
+      border: none;
+      background: linear-gradient(90deg,#818cf8,#a78bfa);
+      color: #fff;
+      font-weight: 800;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .footer-subscribe button:hover {
+      background: linear-gradient(90deg,#22c55e,#818cf8);
+    }
+    .footer-social {
+      margin-top: 8px;
+      display: flex;
+      gap: 18px;
+      font-size: 1.5em;
+    }
+    .footer-social a {
+      color: #e5e7eb;
+      transition: color .2s;
+    }
+    .footer-social a:hover {
+      color: #22c55e;
+    }
+    .links-col h4, .contact-col h4 {
+      margin-bottom: 12px;
+      font-size: 1.1em;
+      color: #fff;
+      font-weight: 800;
+    }
+    .links-col ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .links-col ul li {
+      margin-bottom: 8px;
+    }
+    .links-col ul a {
+      color: #e5e7eb;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color .2s;
+    }
+    .links-col ul a:hover {
+      color: #818cf8;
+    }
+    .contact-col p, .contact-col a {
+      font-size: 1em;
+      color: #e5e7eb;
+      margin-bottom: 6px;
+      text-decoration: none;
+    }
+    .contact-col a:hover { color: #22c55e; }
+    .footer-bottom {
+      border-top: 1px solid #23293a;
+      padding: 18px 24px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.05em;
+      background: linear-gradient(90deg,#181f2a 80%,#334155 100%);
+      border-bottom-left-radius: 32px;
+      border-bottom-right-radius: 32px;
+    }
+    .footer-policy a {
+      color: #a5b4fc;
+      text-decoration: none;
+      margin: 0 6px;
+      font-size: 0.98em;
+    }
+    .footer-policy a:hover { color: #22c55e; }
+    @media (max-width:900px) {
+      .footer-main { flex-direction: column; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+    }
+    body { padding-top:74px; }
+  </style>
+</head>
+<body>
+  <!-- HEADER (projects.html style) -->
+  <header class="header" id="siteHeader">
+    <div class="H">
+      <a class="brand" href="index.html" aria-label="FWF Home">
+        <img src="assets/images/logo.png" alt="FWF">
+      </a>
+      <nav style="flex:1;display:flex;justify-content:center;">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="csr.html">CSR</a></li>
+          <li><a href="about.html">About Us</a></li>
+        </ul>
+      </nav>
+      <div class="lang-switch" role="group" aria-label="Language switch">
+        <button id="btn-hi" type="button">HI</button><div class="lang-sep"></div>
+        <button id="btn-en" type="button" class="active">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>About FWF</h1>
+    <p>Empowering communities with skills, support, and sustainable opportunities.</p>
+  </section>
+
+  <div class="container">
+    <!-- Our Story -->
+    <section class="section">
+      <h2>Our Story</h2>
+      <p>
+        Foundris Welfare Foundation (FWF) was born with a vision to transform livelihoods.
+        We believe that every individual deserves the opportunity to grow, contribute, and thrive.
+        Through skill-based training, micro-enterprise support, and strong community partnerships,
+        FWF works to create a future where sustainable income and dignity of labor are accessible to all.
+      </p>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section class="section grid grid-2">
+      <div class="card">
+        <h3><i class="fas fa-bullseye"></i> Our Mission</h3>
+        <p>To support individuals by providing skill training, start-up assistance, and market linkages that enable them to establish micro-enterprises and secure sustainable livelihoods.</p>
+      </div>
+      <div class="card">
+        <h3><i class="fas fa-lightbulb"></i> Our Vision</h3>
+        <p>To build self-reliant communities where every member has the resources, confidence, and opportunities to pursue a better quality of life.</p>
+      </div>
+    </section>
+
+    <!-- Impact Stats -->
+    <section class="section">
+      <h2>Our Target</h2>
+      <div class="stats">
+        <div class="stat"><h2>500+</h2><p>Beneficiaries Supported</p></div>
+        <div class="stat"><h2>30+</h2><p>Micro-Units Set Up</p></div>
+        <div class="stat"><h2>100+</h2><p>Volunteers Engaged</p></div>
+      </div>
+    </section>
+
+    <!-- Team -->
+    <section class="section">
+      <h2>Meet Our Team</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>👤 Founder</h3>
+          <p>Visionary leader driving FWF’s mission to empower communities.</p>
+        </div>
+        <div class="card">
+          <h3>👤 Core Members</h3>
+          <p>Dedicated professionals and volunteers working tirelessly for impact.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+      <h2>Be a Part of the Change</h2>
+      <a href="donation.html">Join Us</a>
+      <a href="donation.html">Donate</a>
+      <a href="donation.html">Volunteer</a>
+    </section>
+  </div>
+
+  <!-- FOOTER (projects.html style) -->
+  <footer class="footer-modern">
+    <div class="footer-main">
+      <div class="footer-col brand-col">
+        <img src="assets/images/logo.png" alt="FWF" style="width:64px;height:64px;border-radius:16px;box-shadow:0 2px 18px #22c55e22;">
+        <p class="footer-lead">Uniting skills, opportunities and livelihoods on one platform.</p>
+        <form class="footer-subscribe" id="subscribeForm">
+          <input type="email" id="subscribeEmail" placeholder="Your email for updates" aria-label="Subscribe Email" required>
+          <button type="submit" id="subscribeBtn">Subscribe</button>
+        </form>
+        <div id="subscribeMessage" style="margin-top: 10px; font-size: 14px; display: none;"></div>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-col links-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="donation.html">Join</a></li>
+          <li><a href="donation.html">Donate</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+      <div class="footer-col contact-col">
+        <h4>Contact</h4>
+        <p>Address: 1398/1850 Sagarpuri Gallamandi, Kanpur - 208021 U.P India</p>
+        <p>Phone: +91-9580118412</p>
+        <p>Email: support@fwfindia.org</p>
+        <p><a href="#">WhatsApp</a></p>
+        <p style="margin-top:8px;font-size:0.98em;color:#cbd5e1;">Reg: 12A • 80G • CSR-1</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 FWF – All Rights Reserved</span>
+      <span class="footer-policy">
+        <a href="#">Privacy</a> • <a href="#">Terms</a>
+      </span>
+    </div>
+  </footer>
+
+  <script>
+  // Language switch logic
+  document.getElementById('btn-hi').onclick = function() {
+    document.documentElement.setAttribute('data-lang', 'hi');
+    this.classList.add('active');
+    document.getElementById('btn-en').classList.remove('active');
+  };
+  document.getElementById('btn-en').onclick = function() {
+    document.documentElement.setAttribute('data-lang', 'en');
+    this.classList.add('active');
+    document.getElementById('btn-hi').classList.remove('active');
+  };
+
+  // Subscription functionality
+  document.getElementById('subscribeForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const emailInput = document.getElementById('subscribeEmail');
+    const submitBtn = document.getElementById('subscribeBtn');
+    const messageDiv = document.getElementById('subscribeMessage');
+    const email = emailInput.value.trim();
+    
+    if (!email) {
+      showMessage('Please enter a valid email address.', 'error');
+      return;
+    }
+    
+    // Disable button and show loading
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Subscribing...';
+    
+    try {
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: email })
+      });
+      
+      const data = await response.json();
+      
+      if (data.ok) {
+        showMessage(data.message || 'Successfully subscribed to updates!', 'success');
+        emailInput.value = '';
+      } else {
+        showMessage(data.error || 'Failed to subscribe. Please try again.', 'error');
+      }
+    } catch (error) {
+      console.error('Subscription error:', error);
+      showMessage('Failed to subscribe. Please check your connection and try again.', 'error');
+    } finally {
+      // Re-enable button
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Subscribe';
+    }
+  });
+  
+  function showMessage(message, type) {
+    const messageDiv = document.getElementById('subscribeMessage');
+    messageDiv.textContent = message;
+    messageDiv.style.display = 'block';
+    messageDiv.style.color = type === 'success' ? '#22c55e' : '#ef4444';
+    
+    // Hide message after 5 seconds
+    setTimeout(() => {
+      messageDiv.style.display = 'none';
+    }, 5000);
+  }
+  </script>
+</body>
+</html>

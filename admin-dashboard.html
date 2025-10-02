@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Admin Dashboard — FWF</title>
+<link rel="stylesheet" href="style.css"/>
+<style>
+.wrap{max-width:1100px;margin:24px auto;padding:0 16px}
+.card{background:linear-gradient(180deg,#101623,#0d1320);border:1px solid #1f2937;border-radius:16px;padding:20px}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.kpi{display:flex;flex-direction:column;gap:6px;background:#0b1220;border:1px solid #1f2937;border-radius:12px;padding:14px}
+.kpi .val{font-size:22px;font-weight:800;color:#fff}
+.kpi .lab{color:#94a3b8}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{border-bottom:1px solid #1f2937;padding:10px 8px;color:#cbd5e1;text-align:left}
+</style>
+</head><body>
+<div class="wrap">
+  <div class="card">
+    <h2 style="color:#fff;margin:0 0 10px">Admin Overview</h2>
+    <div class="row">
+      <div class="kpi"><span class="lab">Total Members</span><span class="val" id="mcount">0</span></div>
+      <div class="kpi"><span class="lab">Active Members</span><span class="val" id="acount">0</span></div>
+    </div>
+    <br>
+    <h3 style="color:#cbd5e1">Latest Members</h3>
+    <table class="table" id="tbl"><thead><tr><th>Member ID</th><th>Name</th><th>Mobile</th><th>Joined</th></tr></thead><tbody></tbody></table>
+  </div>
+</div>
+<script src="auth.js"></script>
+<script>
+async function load(){
+  try{
+    const data = await AUTH.api('/api/admin/overview');
+    document.getElementById('mcount').textContent = data.totals.members;
+    document.getElementById('acount').textContent = data.totals.active_members;
+    const tbody = document.querySelector('#tbl tbody');
+    tbody.innerHTML = '';
+    data.latest.forEach(r=>{
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${r.member_id}</td><td>${r.name||''}</td><td>${r.mobile||''}</td><td>${r.created_at}</td>`;
+      tbody.appendChild(tr);
+    });
+  }catch(e){
+    alert('Session expired or unauthorized');
+    location.href='admin-login.html';
+  }
+}
+load();
+</script>
+</body></html>

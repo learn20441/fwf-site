@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FWF — CSR Partnership</title>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Plus+Jakarta+Sans:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700;800&family=Mukta:wght@400;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+
+  <style>
+  /* =========================================================
+     GLOBAL / RESET
+     ========================================================= */
+  :root{
+    --primary:#6153ff; --accent:#22c55e; --blue:#3b82f6;
+    --deep:#0f172a; --muted:#475569; --soft:#f1f5f9; --brd:#e3e8f5;
+    --cardH:auto;
+  }
+  html{ scroll-behavior:smooth; background:linear-gradient(120deg,#f6f8ff 0%,#eef2ff 50%,#f8fafc 100%) }
+  body{
+    margin:0; font-family:'Plus Jakarta Sans',Montserrat,sans-serif; color:var(--deep);
+    padding-top:90px; overflow-x:hidden; letter-spacing:.01em
+  }
+  *{ box-sizing:border-box } a{ color:inherit; text-decoration:none }
+  .container{
+    width:100%;
+    max-width:1200px;
+    margin:0 auto;
+    padding:0 20px;
+    display:block; /* Ensure block-level for centering */
+  }
+  section{ scroll-margin-top:96px }
+  .glass{ background:linear-gradient(180deg,#ffffffee,#f7f9ffdd); border:1px solid #e8edf7; box-shadow:0 20px 40px rgba(2,6,23,.06) }
+  .section{ border-radius:28px; padding: clamp(42px,5vw,72px) clamp(18px,3vw,40px); margin:24px 0; position:relative; overflow:hidden }
+  html[data-lang="hi"] body{font-family:'Noto Sans Devanagari','Mukta','Plus Jakarta Sans',system-ui,sans-serif}
+
+  /* =========================================================
+     SECTION: HEADER (HTML #siteHeader)
+     ========================================================= */
+  .header{
+    position:fixed; inset:0 0 auto 0; height:78px; z-index:200; display:flex; align-items:center; justify-content:center;
+    background:rgba(255,255,255,.78); backdrop-filter:blur(14px) saturate(140%); border-bottom:1px solid #dbe3f3; transition:.22s
+  }
+  .header.scrolled{ height:64px; background:rgba(255,255,255,.88); box-shadow:0 10px 30px rgba(2,6,23,.06) }
+  .header .H {
+  max-width:1240px;
+  width:100%;
+  padding:0 18px;
+  display:flex;
+  align-items:center;
+  gap:0;
+  justify-content:space-between;
+}
+
+.brand {
+  flex: 0 0 auto;
+  margin-right: 0;
+}
+
+/* Fix logo size */
+.brand img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  display: block;
+}
+
+nav {
+  flex: 1 1 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Center nav menu */
+nav {
+  flex: 1 1 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Nav list styling */
+.navList {
+  display: flex;
+  gap: 32px; /* Thoda gap badha diya */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+/* Add this to your <style> block for header nav hover effect (same as donation.html) */
+.navList a {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 800;
+  color: #0f172a;
+  position: relative;
+  transition: background .18s, color .18s;
+}
+.navList a:after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 6px;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg,#6366f1,#22c55e);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: .18s;
+}
+.navList a:hover {
+  background: rgba(15,23,42,.06);
+}
+.navList a:hover:after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Language button right */
+.langDesktop {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  margin-left: 0;
+}
+
+/* Hide navToggle on desktop */
+@media (min-width: 900px) {
+  .navToggle {
+    display: none;
+  }
+}
+
+/* Responsive: nav menu mobile par left ho jayega */
+@media (max-width: 900px) {
+  .header .H {
+    gap: 12px;
+  }
+  nav {
+    justify-content: flex-start;
+  }
+  .langDesktop {
+    margin-left: auto;
+  }
+}
+
+  /* =========================================================
+   SECTION: HERO (CSS)
+   ========================================================= */
+.hero{ position:relative; overflow:visible; } /* glow cut na ho */
+.heroWrap{ padding:64px 0 40px; text-align:center; }
+.heroBadge{
+  display:inline-flex; gap:10px; align-items:center; font-weight:900;
+  padding:8px 12px; border-radius:999px;
+  background:linear-gradient(90deg,#e0e7ff,#dcfce7);
+  border:1px solid #dbe3f3; color:#0f172a;
+  box-shadow:0 8px 18px rgba(2,6,23,.06)
+}
+.hero h1{
+  margin:14px auto 6px; font-size:clamp(28px,5vw,54px); line-height:1.08;
+  letter-spacing:-.02em; font-family:Montserrat; font-weight:900;
+  background:linear-gradient(135deg,#0f172a 0%, #334155 35%, #22c55e 100%);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent
+}
+.heroSub{ max-width:760px; margin:6px auto 6px; font-size:clamp(14px,1.4vw,18px); font-weight:700; color:#1f2a44 }
+.heroBG{
+  position:absolute; inset:-20% -10% auto -10%; height:120%;
+  background:
+    radial-gradient(1200px 70% at 20% 10%, #a5b4fc33 0%, transparent 60%),
+    radial-gradient(1100px 65% at 80% -5%, #22c55e26 0%, transparent 60%),
+    linear-gradient(120deg,#f8fafc 55%, #eef2ff 100%);
+  z-index:-1; pointer-events:none;
+}
+.heroWrap{ padding-bottom:26px }
+
+/* ---- Arrow wrapper pinned at bottom-center ---- */
+.heroArrow{
+  position:absolute; left:50%; bottom:22px; transform:translateX(-50%);
+  z-index:5; pointer-events:auto;
+}
+
+/* ---- Arrow button ---- */
+.scrollDown{
+  position:relative;
+  display:inline-flex; align-items:center; justify-content:center;
+  width:64px; height:64px; border-radius:50%;
+  background:#ffffff; color:#0f172a; font-size:26px; text-decoration:none;
+  box-shadow:0 2px 10px rgba(2,6,23,.08);
+  transition:transform .2s ease, box-shadow .2s ease, color .2s ease, background .2s ease;
+  z-index:1;
+  animation: floatY 2.8s ease-in-out infinite;
+}
+
+/* ---- Soft Glow behind circle ---- */
+.scrollDown::before{
+  content:""; position:absolute; inset:-44px; border-radius:50%; z-index:-1;
+  background: radial-gradient(circle at 50% 50%,
+              rgba(56,189,248,0.24) 0%,
+              rgba(16,185,129,0.26) 35%,
+              rgba(99,102,241,0.22) 65%,
+              rgba(56,189,248,0.00) 75%);
+  filter: blur(26px);
+  pointer-events:none;
+}
+
+/* Hover effect */
+.scrollDown:hover{
+  background:linear-gradient(135deg,#22c55e,#3b82f6);
+  color:#fff; transform:translateY(-3px);
+  box-shadow:0 10px 28px rgba(2,6,23,.16);
+}
+
+@keyframes floatY { 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(4px) } }
+/* === HERO spacing tighten === */
+.hero{
+  min-height: clamp(360px, 56vh, 680px);   /* pehle se chhota */
+}
+.heroWrap{
+  padding-bottom: 80px;                    /* arrow ke liye kam space */
+}
+.heroArrow{
+  bottom: 12px;                            /* arrow bottom ke aur paas */
+}
+
+/* === Arrow halo smaller/softer so it doesn’t push the eye down === */
+.scrollDown{
+  width: 54px; height: 54px; font-size: 20px;
+}
+.scrollDown::before{
+  inset: -28px;                            /* halo radius kam */
+  filter: blur(18px);
+  background: radial-gradient(circle at 50% 50%,
+              rgba(56,189,248,0.15) 0%,
+              rgba(16,185,129,0.18) 40%,
+              rgba(99,102,241,0.12) 65%,
+              rgba(56,189,248,0.00) 75%);
+}
+
+/* === Mobile: thoda aur tight === */
+@media (max-width: 768px){
+  .hero{ min-height: 52vh; }
+  .heroWrap{ padding-bottom: 64px; }
+  .heroArrow{ bottom: 10px; }
+}
+
+
+
+  /* =========================================================
+   SECTION: ABOUT / WINS (HTML #about)
+   (Fixed + Requested styling tweaks)
+   ========================================================= */
+.aboutGridV2{ display:grid; grid-template-columns: 1.15fr .85fr; gap:28px; align-items:start }
+@media (max-width:980px){ .aboutGridV2{ grid-template-columns:1fr } }
+.aboutLeft{ position:relative; padding-left:28px }
+.aboutLeft::before{
+  content:""; position:absolute; left:0; top:8px; bottom:8px; width:6px; border-radius:8px;
+  background:linear-gradient(180deg,#60a5fa,#22c55e); box-shadow:0 8px 22px rgba(2,6,23,.10)
+}
+
+/* FIXED: stray text removed; this is valid CSS now */
+.overline{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:8px 12px; border-radius:999px; margin-right:8px;
+  font:900 .8rem/1 Montserrat,system-ui; letter-spacing:.08em; text-transform:uppercase;
+  color:#0f172a; background:linear-gradient(180deg,#ffffff,#f3f6ff);
+  border:1.5px solid #e6eaf7; box-shadow:0 8px 18px rgba(2,6,23,.05);
+}
+/* WHAT WE DO: light green icon + thin green outline on active */
+.overline i{ color:#16a34a; } /* light green icon */
+.overline.is-active{
+  border-color:rgba(34,197,94,.55);
+  box-shadow:0 6px 16px rgba(16,185,129,.12), inset 0 0 0 1.5px rgba(34,197,94,.85);
+}
+
+/* WINS CHIP – gradient removed, golden icon, light outline */
+.winsChip{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:8px 12px; border-radius:999px;
+  font:900 .8rem/1 Montserrat,system-ui; letter-spacing:.08em;
+  background:linear-gradient(180deg,#ffffff,#fff7e6);   /* soft solid feel (no rainbow gradient) */
+  color:#0f172a; 
+  border:1.5px solid #f3e3bb;                           /* light golden outline */
+  box-shadow:0 10px 24px rgba(245,158,11,.10), inset 0 0 0 1px rgba(245,158,11,.18);
+  animation:none;                                        /* gradient animation removed */
+}
+.winsChip i{ color:#f59e0b }                             /* golden icon */
+.winsChip.is-active{
+  border-color:rgba(245,158,11,.6);
+  box-shadow:0 10px 24px rgba(245,158,11,.18), inset 0 0 0 1.5px rgba(245,158,11,.85);
+}
+
+/* --- rest of your existing styles stay the same --- */
+.winsGridAll{ position:relative; display:grid; grid-template-columns:repeat(2,minmax(240px,1fr)); gap:14px; margin:12px 0 18px; padding-left:36px }
+.winsGridAll::before{
+  content:""; position:absolute; left:14px; top:4px; bottom:4px; width:6px; border-radius:6px;
+  background:linear-gradient(180deg,#22c55e,#0ea5e9,#f59e0b,#22c55e); background-size:100% 300%;
+  animation:flow 6s linear infinite; box-shadow:0 10px 22px rgba(2,6,23,.08)
+}
+@keyframes flow{0%{background-position:0% 0%}100%{background-position:0% 200%}}
+@media (max-width:760px){ .winsGridAll{ grid-template-columns:1fr } }
+
+.winsCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 16px;
+  background: #fff; /* White background */
+  border: 1.5px solid #e6eaf7;
+  box-shadow: 0 10px 22px rgba(2,6,23,.05);
+  min-height: var(--cardH, 86px);
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+  color: #0f172a; /* Normal text color */
+}
+
+/* Icon (letter) always colorfull gradient */
+.winsCard .winsLetter {
+  color: #fff;
+  background: linear-gradient(135deg, #22c55e 0%, #f59e0b 100%);
+  box-shadow: 0 10px 24px rgba(245,158,11,.25), inset 0 -6px 12px rgba(255,255,255,.18);
+}
+
+/* Remove hover effect */
+.winsCard:hover,
+.winsCard:focus-within {
+  border-color: #e6eaf7;
+  box-shadow: 0 10px 22px rgba(2,6,23,.05);
+  transform: none;
+}
+
+.winsText b{ display:block; font-weight:900; color:#0f172a; font-size:16.5px; line-height:1.2 }
+.winsText > span{ display:block; font-weight:800; color:#475569; font-size:14px }
+.winsLetter{
+  width:48px; height:48px; border-radius:14px; display:flex; align-items:center; justify-content:center;
+  font-family:Montserrat; font-weight:900; font-size:22px; color:#fff;
+  background:linear-gradient(135deg,#22c55e 0%,#f59e0b 100%); background-size:160% 160%;
+  box-shadow:0 10px 24px rgba(245,158,11,.25), inset 0 -6px 12px rgba(255,255,255,.18)
+}
+.winsStack {
+  position:relative;
+  padding:16px 16px 12px 36px;
+  border-radius:18px;
+  background:linear-gradient(180deg,#ffffff,#f9fbfa);
+  border:1.5px solid #d1f3e0;                       /* soft teal outline */
+  box-shadow:0 22px 50px rgba(2,6,23,.08), inset 0 1px 0 #fff;
+}
+
+.progressTrack{
+  position:absolute; left:14px; top:14px; bottom:14px; width:6px; border-radius:999px;
+  background:linear-gradient(180deg,#22c55e,#0ea5e9,#f59e0b,#22c55e); background-size:100% 300%;
+  animation:flow 6s linear infinite; box-shadow:inset 0 0 0 1px #dbeafe, 0 6px 16px rgba(2,6,23,.08)
+}
+.progressThumb{ position:absolute; left:50%; transform:translate(-50%, 0); width:clamp(30px, 3.8vw, 40px); height:clamp(30px, 3.8vw, 40px); display:flex; align-items:center; justify-content:center; z-index:2 }
+.progressThumb img{ width:100%; height:100%; object-fit:contain; transform: translateX(2px); filter: drop-shadow(0 4px 10px rgba(2,6,23,.28)) }
+.tabWrap{ position:relative; min-height:var(--cardH, 220px) }
+.winsTab{ position:absolute; inset:0; opacity:0; transform:translateY(6px) scale(.99); pointer-events:none; transition:.38s ease }
+.winsTab.active{ opacity:1; transform:translateY(0) scale(1); pointer-events:auto }
+.chipList{ display:flex; flex-wrap:wrap; gap:14px 12px; margin-top:14px }
+.chip{ display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:999px; border:1.5px solid #dbeafe; background:linear-gradient(180deg,#ffffff,#f0f9ff);
+  box-shadow:0 10px 18px rgba(14,165,233,.08); font-weight:800; color:#0f172a }
+.reveal{ opacity:0; transform:translateY(6px); animation:reveal .48s var(--d,0ms) cubic-bezier(.2,.7,.2,1) forwards }
+@keyframes reveal{ to{ opacity:1; transform:none } }
+.cardIn{ animation:pop .32s ease-out both }
+@keyframes pop{ from{ transform:scale(.99); } to{ transform:scale(1); } }
+
+.qrCard{ align-self:center; display:flex; align-items:center; justify-content:center; width:clamp(220px, 34vw, 420px); border-radius:22px; border:1px solid #e6eaf7; background:#fff; padding:16px;
+  box-shadow:0 25px 60px rgba(2,6,23,.12); margin-inline:auto }
+.qrCard img{ height:clamp(260px, 50vh, 520px); width:auto; max-width:100%; object-fit:contain; display:block }
+
+.winsLetter {
+  width:48px; height:48px; border-radius:14px;
+  display:flex; align-items:center; justify-content:center;
+  font-family:Montserrat; font-weight:900; font-size:22px;
+  color:#0f172a;                                   /* text black */
+  background:#f1f5f9;                              /* light grey bg */
+  box-shadow:0 6px 14px rgba(0,0,0,.08), inset 0 -4px 6px rgba(255,255,255,.6);
+  transition:.35s ease;
+}
+.winsCard:hover .winsLetter {
+  color:#fff;
+  background:linear-gradient(135deg,#22c55e 0%,#f59e0b 100%); /* green→gold */
+  box-shadow:0 10px 24px rgba(245,158,11,.25), inset 0 -6px 12px rgba(255,255,255,.18);
+}
+
+/* Stylish heading for Seed to Sustain */
+.seedTitle {
+  font-family: 'Montserrat', 'Plus Jakarta Sans', sans-serif;
+  font-weight: 900;
+  font-size: 2.2rem;
+  letter-spacing: -0.5px;
+  background: linear-gradient(90deg, #22c55e 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 8px;
+  display: inline-block;
+  filter: drop-shadow(0 4px 16px rgba(34,197,94,0.12));
+}
+
+  /* =========================================================
+     SECTION: WAYS (HTML #ways)
+     ========================================================= */
+  .waysHead{ text-align:left; margin-bottom:10px }
+  .waysHead h2{
+    margin:0 0 8px; font:900 clamp(30px,5vw,52px)/1.02 Montserrat,system-ui; letter-spacing:-0.02em;
+    background:linear-gradient(90deg,#ff5f6d 0%, #ffc371 25%, #7ce4ff 50%, #a78bfa 75%, #60a5fa 100%);
+    background-size:200% 100%;
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+    animation: gradientShift 6s linear infinite;
+    filter: drop-shadow(0 6px 18px rgba(99,102,241,0.12))
+  }
+  @keyframes gradientShift{ 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+  .waysHead h2::after{ content:""; display:block; height:6px; width:56px; border-radius:999px; margin-top:10px;
+    background: linear-gradient(90deg, rgba(255,95,109,0.9), rgba(255,195,113,0.9)); box-shadow: 0 8px 30px rgba(99,102,241,0.12) }
+  .waysHead .lead{ margin:8px 0 18px; font-weight:800; color:#334155; font-size:clamp(15px,1.8vw,18px) }
+
+  .waysGrid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 36px 48px;
+    align-items:start;
+  }
+  .leftPane{ grid-column: 1 / 2; grid-row: 1 / 3; }
+  .waysGrid .media{ grid-column: 2 / 3; grid-row: 1 / 2; align-self:start; justify-self:center; max-width:420px }
+
+  .tabs{ display:flex; gap:12px; flex-wrap:wrap; margin:10px 0 18px }
+  .tabBtn{
+    appearance:none; cursor:pointer; font-weight:900;
+    padding:12px 18px; border-radius:999px;
+    border:1.5px solid var(--brd); background:#fff; color:#111827;
+    display:inline-flex; align-items:center; gap:10px;
+    transition:transform .15s ease, box-shadow .15s ease, filter .15s ease, border-color .15s ease;
+    filter:grayscale(1) saturate(.6);
+  }
+  .tabBtn i{ font-size:18px; line-height:1 }
+  .tabBtn:hover{ filter:none; box-shadow:0 8px 18px rgba(2,6,23,.06); border-color:#d7def2 }
+  .tabBtn.active{
+    filter:none; color:#fff; border-color:transparent;
+    background:linear-gradient(90deg,var(--accent),#60a5fa);
+    box-shadow:0 12px 24px rgba(14,165,233,.20); transform:translateY(-1px);
+  }
+
+  #ways .pane{ display:none }
+  #ways .pane.active{ display:block }
+
+  .project-grid{ display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; margin-top:14px }
+  @media (max-width:1100px){ .project-grid{ grid-template-columns: repeat(2, 1fr) } }
+  @media (max-width:640px){ .project-grid{ grid-template-columns: 1fr } }
+
+  .project-card{ background:#fff; border:1.6px solid rgba(9,103,93,0.65); border-radius:14px; padding:14px;
+    display:flex; flex-direction:column; gap:8px; min-height:80px; transition:.18s; box-shadow:0 1px 0 rgba(255,255,255,.9) inset, 0 2px 10px rgba(9,103,93,.08); font-size:13px }
+  .project-card:hover,.project-card:focus-within{ border-color:rgb(9,103,93); box-shadow:0 1px 0 rgba(255,255,255,.95) inset, 0 6px 18px rgba(9,103,93,.14); transform:translateY(-2px) }
+  .project-card .pc-top{ display:flex; gap:12px; align-items:flex-start }
+  .project-card .pc-badge{ width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#f4fffb,#eef6ff); border:1px solid #d7efe9; color:#0f766e; font-size:14px }
+  .project-card .p-title{ font-weight:900; font-size:13px; color:#0f172a; line-height:1.05 }
+  .project-card .p-sub{ font-weight:700; font-size:11.5px; color:#566070; margin-top:2px }
+
+  .card-cta{ display:flex; gap:6px; margin-top:auto }
+  .btn-compact{ appearance:none; border:0; padding:4px 8px; border-radius:7px; font-weight:900; cursor:pointer; font-size:11px; line-height:1.1 }
+  .btn-seeding{ background:transparent; border:1px solid #10b981; color:#10b981 }
+  .btn-details{ background:#2563eb; color:#fff; border:1px solid rgba(0,0,0,0.06) }
+
+  /* =========================================================
+     SECTION: FOOTER
+     ========================================================= */
+  footer {
+  background: linear-gradient(135deg,#18181b 70%,#3b82f6 100%);
+  color: #e2e8f0;
+  padding: 54px 0 26px;
+}
+.F {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.3fr .7fr .7fr;
+  gap: 32px;
+}
+@media(max-width:980px){.F{grid-template-columns:1fr;gap:16px}}
+.footer-logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  box-shadow: 0 2px 14px #60a5fa94;
+  margin-bottom: 8px;
+}
+.newsletter {
+  display: flex;
+  gap: 11px;
+  margin: 18px 0 0;
+}
+.newsletter input {
+  flex: 1;
+  padding: 11px 13px;
+  border-radius: 12px;
+  border: 1px solid #334155;
+  background: #262b3a;
+  color: #e2e8f0;
+  font-size: 15px;
+}
+.newsletter button {
+  padding: 11px 21px;
+  border-radius: 12px;
+  border: 0;
+  background: linear-gradient(90deg,#60a5fa,#a78bfa);
+  color: #fff;
+  font-weight: 800;
+  font-size: 15px;
+  cursor: pointer;
+}
+.footer-tagline {
+  color: #cbd5e1;
+  margin-top: 10px;
+  margin-bottom: 12px;
+  font-size: 15px;
+  line-height: 1.4;
+  font-weight: 500;
+}
+.social {
+  margin: 17px 0 0;
+  display: flex;
+  gap: 17px;
+}
+.social a {
+  color: #cbd5e1;
+  font-size: 24px;
+  transition: .14s;
+}
+.social a:hover {
+  color: #22c55e;
+}
+.foot-links h4, .foot-contact h4 {
+  margin-bottom: 19px;
+}
+.foot-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.foot-links a {
+  color: #e2e8f0;
+  text-decoration: none;
+  font-size: 15px;
+}
+.foot-links a:hover {
+  color: #a78bfa;
+}
+.foot-contact div {
+  margin-bottom: 12px;
+  color: #cbd5e1;
+}
+.footbar {
+  margin-top: 30px;
+  padding-top: 17px;
+  border-top: 1px solid #334155;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  color: #94a3b8;
+  font-size: 15px;
+}
+.footbar a {
+  color: #9fb3c8;
+  text-decoration: none;
+}
+
+  /* =========================================================
+     SECTION: MODAL (Contact form)
+     ========================================================= */
+  .modal{
+    position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+    background:rgba(2,6,23,.35);
+    backdrop-filter: blur(6px);
+    z-index:300;
+    padding:18px;
+  }
+  .modal.open{ display:flex }
+  .modalCard{
+    width:min(760px,96vw);
+    position:relative; overflow:hidden;
+    background:linear-gradient(180deg,#ffffff,#f9fbff);
+    border-radius:20px;
+    border:1px solid #e6eaf7;
+    box-shadow: 0 20px 60px rgba(2,6,23,.20), 0 2px 0 rgba(255,255,255,.8) inset;
+    padding:22px;
+  }
+  .modalHead{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:10px; }
+  .modalHead h3{ margin:0; font:900 1.25rem/1.2 Montserrat,system-ui; color:#0f172a; letter-spacing:.01em; display:flex; align-items:center; gap:10px; }
+  .modalHead h3 i{ color:#111827; }
+  .closeBtn{ appearance:none; border:1px solid #e6eaf7; background:#fff; border-radius:12px; width:36px; height:36px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:transform .14s ease, box-shadow .14s ease, border-color .14s ease; }
+  .closeBtn:hover{ transform:translateY(-1px); box-shadow:0 8px 20px rgba(2,6,23,.10); border-color:#d3daf2 }
+  .formGrid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:8px }
+  .formGrid .full{ grid-column:1 / -1 }
+  label{ display:block; margin:4px 0 6px; font-size:.86rem; font-weight:900; color:#0f172a; letter-spacing:.015em; }
+  input, select, textarea{
+    width:100%; border:1.6px solid #dbe3f3; background:#fbfcff; border-radius:14px; padding:12px 14px;
+    font:inherit; font-weight:700; color:#0f172a; transition:border-color .20s ease, box-shadow .20s ease, background .20s ease;
+  }
+  input::placeholder, textarea::placeholder{ color:#94a3b8; font-weight:600 }
+  textarea{ min-height:120px; resize:vertical }
+  input:focus, select:focus, textarea:focus{
+    outline:none; border-color:#93c5fd; background:#fff;
+    box-shadow: 0 0 0 4px rgba(59,130,246,.12), 0 10px 22px rgba(2,6,23,.06);
+  }
+  select{
+    appearance:none;
+    background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="%2399a4b2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>');
+    background-repeat:no-repeat; background-position: right 12px center; padding-right:40px; cursor:pointer;
+  }
+  .submitRow{ display:flex; gap:10px; justify-content:flex-end; margin-top:14px; }
+  .btn{ appearance:none; border:0; border-radius:12px; padding:10px 14px; font-weight:900; cursor:pointer }
+  .btn.primary{ background:linear-gradient(90deg,var(--deep),#1e293b); color:#fff; box-shadow: 0 10px 24px rgba(2,6,23,.20); display:inline-flex; align-items:center; gap:8px; }
+  .btn.primary:hover{ filter:brightness(1.05) }
+  .btn.secondary{ background:#fff; color:#0f172a; border:1.6px solid #dbe3f3; }
+  .btn.secondary:hover{ border-color:#c9d3ea; box-shadow:0 8px 18px rgba(2,6,23,.06) }
+
+  /* =========================
+     SECTION: CSR DONATION (NEW)
+     ========================= */
+  .csrDonationSection {
+  background: linear-gradient(120deg,#f8fafc 0%,#eef2ff 100%);
+  padding: clamp(48px, 8vw, 96px) 16px;
+  text-align: center;
+}
+.csrDonation__wrap { max-width: 700px; margin: 0 auto; }
+.csrDonation__title {
+  font:900 clamp(28px,4vw,42px)/1.08 Montserrat,system-ui;
+  letter-spacing:-.02em;
+  background:linear-gradient(90deg,#22c55e,#3b82f6 80%);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  margin-bottom: 12px;
+}
+.csrDonation__sub {
+  font:600 clamp(15px,2vw,19px)/1.5 "Plus Jakarta Sans",system-ui;
+  color:#334155;
+  margin-bottom: 28px;
+}
+.csrDonation__cta {
+  font-weight:900;
+  font-size:1.25rem;
+  padding:18px 48px;
+  border-radius:22px;
+  background:linear-gradient(90deg,#22c55e,#3b82f6);
+  color:#fff;
+  border:none;
+  box-shadow:0 8px 32px rgba(34,197,94,.12);
+  cursor:pointer;
+  transition:background .18s, box-shadow .18s, transform .18s;
+  margin-bottom: 18px;
+}
+.csrDonation__cta:hover {
+  background:linear-gradient(90deg,#3b82f6,#22c55e);
+  box-shadow:0 12px 36px rgba(59,130,246,.18);
+  transform:translateY(-2px) scale(1.03);
+}
+.csrDonation__thank {
+  margin-top: 18px;
+  font-weight:800;
+  color:#22c55e;
+  font-size:1.1rem;
+  background:linear-gradient(90deg,#f0fdf4,#f0f9ff);
+  border-radius:14px;
+  padding:14px 18px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  justify-content:center;
+  box-shadow:0 2px 14px rgba(34,197,94,.08);
+  animation: fadeIn .6s;
+}
+.csrDonation__thank.hidden { display:none; }
+
+@keyframes fadeIn { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:none;} }
+
+/* Modal Overlay & Modal */
+.csrDonation__modalOverlay {
+  position:fixed; inset:0; z-index:9999;
+  background:rgba(15,23,42,0.55);
+  display:flex; align-items:center; justify-content:center;
+  transition:opacity .3s;
+  opacity:1;
+}
+.csrDonation__modalOverlay.hidden { opacity:0; pointer-events:none; }
+.csrDonation__modal {
+  background:#fff;
+  border-radius:22px;
+  box-shadow:0 24px 80px rgba(2,6,23,.22);
+  max-width:600px;
+  width:96vw;
+  padding:32px 22px 22px 22px;
+  position:relative;
+  animation: modalIn .4s;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  max-height:90vh;
+  overflow-y:auto;
+}
+@keyframes modalIn { from{opacity:0;transform:scale(.96);} to{opacity:1;transform:none;} }
+.csrDonation__close {
+  position:absolute; right:18px; top:18px;
+  background:#fff; border:1px solid #e6eaf7;
+  border-radius:50%; width:38px; height:38px;
+  display:grid; place-items:center; cursor:pointer;
+  font-size:1.3rem;
+  box-shadow:0 2px 10px rgba(2,6,23,.08);
+  transition:background .18s, box-shadow .18s;
+}
+.csrDonation__close:hover { background:#f1f5f9; box-shadow:0 8px 24px rgba(2,6,23,.10); }
+.csrDonation__modalTitle {
+  font:900 1.5rem/1.2 Montserrat,system-ui;
+  color:#22c55e;
+  margin-bottom:8px;
+  text-align:center;
+}
+.csrDonation__toggle {
+  display:flex; gap:10px; justify-content:center; margin-bottom:10px;
+}
+.csrDonation__toggle button {
+  flex:1; font-weight:900; font-size:1rem; padding:10px 0;
+  border-radius:12px; border:1.5px solid #e6eaf7;
+  background:#f8fafc; color:#334155; cursor:pointer;
+  transition:background .18s, color .18s;
+}
+.csrDonation__toggle button.active {
+  background: linear-gradient(90deg,#22c55e,#3b82f6);
+  color: #fff;
+  border-color: #22c55e;
+}
+.csrDonation__toggle button:not(.active):hover {
+  background: #e0e7ff;
+  color: #22c55e;
+}
+.donorFields { display:flex; flex-direction:column; gap:14px; }
+.donorFields.hidden { display:none; }
+label { display:flex; flex-direction:column; gap:6px; font-weight:700; color:#0f172a }
+input[type="text"], input[type="email"], input[type="tel"], input[type="number"] {
+  padding:12px 12px; border:1px solid #cbd5e1; border-radius:12px;
+  font:600 15px/1.2 "Plus Jakarta Sans",system-ui;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.inline { flex-direction:row; align-items:center; gap:10px; margin-top:2px; }
+.donationAmtRow { display:flex; flex-direction:column; gap:6px; }
+.amtBtns { display:flex; gap:10px; flex-wrap:wrap; margin-top:6px; }
+.amtBtns button {
+  background:linear-gradient(90deg,#22c55e,#3b82f6);
+  color:#fff; font-weight:800; border:none; border-radius:10px;
+  padding:10px 22px; cursor:pointer; font-size:1rem;
+  transition:background .18s, box-shadow .18s;
+}
+.amtBtns button.selected, .amtBtns button:hover {
+  background:linear-gradient(90deg,#3b82f6,#22c55e);
+  box-shadow:0 4px 16px rgba(34,197,94,.10);
+}
+.amtBtns input[type="number"] {
+  width:120px; border:1px solid #e6eaf7; border-radius:10px; padding:10px 12px;
+  font-size:1rem; font-weight:700;
+}
+.payOptions { display:flex; gap:18px; margin-top:6px; flex-wrap:wrap; }
+.payOptions label { flex-direction:row; align-items:center; gap:6px; font-weight:700; }
+.csrDonation__actions { margin-top:18px; display:flex; justify-content:flex-end; }
+.csrDonation__payBtn {
+  background:linear-gradient(90deg,#22c55e,#3b82f6);
+  color:#fff; font-weight:900; font-size:1.15rem;
+  border:none; border-radius:14px; padding:14px 38px;
+  cursor:pointer; box-shadow:0 8px 24px rgba(34,197,94,.12);
+  transition:background .18s, box-shadow .18s, transform .18s;
+}
+.csrDonation__payBtn:hover {
+  background:linear-gradient(90deg,#3b82f6,#22c55e);
+  box-shadow:0 12px 36px rgba(59,130,246,.18);
+  transform:translateY(-2px) scale(1.03);
+}
+
+/* Responsive */
+@media (max-width:600px) {
+  .csrDonation__modal { padding:18px 6vw; }
+  .csrDonation__title { font-size:1.4rem; }
+  .csrDonation__cta { font-size:1rem; padding:14px 18px; }
+  .amtBtns button, .amtBtns input[type="number"] { font-size:.95rem; padding:8px 12px; }
+}
+
+.lang-switch button {
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 8px 18px;
+  border-radius: 10px;
+  border: 1.5px solid #e6eaf7;
+  background: #f8fafc;
+  color: #334155;
+  cursor: pointer;
+  transition: background .18s, color .18s;
+}
+.lang-switch button.active {
+  background: linear-gradient(90deg,#22c55e,#3b82f6);
+  color: #fff;
+  border-color: #22c55e;
+}
+.lang-switch button:not(.active):hover {
+  background: #e0e7ff;
+  color: #22c55e;
+}
+.lang-sep {
+  width: 2px;
+  height: 22px;
+  background: #e6eaf7;
+  display: inline-block;
+  margin: 0 4px;
+  border-radius: 2px;
+}
+
+/* Modern animated down arrow for hero section */
+.downArrow {
+  width:54px; height:54px; border-radius:50%;
+  display:inline-flex; align-items:center; justify-content:center;
+  background:#fff; border:1px solid #e6eaf7;
+  box-shadow:0 10px 28px rgba(2,6,23,.10);
+  text-decoration:none; color:#0f172a;
+  animation:floaty 2.2s ease-in-out infinite; position:relative; margin:10px auto 0;
+  font-size:20px;
+  transition:background .18s, color .18s, box-shadow .18s, transform .18s;
+}
+.downArrow:after {
+  content:""; position:absolute; inset:-6px; border-radius:50%;
+  box-shadow:0 0 0 0 rgba(34,197,94,.25); animation:pulse 2.2s ease-out infinite;
+}
+.downArrow:hover {
+  background:linear-gradient(90deg,#22c55e,#3b82f6);
+  color:#fff;
+  box-shadow:0 16px 36px rgba(34,197,94,.18);
+  transform:translateY(-2px) scale(1.05);
+}
+.downArrow i { font-size:20px; }
+@keyframes floaty { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+@keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(34,197,94,.25)} 70%{box-shadow:0 0 0 14px rgba(34,197,94,0)} 100%{box-shadow:0 0 0 0 rgba(34,197,94,0)} }
+  </style>
+</head>
+<body>
+
+  <!-- =======================================================
+       HEADER
+       ======================================================= -->
+  <header class="header" id="siteHeader">
+  <div class="H">
+    <!-- HEADER LOGO -->
+    <a class="brand" href="index.html" aria-label="FWF Home">
+      <img src="./assets/images/logo.png" alt="FWF">
+    </a>
+    <nav>
+      <ul class="navList" id="navList">
+        <!-- NAV HOME LINK -->
+        <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+        <li><a href="csr.html">CSR</a></li>
+        <li><a href="projects.html" data-i18n="nav.projects">Projects</a></li>
+        <li><a href="about.html" data-i18n="nav.about">About Us</a></li>
+      </ul>
+    </nav>
+    <div class="langDesktop">
+      <div class="lang-switch" role="group" aria-label="Language switch">
+        <button id="btn-hi" type="button">HI</button>
+        <div class="lang-sep"></div>
+        <button id="btn-en" type="button">EN</button>
+      </div>
+    </div>
+    <button class="navToggle" id="navToggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+  </div>
+  </header>
+
+  <!-- =========================================================
+     SECTION: HERO (HTML #home)
+     ========================================================= -->
+<section class="hero" id="home">
+  <div class="heroBG"></div>
+
+  <div class="container heroWrap">
+    <span class="heroBadge"><i class="fa-solid fa-handshake"></i> CSR Partnership</span>
+    <h1>Empowering Lives, Creating Sustainable Impact</h1>
+    <p class="heroSub">Partner with FWF to build livelihoods through skills & micro-businesses.</p>
+  </div>
+
+  <!-- Arrow + Glow -->
+  <div class="heroArrow">
+    <a href="#involved" class="downArrow" aria-label="Scroll to involvement">
+      <i class="fa-solid fa-chevron-down"></i>
+    </a>
+  </div>
+</section>
+
+
+  <!-- =======================================================
+       ABOUT / WINS
+       ======================================================= -->
+  <section id="about" class="section glass">
+  <div class="container aboutGridV2">
+      <div class="aboutLeft" id="winsArea">
+        <span class="overline"><i class="fa-solid fa-bolt"></i> What We Do</span>
+        <span class="winsChip"><i class="fa-solid fa-trophy"></i> WINS</span>
+
+        <div class="winsGridAll" aria-label="WINS overview">
+          <div class="winsCard"><div class="winsLetter">W</div><div class="winsText"><b>Women empowerment</b><span>(Leadership & Entrepreneurship)</span></div></div>
+          <div class="winsCard"><div class="winsLetter">I</div><div class="winsText"><b>Income</b><span>(Livelihood creation)</span></div></div>
+          <div class="winsCard"><div class="winsLetter">N</div><div class="winsText"><b>Nurture skills</b><span>(Skill & training)</span></div></div>
+          <div class="winsCard"><div class="winsLetter">S</div><div class="winsText"><b>Support Local</b><span>(Vocal for Local)</span></div></div>
+        </div>
+
+        <div class="winsStack" id="winsStack">
+          <div class="progressTrack" aria-hidden="true">
+            <span class="progressThumb" aria-label="Progress turtle">
+              <img src="./assets/images/turtle-icon.png" alt="Turtle pointer">
+            </span>
+          </div>
+
+          <div class="tabWrap" id="tabWrap">
+            <div class="winsTab active" data-key="W">
+              <div class="winsCard">
+                <div class="winsLetter">W</div>
+                <div class="winsText">
+                  <b>Women empowerment</b><span>(Leadership & Entrepreneurship)</span>
+                  <div class="chipList">
+                    <span class="chip"><i class="fa-solid fa-people-group"></i><span class="chipText"> SHG-led micro-enterprises</span></span>
+                    <span class="chip"><i class="fa-solid fa-chalkboard-user"></i><span class="chipText"> Leadership workshops</span></span>
+                    <span class="chip"><i class="fa-solid fa-handshake"></i><span class="chipText"> Seed capital & buyer tie-ups</span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="winsTab" data-key="I">
+              <div class="winsCard">
+                <div class="winsLetter">I</div>
+                <div class="winsText">
+                  <b>Income</b><span>(Livelihood creation)</span>
+                  <div class="chipList">
+                    <span class="chip"><i class="fa-solid fa-chart-line"></i><span class="chipText"> CSR cohorts with KPIs</span></span>
+                    <span class="chip"><i class="fa-solid fa-cart-shopping"></i><span class="chipText"> Make → Sell → Earn</span></span>
+                    <span class="chip"><i class="fa-solid fa-file-circle-check"></i><span class="chipText"> Audit-ready documentation</span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="winsTab" data-key="N">
+              <div class="winsCard">
+                <div class="winsLetter">N</div>
+                <div class="winsText">
+                  <b>Nurture skills</b><span>(Skill & training)</span>
+                  <div class="chipList">
+                    <span class="chip"><i class="fa-solid fa-flask"></i><span class="chipText"> Hands-on labs</span></span>
+                    <span class="chip"><i class="fa-solid fa-briefcase"></i><span class="chipText"> Placement & self-employment</span></span>
+                    <span class="chip"><i class="fa-solid fa-user-group"></i><span class="chipText"> Mentor network</span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="winsTab" data-key="S">
+              <div class="winsCard">
+                <div class="winsLetter">S</div>
+                <div class="winsText">
+                  <b>Support Local</b><span>(Vocal for Local)</span>
+                  <div class="chipList">
+                    <span class="chip"><i class="fa-solid fa-store"></i><span class="chipText"> Local sourcing & quality</span></span>
+                    <span class="chip"><i class="fa-solid fa-bullhorn"></i><span class="chipText"> District melas & marketplace</span></span>
+                    <span class="chip"><i class="fa-solid fa-truck"></i><span class="chipText"> Packaging & logistics support</span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div><!-- /.tabWrap -->
+        </div>
+      </div>
+
+      <!-- Right image -->
+      <aside class="qrCard">
+        <img src="./assets/images/qr.png" alt="FWF Illustration">
+      </aside>
+    </div>
+  </section>
+
+  <!-- =======================================================
+       WAYS
+       ======================================================= -->
+  <section id="ways" class="section">
+    <div class="container">
+      <div class="waysHead">
+        <h2>One Step for Humanity</h2>
+        <p class="lead">Your small effort can put two meals on a family's table.</p>
+      </div>
+
+      <div class="ways3col">
+        <!-- LEFT COLUMN: Direct content (no white card) -->
+        <div>
+          <h3 class="seedTitle"><i class="fa-solid fa-seedling"></i> Seed to Sustain</h3>
+          <p>Together, we seed skills that blossom into businesses and sustain families.</p>
+          <div class="project-grid" role="list" aria-label="Sponsor projects">
+            <!-- ...project cards... -->
+            <article class="project-card" data-project="Suraksha"><div class="pc-top"><div class="pc-badge"><i class="fa-solid fa-shield-virus"></i></div><div><div class="p-title">Suraksha</div><div class="p-sub">Manufacturing health &amp; hygiene products for protection</div></div></div><div class="card-cta"><button class="btn-compact btn-seeding" type="button">Seeding</button><button class="btn-compact btn-details" type="button">More Details</button></div></article>
+            <article class="project-card" data-project="Swachh Bharat"><div class="pc-top"><div class="pc-badge"><i class="fa-solid fa-broom"></i></div><div><div class="p-title">Swachh Bharat</div><div class="p-sub">Cleanliness solutions for a pollution-free environment</div></div></div><div class="card-cta"><button class="btn-compact btn-seeding" type="button">Seeding</button><button class="btn-compact btn-details" type="button">More Details</button></div></article>
+            <article class="project-card" data-project="Happy Meal"><div class="pc-top"><div class="pc-badge"><i class="fa-solid fa-bowl-food"></i></div><div><div class="p-title">Happy Meal</div><div class="p-sub">Nutritious food products for wellness</div></div></div><div class="card-cta"><button class="btn-compact btn-seeding" type="button">Seeding</button><button class="btn-compact btn-details" type="button">More Details</button></div></article>
+            <article class="project-card" data-project="Green Energy"><div class="pc-top"><div class="pc-badge"><i class="fa-solid fa-solar-panel"></i></div><div><div class="p-title">Green Energy</div><div class="p-sub">Renewable, eco-friendly energy solutions</div></div></div><div class="card-cta"><button class="btn-compact btn-seeding" type="button">Seeding</button><button class="btn-compact btn-details" type="button">More Details</button></div></article>
+            <article class="project-card" data-project="DIY Crafts"><div class="pc-top"><div class="pc-badge"><i class="fa-solid fa-paintbrush"></i></div><div><div class="p-title">DIY Crafts</div><div class="p-sub">Promoting handmade &amp; artisan products</div></div></div><div class="card-cta"><button class="btn-compact btn-seeding" type="button">Seeding</button><button class="btn-compact btn-details" type="button">More Details</button></div></article>
+            <article class="project-card" data-project="Swachh Jal"><div class="pc-top"><div class="pc-badge"><i class="fa-solid fa-water"></i></div><div><div class="p-title">Swachh Jal</div><div class="p-sub">Affordable water &amp; sanitation solutions</div></div></div><div class="card-cta"><button class="btn-compact btn-seeding" type="button">Seeding</button><button class="btn-compact btn-details" type="button">More Details</button></div></article>
+            <article class="project-card" data-project="Samman"><div class="pc-top"><div class="pc-badge"><i class="fa-solid fa-shirt"></i></div><div><div class="p-title">Samman</div><div class="p-sub">Affordable garments for dignity &amp; comfort</div></div></div><div class="card-cta"><button class="btn-compact btn-seeding" type="button">Seeding</button><button class="btn-compact btn-details" type="button">More Details</button></div></article>
+            <article class="project-card" data-project="Sweet Home"><div class="pc-top"><div class="pc-badge"><i class="fa-solid fa-house-chimney"></i></div><div><div class="p-title">Sweet Home</div><div class="p-sub">Household products for comfort &amp; safety</div></div></div><div class="card-cta"><button class="btn-compact btn-seeding" type="button">Seeding</button><button class="btn-compact btn-details" type="button">More Details</button></div></article>
+          </div>
+        </div>
+        <!-- END LEFT COLUMN -->
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================
+       CSR DONATION
+       ======================================================= -->
+<section id="csr-donation" class="csrDonationSection">
+  <div class="csrDonation__wrap">
+    <h2 class="csrDonation__title">
+      Fund a Livelihood, Create Jobs
+    </h2>
+    <p class="csrDonation__sub">
+      Your CSR funds directly support small manufacturing units and livelihood setups for beneficiaries.
+    </p>
+    <button class="csrDonation__cta" id="donateNowBtn">
+      <i class="fa-solid fa-indian-rupee-sign"></i> Donate Now
+    </button>
+    <div id="thankYouMsg" class="csrDonation__thank hidden">
+      <i class="fa-solid fa-heart-circle-check"></i>
+      Thank you for your support! Your contribution will directly impact women empowerment and livelihood programs.
+    </div>
+  </div>
+</section>
+
+<!-- Modal Overlay & Form -->
+<div class="csrDonation__modalOverlay hidden" id="donationModalOverlay">
+  <div class="csrDonation__modal">
+    <button class="csrDonation__close" id="closeModalBtn" aria-label="Close">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <h3 class="csrDonation__modalTitle">Donate to Empower Lives</h3>
+    <div class="csrDonation__toggle" id="donorTypeToggle">
+      <button type="button" class="active" data-type="individual">Individual Donor</button>
+      <button type="button" data-type="corporate">Corporate Donor</button>
+    </div>
+    <form id="donationForm" autocomplete="off">
+      <!-- Individual Donor Fields -->
+      <div class="donorFields" data-type="individual">
+        <label>
+          <span>Full Name</span>
+          <input type="text" name="fullName" required placeholder="Your Name">
+        </label>
+        <label>
+          <span>Email</span>
+          <input type="email" name="email" required placeholder="you@email.com">
+        </label>
+        <label>
+          <span>Mobile</span>
+          <input type="tel" name="mobile" required placeholder="+91 XXXXX XXXXX">
+        </label>
+        <div class="donationAmtRow">
+          <span>Donation Amount</span>
+          <div class="amtBtns">
+            <button type="button" data-amt="500">₹500</button>
+            <button type="button" data-amt="1000">₹1000</button>
+            <button type="button" data-amt="5000">₹5000</button>
+            <input type="number" name="customAmt" min="100" step="100" placeholder="Custom Amount">
+          </div>
+        </div>
+        <label>
+          <span>Payment Options</span>
+          <div class="payOptions">
+            <label><input type="radio" name="payMethod" value="upi" required> UPI</label>
+            <label><input type="radio" name="payMethod" value="card" required> Card</label>
+            <label><input type="radio" name="payMethod" value="netbanking" required> Net Banking</label>
+          </div>
+        </label>
+        <label class="inline">
+          <input type="checkbox" name="need80g">
+          <span>Request 80G Receipt</span>
+        </label>
+      </div>
+      <!-- Corporate Donor Fields -->
+      <div class="donorFields hidden" data-type="corporate">
+        <label>
+          <span>Organization Name</span>
+          <input type="text" name="orgName" required placeholder="Company / NGO Name">
+        </label>
+        <label>
+          <span>Contact Person Name</span>
+          <input type="text" name="contactName" required placeholder="Contact Person">
+        </label>
+        <label>
+          <span>Email</span>
+          <input type="email" name="corpEmail" required placeholder="contact@company.com">
+        </label>
+        <label>
+          <span>Mobile</span>
+          <input type="tel" name="corpMobile" required placeholder="+91 XXXXX XXXXX">
+        </label>
+        <div class="donationAmtRow">
+          <span>Donation Amount</span>
+          <div class="amtBtns">
+            <button type="button" data-amt="10000">₹10,000</button>
+            <input type="number" name="corpCustomAmt" min="10000" step="1000" placeholder="Custom Amount">
+          </div>
+        </div>
+        <label>
+          <span>Payment Options</span>
+          <div class="payOptions">
+            <label><input type="radio" name="corpPayMethod" value="bank" required> Bank Transfer</label>
+            <label><input type="radio" name="corpPayMethod" value="upi" required> UPI</label>
+            <label><input type="radio" name="corpPayMethod" value="card" required> Card</label>
+          </div>
+        </label>
+        <label class="inline"><input type="checkbox" name="utilCert"> <span>Utilization Certificate</span></label>
+        <label class="inline"><input type="checkbox" name="impactReport"> <span>Impact Report</span></label>
+        <label class="inline"><input type="checkbox" name="brandingOpt"> <span>Branding Option</span></label>
+      </div>
+      <div class="csrDonation__actions">
+        <button type="submit" class="csrDonation__payBtn">Proceed to Pay</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="F">
+      <div>
+        <img class="footer-logo" src="assets/images/logo.png" alt="FWF" />
+        <div class="footer-tagline" data-i18n="footer.tagline">Uniting skills, opportunities and livelihoods on one platform.</div>
+        <form class="newsletter" action="#" method="POST" autocomplete="off">
+          <input id="nlph" placeholder="Your email for updates" data-i18n-placeholder="footer.news.placeholder"/>
+          <button type="button" data-i18n="footer.news.btn">Subscribe</button>
+        </form>
+        <div class="social">
+          <a href="#"><i class="fa-brands fa-facebook"></i></a>
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="#"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="foot-links">
+        <h4 data-i18n="footer.quick">Quick Links</h4>
+        <ul>
+          <li><a href="#projects" data-i18n="footer.links.projects">Projects</a></li>
+          <li><a href="#cta" data-i18n="footer.links.join">Join</a></li>
+          <li><a href="donation.html" data-i18n="footer.links.donate">Donate</a></li>
+          <li><a href="about.html" data-i18n="footer.links.about">About</a></li>
+        </ul>
+      </div>
+      <div class="foot-contact">
+        <h4 data-i18n="footer.contact">Contact</h4>
+        <div><span data-i18n="footer.addr">Address:</span> <span data-i18n="footer.addr.val">Your NGO address</span></div>
+        <div><span data-i18n="footer.phone">Phone:</span> <span>+91-XXXXXXXXXX</span></div>
+        <div><span data-i18n="footer.email">Email:</span> <span>info@fwf.org</span></div>
+        <div><i class="fa-brands fa-whatsapp"></i> <span data-i18n="footer.whatsapp">WhatsApp</span></div>
+        <div style="margin-top:10px;color:#94a3b8" data-i18n="footer.reg">Reg: 12A • 80G • CSR-1</div>
+      </div>
+    </div>
+    <div class="footbar">
+      <div>© <span id="year"></span> <span data-i18n="footer.rights">FWF – All Rights Reserved</span></div>
+      <div><a href="#" data-i18n="footer.privacy">Privacy</a> • <a href="#" data-i18n="footer.terms">Terms</a></div>
+    </div>
+  </div>
+</footer>
+
+  <!-- =======================================================
+       CONTACT MODAL
+       ======================================================= -->
+  <div class="modal" id="csrModal" aria-hidden="true" role="dialog" aria-label="CSR Contact Form">
+    <div class="modalCard">
+      <div class="modalHead">
+        <h3><i class="fa-solid fa-envelope"></i> Contact FWF — CSR Partnership</h3>
+        <button class="closeBtn" onclick="closeModal()" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <form id="csrForm" onsubmit="sendEmail(event)">
+        <div class="formGrid">
+          <div>
+            <label for="company">Company Name</label>
+            <input id="company" name="company" placeholder="Your Company Pvt. Ltd." required />
+          </div>
+          <div>
+            <label for="person">Contact Person</label>
+            <input id="person" name="person" placeholder="Your Name" required />
+          </div>
+                            <div>
+            <label for="email">Official Email</label>
+            <input id="email" name="email" type="email" placeholder="name@company.com" required />
+          </div>
+          <div>
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" placeholder="+91-XXXXXXXXXX" />
+          </div>
+          <div class="full">
+            <label for="model">Partnership Type</label>
+            <select id="model" name="model" required>
+              <option value="Seed to Sustain">Seed to Sustain</option>
+              <option value="Product Collaboration">Product Collaboration</option>
+              <option value="Both / Not Sure">Both / Not Sure</option>
+            </select>
+          </div>
+          <div class="full">
+            <label for="message">Message / Requirements</label>
+            <textarea id="message" name="message" placeholder="Tell us your CSR goals, budgets, timelines..."></textarea>
+          </div>
+        </div>
+        <div class="submitRow">
+          <button type="button" class="btn secondary" onclick="closeModal()"><i class="fa-solid fa-ban"></i> Cancel</button>
+          <button type="submit" class="btn primary"><i class="fa-solid fa-paper-plane"></i> Send via Email</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+  /* =========================================================
+     GLOBAL JS (year, helpers)
+     ========================================================= */
+  (function(){ const y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear(); })();
+
+  /* =========================================================
+     HEADER JS (scroll, nav, i18n)
+     ========================================================= */
+  (function(){
+    const siteHeader=document.getElementById('siteHeader');
+    function doScrollHdr(){ if(siteHeader) siteHeader.classList.toggle('scrolled', window.scrollY>6); }
+    window.addEventListener('scroll', doScrollHdr, {passive:true}); doScrollHdr();
+
+    const navToggle=document.getElementById('navToggle'), navList=document.getElementById('navList');
+    if(navToggle) navToggle.addEventListener('click', ()=> navList.classList.toggle('open'));
+
+    const dict = {
+      en: { "nav.home":"Home","nav.projects":"Projects","nav.about":"About Us" },
+      hi: { "nav.home":"होम","nav.projects":"प्रोजेक्ट्स","nav.about":"हमारे बारे में" }
+    };
+    function applyLang(lang){
+      document.documentElement.setAttribute('data-lang', lang==='hi'?'hi':'en');
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const k=el.getAttribute('data-i18n');
+        if(dict[lang] && dict[lang][k]) el.textContent=dict[lang][k];
+      });
+      const enBtn=document.getElementById('btn-en'), hiBtn=document.getElementById('btn-hi');
+      if(enBtn) enBtn.classList.toggle('active', lang==='en');
+      if(hiBtn) hiBtn.classList.toggle('active', lang==='hi');
+    }
+    const enBtn=document.getElementById('btn-en'), hiBtn=document.getElementById('btn-hi');
+    if(enBtn) enBtn.addEventListener('click', ()=>applyLang('en'));
+    if(hiBtn) hiBtn.addEventListener('click', ()=>applyLang('hi'));
+    applyLang('en');
+  })();
+
+  /* =========================================================
+     MODAL JS (open/close + mailto)
+     ========================================================= */
+  (function(){
+    const modal=document.getElementById('csrModal');
+    window.openModal = function(){ modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); }
+    window.closeModal = function(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); }
+    window.sendEmail = function(e){
+      e.preventDefault(); const f=e.target;
+      const subject=`[CSR Partnership] ${f.company.value.trim()} — ${f.model.value}`;
+      const body=`Company: ${f.company.value.trim()}%0D%0AContact: ${f.person.value.trim()}%0D%0AEmail: ${f.email.value.trim()}%0D%0APhone: ${f.phone.value.trim()}%0D%0AModel: ${f.model.value}%0D%0A%0D%0AMessage:%0D%0A${encodeURIComponent(f.message.value.trim())}`;
+      window.location.href=`mailto:csr@fwf.org?subject=${encodeURIComponent(subject)}&body=${body}`;
+      closeModal();
+    }
+  })();
+
+  /* =========================================================
+     WINS AUTOPLAY (About/WINS)
+     ========================================================= */
+  (function(){
+    const winsArea = document.getElementById('winsArea');
+    const stack    = document.getElementById('winsStack');
+    const tabWrap  = document.getElementById('tabWrap');
+    if(!winsArea || !stack || !tabWrap) return;
+
+    const tabs     = Array.from(stack.querySelectorAll('.winsTab'));
+    const track    = stack.querySelector('.progressTrack');
+    const thumb    = stack.querySelector('.progressThumb');
+
+    const STAGGER = 130, BASE_HOLD = 2600;
+    let stepIndex = 0, playing = false, nextTimer = null, resizeTO = null;
+
+    function setProgress(r){
+      const h = track.clientHeight - (thumb.offsetHeight||30);
+      thumb.style.transform = `translate(-50%, ${Math.max(0, Math.min(r*h, h))}px)`;
+    }
+    function setEqualHeights(){
+      const cards = tabs.map(t => t.querySelector('.winsCard')).filter(Boolean);
+      let maxH = 0; cards.forEach(c => { c.style.minHeight = ''; maxH = Math.max(maxH, c.offsetHeight); });
+      tabWrap.style.setProperty('--cardH', `${maxH}px`);
+    }
+    function setActiveCardState(){
+      tabs.forEach(t => t.querySelector('.winsCard')?.classList.remove('active'));
+      tabs[stepIndex].querySelector('.winsCard')?.classList.add('active');
+    }
+    function setStep(i){
+      stepIndex=(i+tabs.length)%tabs.length;
+      tabs.forEach((t,idx)=> t.classList.toggle('active', idx===stepIndex));
+      setActiveCardState();
+      setProgress(tabs.length===1?1:stepIndex/(tabs.length-1));
+    }
+    function runReveal(tab){
+      const card=tab.querySelector('.winsCard');
+      const title=tab.querySelector('.winsText > b');
+      const sub=tab.querySelector('.winsText > span');
+      const chips=[...tab.querySelectorAll('.chip')];
+      [card,title,sub,...chips].forEach(el=>{ if(!el) return; el.classList.remove('reveal','cardIn'); el.style.removeProperty('--d'); void el.offsetWidth; });
+      if(card) card.classList.add('cardIn');
+      if(title){ title.style.setProperty('--d','40ms'); title.classList.add('reveal'); }
+
+      if(sub){ sub.style.setProperty('--d','140ms'); sub.classList.add('reveal'); }
+      chips.forEach((ch,idx)=>{ ch.style.setProperty('--d', `${220 + idx*STAGGER}ms`); ch.classList.add('reveal'); });
+    }
+    function getHold(tab){
+      const chipsCount = tab.querySelectorAll('.chip').length;
+      const lastDelay =  220 + Math.max(0,(chipsCount-1))*STAGGER;
+      return BASE_HOLD + lastDelay + 500;
+    }
+    function showTab(i){
+      clearTimeout(nextTimer);
+      setStep(i);
+      const tab=tabs[stepIndex];
+      runReveal(tab);
+      const hold=getHold(tab);
+      if(playing){ nextTimer=setTimeout(()=>showTab(stepIndex+1), hold); }
+    }
+    function play(){ if(playing) return; playing=true; showTab(stepIndex); }
+    function pause(){ playing=false; clearTimeout(nextTimer); nextTimer=null; }
+
+   
+
+    const io = new IntersectionObserver((entries)=>{
+      const e=entries[0];
+      if(e.isIntersecting){ play(); } else { pause(); }
+    }, {threshold:0.35});
+
+    io.observe(winsArea);
+    stack.addEventListener('mouseenter', pause);
+    stack.addEventListener('mouseleave', play);
+    window.addEventListener('load', ()=>{ setEqualHeights(); setStep(0); play(); });
+    window.addEventListener('resize', ()=>{ clearTimeout(resizeTO); resizeTO=setTimeout(()=>{ setEqualHeights(); setStep(stepIndex); }, 150); });
+  })();
+
+  /* =========================================================
+     WAYS TABS + CTA Fill (left pane)
+     ========================================================= */
+  (function(){
+    const wayTabs = Array.from(document.querySelectorAll('#ways .tabBtn'));
+    const wayPanes = Array.from(document.querySelectorAll('#ways .pane'));
+    function activateWayTab(id){
+      wayTabs.forEach(b=>{ const on=b.id===id; b.classList.toggle('active', on); b.setAttribute('aria-selected', on?'true':'false'); });
+      wayPanes.forEach(p=>{ const on=p.getAttribute('aria-labelledby')===id; p.classList.toggle('active', on); p.setAttribute('aria-hidden', on?'false':'true'); });
+    }
+    wayTabs.forEach(b=> b.addEventListener('click', ()=> activateWayTab(b.id)));
+
+    document.addEventListener('click', function(e){
+      const t=e.target;
+      if(t.matches('.btn-seeding') || t.matches('.btn-compact.btn-seeding')){
+        const proj=t.closest('.project-card')?.getAttribute('data-project')||'';
+        const modelSelect=document.getElementById('model'); const messageField=document.getElementById('message');
+        if(modelSelect) modelSelect.value='Seed to Sustain';
+        if(messageField) messageField.value=`Hello,\nI am interested in seeding support for the project: "${proj}". Please share budgets and timelines.\n\nThanks.`;
+        openModal(); document.getElementById('company')?.focus(); return;
+      }
+      if(t.matches('.btn-details') || t.matches('.btn-compact.btn-details')){
+        const proj=t.closest('.project-card')?.getAttribute('data-project')||'';
+        const modelSelect=document.getElementById('model'); const messageField=document.getElementById('message');
+        if(modelSelect) modelSelect.value='Product Collaboration';
+        if(messageField) messageField.value=`Hello,\nPlease send more details about the project: "${proj}" (scope, timeline, scale).`;
+        openModal(); document.getElementById('company')?.focus(); return;
+      }
+    });
+  })();
+  </script>
+</body>
+</html>
+
+
