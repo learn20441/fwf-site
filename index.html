@@ -480,10 +480,11 @@
       <div>
         <img class="footer-logo" src="assets/images/logo.png" alt="FWF" />
         <div class="footer-tagline" data-i18n="footer.tagline">Uniting skills, opportunities and livelihoods on one platform.</div>
-        <form class="newsletter" action="#" method="POST" autocomplete="off">
-          <input id="nlph" placeholder="Your email for updates" data-i18n-placeholder="footer.news.placeholder"/>
-          <button type="button" data-i18n="footer.news.btn">Subscribe</button>
+        <form class="newsletter" id="subscribeFormIndex">
+          <input id="nlph" type="email" placeholder="Your email for updates" data-i18n-placeholder="footer.news.placeholder" required/>
+          <button type="submit" data-i18n="footer.news.btn">Subscribe</button>
         </form>
+        <div id="subscribeMessageIndex" style="margin-top: 10px; font-size: 14px; display: none;"></div>
         <div class="social">
           <a href="#"><i class="fa-brands fa-facebook"></i></a>
           <a href="#"><i class="fa-brands fa-instagram"></i></a>
@@ -511,7 +512,7 @@
     </div>
     <div class="footbar">
       <div>© <span id="year"></span> <span data-i18n="footer.rights">FWF – All Rights Reserved</span></div>
-      <div><a href="#" data-i18n="footer.privacy">Privacy</a> • <a href="#" data-i18n="footer.terms">Terms</a></div>
+      <div><a href="Privacy Policy.html" data-i18n="footer.privacy">Privacy</a> • <a href="t&c.html" data-i18n="footer.terms">Terms</a></div>
     </div>
   </footer>
 
@@ -709,6 +710,64 @@
     if(be&&bh){ be.onclick=()=>setI18n('en'); bh.onclick=()=>setI18n('hi'); }
     // initial
     setI18n(document.documentElement.getAttribute('data-lang') || 'en');
+
+    // Subscription functionality for index page
+    document.getElementById('subscribeFormIndex').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const emailInput = document.getElementById('nlph');
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const messageDiv = document.getElementById('subscribeMessageIndex');
+      const email = emailInput.value.trim();
+      
+      if (!email) {
+        showMessageIndex('Please enter a valid email address.', 'error');
+        return;
+      }
+      
+      // Disable button and show loading
+      submitBtn.disabled = true;
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Subscribing...';
+      
+      try {
+        const response = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email: email })
+        });
+        
+        const data = await response.json();
+        
+        if (data.ok) {
+          showMessageIndex(data.message || 'Successfully subscribed to updates!', 'success');
+          emailInput.value = '';
+        } else {
+          showMessageIndex(data.error || 'Failed to subscribe. Please try again.', 'error');
+        }
+      } catch (error) {
+        console.error('Subscription error:', error);
+        showMessageIndex('Failed to subscribe. Please check your connection and try again.', 'error');
+      } finally {
+        // Re-enable button
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }
+    });
+    
+    function showMessageIndex(message, type) {
+      const messageDiv = document.getElementById('subscribeMessageIndex');
+      messageDiv.textContent = message;
+      messageDiv.style.display = 'block';
+      messageDiv.style.color = type === 'success' ? '#22c55e' : '#ef4444';
+      
+      // Hide message after 5 seconds
+      setTimeout(() => {
+        messageDiv.style.display = 'none';
+      }, 5000);
+    }
   </script>
 </body>
 </html>
