@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FWF — Donate, Join & Create Impact</title>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700;800&family=Mukta:wght@400;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+
+  <style>
+    :root{
+      --primary:#6153ff; --accent:#22c55e; --deep:#0f172a; --brd:#e3e8f5;
+      --pink:#ff416c; --pink2:#ff4757;
+      --label:#6153ff; --chip:#f1f5ff; --chip-brd:#dbe3f7;
+      --cta:#16a34a; --orange:#fb923c;
+    }
+
+    html{scroll-behavior:smooth;background:
+      radial-gradient(120vw 85vh at 65% 0,#e0e7ff 0%,#f8fafc 70%),
+      linear-gradient(120deg,#f5f5fb 60%,#ece9fa 100%);}
+    body{margin:0;font-family:'Plus Jakarta Sans',Montserrat,sans-serif;color:var(--deep);min-height:100vh;overflow-x:hidden;letter-spacing:.01em;padding-top:90px}
+    *{box-sizing:border-box}
+    a{color:inherit;text-decoration:none}
+
+    /* HEADER */
+    .header{position:fixed; inset:0 0 auto 0; height:78px; z-index:200; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,.78); backdrop-filter:blur(14px) saturate(140%); border-bottom:1px solid #dbe3f3; transition:height .22s, border-color .2s, box-shadow .2s, background .2s;}
+    .header.scrolled{ height:64px; background:rgba(255,255,255,.88); box-shadow:0 10px 30px rgba(2,6,23,.06); border-bottom-color:#e6eaf4; }
+    .H{max-width:1240px;width:100%;padding:0 18px;display:flex;align-items:center;gap:18px}
+    .brand{display:inline-flex;align-items:center;gap:10px}
+    .brand img{width:52px;height:52px;object-fit:contain;border-radius:14px}
+    nav{margin-left:auto;display:flex;align-items:center;gap:14px}
+    .navList{display:flex;align-items:center;gap:6px;margin:0;padding:0;list-style:none}
+    .navList a{display:inline-flex;align-items:center;padding:10px 14px;border-radius:12px;font-weight:800;color:#0f172a;position:relative}
+    .navList a:hover{background:rgba(15,23,42,.06)}
+    .lang-switch{display:inline-flex;align-items:center;height:42px;border:1px solid #c7d0e4;border-radius:12px;overflow:hidden;background:#fff}
+    .lang-switch button{border:0;background:transparent;padding:0 12px;height:100%;display:inline-flex;align-items:center;font-weight:900;letter-spacing:.08em;cursor:pointer;color:#475569}
+    .lang-switch button.active{background:linear-gradient(90deg,#60a5fa22,#a78bfa22);color:#111827}
+    .lang-sep{width:1px;background:#e2e8f0}
+    .navToggle{display:none;height:42px;width:42px;border-radius:10px;border:1px solid #dbe3f3;background:#fff;cursor:pointer;align-items:center;justify-content:center;font-size:18px}
+    @media (max-width:880px){
+      .navToggle{display:inline-flex}
+      .navList{display:none;position:absolute;left:0;right:0;top:78px;padding:10px 14px;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);
+        border-bottom:1px solid #e8edf7;box-shadow:0 14px 26px rgba(2,6,23,.07);flex-direction:column;gap:6px}
+      .header.scrolled .navList{top:64px}
+      .navList.open{display:flex}
+      .lang-switch{display:none}
+    }
+
+    /* HERO */
+    .mainHero{position:relative; z-index:0; color:#0f172a; min-height:72vh; display:flex; align-items:center; justify-content:center;
+      background:
+        radial-gradient(1200px 70% at 20% 10%, #a5b4fc33 0%, transparent 60%),
+        radial-gradient(1000px 60% at 80% 0%, #22c55e22 0%, transparent 60%),
+        linear-gradient(120deg,#f8fafc 55%, #eef2ff 100%); overflow:hidden; text-align:center;}
+    .heroLayer.pattern{position:absolute; inset:0; z-index:0; background:
+      linear-gradient(90deg,rgba(96,165,250,.08) 1px, transparent 1px) 0 0/28px 28px,
+      linear-gradient(0deg, rgba(167,139,250,.08) 1px, transparent 1px) 0 0/28px 28px;
+      mask:linear-gradient(to bottom, rgba(0,0,0,.75), rgba(0,0,0,.2)); pointer-events:none;}
+    .heroLayer.vignette{position:absolute; inset:0; z-index:0; background:radial-gradient(120% 90% at 50% 0%, transparent 40%, rgba(15,23,42,.14) 100%); pointer-events:none;}
+    .heroWrap{ z-index:1; width:100%; max-width:1240px; padding:40px 24px 34px; display:grid; grid-template-columns:1fr; gap:20px; place-items:center; }
+    .heroLeft{ display:flex; flex-direction:column; gap:16px; max-width:900px; align-items:center; }
+    .heroBadge{display:inline-flex;gap:10px;align-items:center;font-weight:900;letter-spacing:.02em;padding:8px 12px;border-radius:999px;background:linear-gradient(90deg,#e0e7ff,#dcfce7);border:1px solid #dbe3f3;color:#0f172a;box-shadow:0 8px 18px rgba(2,6,23,.06)}
+    .heroBadge i{ color:#22c55e; }
+    .heroTitle .titleText{
+      font-size:clamp(36px,5.6vw,74px);
+      font-family:Montserrat,'Plus Jakarta Sans',sans-serif;
+      font-weight:900; line-height:1.05; letter-spacing:-.03em;
+      background:linear-gradient(135deg,#0f172a 0%, #334155 35%, #22c55e 100%);
+      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+      text-shadow:0 10px 60px #22c55e22;
+    }
+    .heroTitle{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:0}
+    .heroDesc{ font-size:clamp(13px,1.5vw,17px); max-width:720px; margin:6px auto 16px; color:#1f2a44; font-weight:600; font-style:italic; letter-spacing:.01em; text-shadow:0 1px 12px rgba(34,197,94,.12);}
+    /* down arrow with color */
+    .downArrow{
+      width:58px;height:58px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
+      background:linear-gradient(#fff,#fff) padding-box, conic-gradient(#22c55e, #60a5fa, #22c55e) border-box;
+      border:2px solid transparent; color:#0f172a; position:relative; margin:10px auto 0;
+      box-shadow:0 10px 28px rgba(2,6,23,.10);
+      animation:floaty 2.2s ease-in-out infinite;
+    }
+    .downArrow:after{ content:""; position:absolute; inset:-6px; border-radius:50%; box-shadow:0 0 0 0 rgba(34,197,94,.28); animation:pulse 2.2s ease-out infinite; }
+    .downArrow i{ font-size:20px; }
+    @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+    @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.28)}70%{box-shadow:0 0 0 14px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+
+    /* rest of layout */
+    .footer{margin:50px 0 38px;text-align:center;color:#6153ffd6;font-weight:900;font-size:1.1em}
+    html[data-lang="hi"] body{font-family:'Noto Sans Devanagari','Mukta','Plus Jakarta Sans',system-ui,sans-serif}
+
+    .tabsWrap{ position:sticky; top:74px; z-index:150; margin:-12px auto 18px; padding:4px 8px; backdrop-filter: blur(8px) saturate(140%); background:rgba(255,255,255,0.92); border:none; border-radius:16px; box-shadow:0 4px 18px rgba(59,130,246,0.08); max-width:700px; display:flex; justify-content:center;}
+    .tabs{display:flex; gap:8px; flex-wrap:wrap; justify-content:center; width:100%}
+    .tabBtn{appearance:none; border:none; background:#f3f6ff; color:#0f172a; font-weight:900; padding:10px 22px; border-radius:999px; cursor:pointer; letter-spacing:.02em; font-size:1.08rem; box-shadow:0 2px 8px rgba(59,130,246,0.07); transition:background .18s, color .18s, box-shadow .18s; outline:none}
+    .tabBtn.active, .tabBtn:hover{ background:linear-gradient(90deg,#6366f1 60%,#22c55e 100%); color:#fff; box-shadow:0 6px 18px rgba(34,197,94,0.10) }
+
+    .main-container{ max-width:1200px; margin:0 auto; padding: 0 18px }
+    .section-header{ text-align:center; margin: 40px 0 36px }
+    .main-title{ font-size:clamp(32px,6vw,60px); font-weight:900; background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4); background-size:300% 300%; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; animation: gradientShift 8s ease infinite; margin-bottom:8px }
+    .main-subtitle{ font-size:1.05rem; color:#475569; font-weight:700 }
+    @keyframes gradientShift{ 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+
+    .featureSection{ position:relative; overflow:hidden; border-radius:32px; margin: 26px 0; padding: clamp(48px,6vw,84px) clamp(22px,3vw,44px); color:#fff }
+    .featureSection .section-content{ display:grid; grid-template-columns: 1fr 1fr; gap: clamp(24px,4vw,64px); align-items:center }
+    .featureSection .content-right{ display:flex; justify-content:center; align-items:center }
+    .illustration{ width:min(400px,42vw); height:min(300px,32vw); background: rgba(255,255,255,0.12); border-radius:20px; display:flex; align-items:center; justify-content:center; backdrop-filter: blur(10px); border:1px solid rgba(255,255,255,0.22); position:relative; overflow:hidden }
+    .illustration i{ font-size: clamp(72px,10vw,140px); color: rgba(255,255,255,0.9) }
+    .section-title{ font-size: clamp(28px,4vw,44px); font-weight:900; margin:0 0 10px; line-height:1.15 }
+    .section-description{ font-size: clamp(15px,1.4vw,18px); margin: 0 0 22px; line-height:1.65; font-weight:700 }
+    .features-list{ list-style:none; margin:0 0 26px; padding:0 }
+    .features-list li{ display:flex; align-items:center; gap:10px; margin:10px 0; font-weight:800 }
+    .features-list i{ color:#86efac }
+    .cta-button{ padding: 14px 22px; background: rgba(255,255,255,0.18); border: 2px solid rgba(255,255,255,0.35); border-radius: 999px; color: #fff; font-size: 1rem; font-weight: 900; cursor:pointer; transition:.2s; backdrop-filter: blur(10px); display:inline-flex; align-items:center; gap:10px }
+    .cta-button:hover{ transform: translateY(-2px) scale(1.03); background: rgba(255,255,255,0.26) }
+    .donate{ background:linear-gradient(135deg, var(--pink), var(--pink2)) }
+    .rojgar{ background:linear-gradient(135deg, #667eea, #764ba2) }
+    .volunteer{ background:linear-gradient(135deg, #56ab2f, #a8e6cf) }
+    .csr{ background:linear-gradient(135deg, #8360c3, #2ebf91) }
+    @media (max-width:980px){ .featureSection .section-content{ grid-template-columns:1fr } .content-right{ order:-1 } .tabsWrap{ top:66px } }
+
+    /* MODALS base */
+    .modal{ display:none; position:fixed; z-index:9999; inset:0; align-items:center; justify-content:center; background:rgba(15,23,42,.18); backdrop-filter:blur(4px); }
+    .modalCard{ background:#fff; border-radius:18px; max-width:520px; width:96vw; padding:26px 22px; box-shadow:0 8px 40px #0f172a22; position:relative; }
+    .modalClose{ position:absolute; top:14px; right:14px; background:none; border:none; font-size:1.5em; cursor:pointer; color:#475569; }
+
+    /* Floating labels */
+    .fl-group{ position:relative; margin-bottom:16px; }
+    .fl-input{
+      width:100%; border-radius:14px; border:2px solid #e7e9f6; background:#fff;
+      font-size:1.05rem; padding:22px 16px 10px 48px; color:#0f172a; font-weight:700;
+      transition:border-color .18s, box-shadow .18s, background .18s; outline:0;
+    }
+    .fl-input::placeholder{ color:transparent; }
+    .fl-input:focus{ border-color:var(--label); box-shadow:0 0 0 3px color-mix(in oklab, var(--label) 30%, transparent); }
+    .fl-label{ position:absolute; left:44px; top:14px; font-weight:800; font-size:1rem; color:var(--label); padding:0 6px; background:transparent; pointer-events:none; transition:.18s; border-radius:6px; }
+    .fl-input:focus + .fl-label, .fl-input:not(:placeholder-shown) + .fl-label{ top:-8px; left:38px; font-size:.86rem; background:#fff; box-shadow:0 0 0 6px #fff inset; }
+    .fl-icon{ position:absolute; left:14px; top:50%; transform:translateY(-50%); color:#94a3b8; font-size:1.05rem; }
+    .rupee-chip{ position:absolute; left:58px; top:50%; transform:translateY(-50%); font-weight:900; color:#64748b; }
+    .fl-input.amount{ padding-left:106px; }
+    .fl-input.amount + .fl-label{ left:88px; }
+
+    .btn-primary{ width:100%; padding:12px 0; background:var(--primary); color:#fff; font-weight:900; border:none; border-radius:12px; font-size:1.08em; cursor:pointer; transition:.18s;}
+    .btn-primary:hover{ filter:brightness(1.05); transform:translateY(-1px) }
+    .subtle{ font-size:.88rem; color:#64748b; margin:6px 2px 12px }
+    .amount-chips{ display:flex; gap:8px; flex-wrap:wrap; margin:-2px 0 12px; }
+    .amount-chip{ padding:8px 12px; border-radius:999px; background:#f1f5ff; border:1px solid #dbe3f7; cursor:pointer; font-weight:900; font-size:.95rem; }
+    .amount-chip:hover{ filter:brightness(0.98) }
+
+    /* Donation step-2 */
+    .payTitle{ color:var(--orange); font-weight:900; margin:0 0 10px; font-size:1.6rem; }
+    .qrBox{ display:flex; justify-content:center; }
+    .qrBox img{ width:220px; height:220px; border-radius:14px; background:#fff; box-shadow:0 6px 22px rgba(2,6,23,.10); cursor:pointer; transition:transform .18s, width .18s, height .18s, box-shadow .18s; }
+    .qrBox img.zoomed{ width:320px; height:320px; box-shadow:0 10px 34px rgba(2,6,23,.20); }
+    .bankList{ font-weight:800; color:#0f172a; margin:12px 0 8px; line-height:1.6; }
+    .note{ color:#64748b; font-weight:700; margin:8px 0 14px; }
+    .btn-solid{ display:inline-flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:12px 14px; border:none; border-radius:12px; cursor:pointer; font-weight:900; color:#fff; background:#16a34a; box-shadow:0 6px 18px rgba(22,163,74,.25); transition:.18s; }
+    .btn-solid:hover{ filter:brightness(1.05); transform:translateY(-1px); }
+    .done-wrap{ margin-top:14px; padding:12px; border:1px dashed #dbe3f3; border-radius:12px; display:none; }
+    .done-grid{ display:grid; gap:10px; }
+    .done-grid input[type="text"]{ width:100%; border:2px solid #e7e9f6; border-radius:10px; padding:10px 12px; font-weight:700; }
+    .done-grid input[type="file"]{ border:1px solid #e7e9f6; border-radius:10px; padding:10px; background:#fafbff; }
+    .btn-done{ margin-top:10px; width:100%; padding:10px 0; border:none; border-radius:10px; background:var(--primary); color:#fff; font-weight:900; cursor:pointer; }
+  </style>
+</head>
+<body>
+
+<header class="header" id="siteHeader">
+  <div class="H">
+    <a class="brand" href="new-index.html" aria-label="FWF Home">
+      <img src="D:/fwf-site/assets/images/logo.png" alt="FWF">
+    </a>
+
+    <nav style="flex:1;display:flex;justify-content:center;">
+      <ul class="navList" id="navList" style="margin:0 auto;">
+        <li><a href="new-index.html" data-i18n="nav.home">Home</a></li>
+        <li><a href="csr.html">CSR</a></li>
+        <li><a href="projects.html" data-i18n="nav.projects">Projects</a></li>
+        <!-- About Us -> link updated -->
+        <li><a href="D:/fwf-site/about.html" data-i18n="nav.about">About Us</a></li>
+      </ul>
+    </nav>
+
+    <div class="langDesktop" style="margin-left:auto;">
+      <div class="lang-switch" role="group" aria-label="Language switch">
+        <button id="btn-hi" type="button">HI</button><div class="lang-sep"></div>
+        <button id="btn-en" type="button" class="active">EN</button>
+      </div>
+    </div>
+
+    <button class="navToggle" id="navToggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+  </div>
+</header>
+
+<section class="mainHero" id="home">
+  <div class="heroLayer pattern"></div>
+  <div class="heroLayer vignette"></div>
+
+  <div class="heroWrap">
+    <div class="heroLeft">
+      <div class="heroBadge"><i class="fa-solid fa-hand-holding-heart"></i><span data-i18n="hero.badge">Small gift. Big livelihood.</span></div>
+      <h1 class="heroTitle"><span class="titleText" data-i18n="hero.title">You can be the reason a family smiles</span><span class="emoji" aria-hidden="true">😊</span></h1>
+      <p class="heroDesc" data-i18n="hero.desc">Your small contribution is a new ray of hope for the unemployed.</p>
+      <a href="#involved" class="downArrow" aria-label="Scroll to involvement">
+        <i class="fa-solid fa-chevron-down"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<main id="involved" class="main-container">
+  <div class="section-header">
+    <h1 class="main-title">Get Involved</h1>
+    <p class="main-subtitle">Choose your path to make a meaningful impact</p>
+  </div>
+
+  <div class="tabsWrap" aria-label="Involved navigation">
+    <div class="tabs">
+      <button class="tabBtn active" data-target="#donate">Donate</button>
+      <button class="tabBtn" data-target="#rojgar">Rojgar (Membership)</button>
+      <button class="tabBtn" data-target="#volunteer">Volunteer</button>
+      <button class="tabBtn" data-target="#csr">CSR Tie-up</button>
+    </div>
+  </div>
+
+  <!-- Donate section (unchanged content) -->
+  <section class="featureSection donate" id="donate">
+    <div class="section-content">
+      <div class="content-left">
+        <h2 class="section-title">Make a Donation</h2>
+        <p class="section-description">Every ₹ you give helps train skills, fund real projects & open a livelihood door.</p>
+        <ul class="features-list">
+          <li><i class="fa-solid fa-check"></i> 80G receipt support</li>
+          <li><i class="fa-solid fa-check"></i> Direct impact tracking</li>
+          <li><i class="fa-solid fa-check"></i> UPI / Bank transfer</li>
+        </ul>
+        <a class="cta-button" href="#donateModal" id="openDonate2"><i class="fa-solid fa-heart"></i> Donate Now</a>
+      </div>
+      <div class="content-right"><div class="illustration"><i class="fa-solid fa-hand-holding-heart"></i></div></div>
+    </div>
+  </section>
+
+  <!-- Membership -->
+  <section class="featureSection rojgar" id="rojgar">
+    <div class="section-content">
+      <div class="content-left">
+        <h2 class="section-title">Membership Program</h2>
+        <p class="section-description">₹200/month: training, projects, mentoring, job-connect.</p>
+        <ul class="features-list">
+          <li><i class="fa-solid fa-check"></i> Project labs & gigs</li>
+          <li><i class="fa-solid fa-check"></i> Resume & interview help</li>
+          <li><i class="fa-solid fa-check"></i> Community support</li>
+        </ul>
+        <button class="cta-button" id="openMember2"><i class="fa-solid fa-user-plus"></i> Join Now</button>
+      </div>
+      <div class="content-right"><div class="illustration"><i class="fa-solid fa-user-graduate"></i></div></div>
+    </div>
+  </section>
+
+  <!-- Volunteer -->
+  <section class="featureSection volunteer" id="volunteer">
+    <div class="section-content">
+      <div class="content-left">
+        <h2 class="section-title">Volunteer Program</h2>
+        <p class="section-description">Teach, mentor & help set up micro-business.</p>
+        <ul class="features-list">
+          <li><i class="fa-solid fa-check"></i> Flexible time</li>
+          <li><i class="fa-solid fa-check"></i> Teach real skills</li>
+          <li><i class="fa-solid fa-check"></i> Community reach</li>
+        </ul>
+        <button class="cta-button" id="openVolunteer2"><i class="fa-solid fa-hands-helping"></i> Sign Up</button>
+      </div>
+      <div class="content-right"><div class="illustration"><i class="fa-solid fa-people-group"></i></div></div>
+    </div>
+  </section>
+
+  <!-- CSR -->
+  <section class="featureSection csr" id="csr">
+    <div class="section-content">
+      <div class="content-left">
+        <h2 class="section-title">CSR Tie-up / Corporate Partnership</h2>
+        <p class="section-description">Projects, internships, hiring या CSR से sustainable impact.</p>
+        <ul class="features-list">
+          <li><i class="fa-solid fa-check"></i> CSR alignment</li>
+          <li><i class="fa-solid fa-check"></i> Project outsourcing</li>
+          <li><i class="fa-solid fa-check"></i> Direct placements</li>
+        </ul>
+        <button class="cta-button" id="openPartner2"><i class="fa-solid fa-building-user"></i> Partner</button>
+      </div>
+      <div class="content-right"><div class="illustration"><i class="fa-solid fa-city"></i></div></div>
+    </div>
+  </section>
+</main>
+
+<section class="footer">
+  &copy; <span id="year"></span> FWF • Built for creators, collaborators, and changemakers
+</section>
+
+<!-- Donation modal -->
+<div id="donateModal" class="modal">
+  <div class="modalCard">
+    <button id="closeDonateModal" class="modalClose"><i class="fa fa-times"></i></button>
+    <div id="donateStep1">
+      <h2 style="margin:0 0 6px">Donation Details</h2>
+      <p class="subtle">Fill details below to receive 80G receipt</p>
+      <form id="donateForm" autocomplete="off" novalidate>
+        <div class="fl-group"><span class="rupee-chip">₹</span><input class="fl-input amount" type="number" min="1" step="1" name="amount" placeholder=" " required /><label class="fl-label">Amount</label></div>
+        <div class="amount-chips" id="amountChips">
+          <button type="button" class="amount-chip" data-amount="200">₹200</button>
+          <button type="button" class="amount-chip" data-amount="500">₹500</button>
+          <button type="button" class="amount-chip" data-amount="1000">₹1,000</button>
+          <button type="button" class="amount-chip" data-amount="2500">₹2,500</button>
+          <button type="button" class="amount-chip" data-amount="5000">₹5,000</button>
+        </div>
+        <div class="fl-group"><i class="fl-icon fa-regular fa-user"></i><input class="fl-input" name="name" placeholder=" " required /><label class="fl-label">Full Name</label></div>
+        <div class="fl-group"><i class="fl-icon fa-solid fa-mobile-screen-button"></i><input class="fl-input" name="mobile" placeholder=" " pattern="[0-9]{10}" maxlength="10" required /><label class="fl-label">Phone (10-digit)</label></div>
+        <div class="fl-group"><i class="fl-icon fa-regular fa-envelope"></i><input class="fl-input" type="email" name="email" placeholder=" " required /><label class="fl-label">Email</label></div>
+        <div class="fl-group"><i class="fl-icon fa-regular fa-id-card"></i><input class="fl-input" name="pan" placeholder=" " maxlength="10" /><label class="fl-label">PAN (for 80G receipt)</label></div>
+        <div class="fl-group"><i class="fl-icon fa-solid fa-user-tag"></i><input class="fl-input" name="memberid" placeholder=" " /><label class="fl-label">Member ID (optional)</label></div>
+        <button type="submit" class="btn-primary">Next: Payment</button>
+      </form>
+    </div>
+    <div id="donateStep2" style="display:none;">
+      <h2 class="payTitle">Complete Payment</h2>
+      <div class="qrBox"><img id="qrToggle" src="D:/fwf-site/assets/images/QRimg.jpg" alt="FWF UPI QR"></div>
+      <div class="bankList">
+        <div><b>Account number:</b> 9580118412</div><div><b>Account type:</b> Current</div>
+        <div><b>Account holder:</b> FOUNDRIS WELFARE FOUNDATION</div><div><b>UPI ID:</b> fwf10@kotak</div>
+        <div><b>Branch IFSC:</b> KKBK0005355</div>
+      </div>
+      <p class="note">Please make payment and click below.</p>
+      <button id="toggleDone" class="btn-solid"><i class="fa-solid fa-check"></i> I have paid</button>
+      <div class="done-wrap" id="doneWrap">
+        <div class="done-grid"><input type="text" id="txnId" placeholder="Transaction / UTR Number" /><input type="file" id="txnShot" accept="image/*" /></div>
+        <button id="submitDone" class="btn-done">Submit & Finish</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Membership modal (Project dropdown updated) -->
+<div id="memberModal" class="modal">
+  <div class="modalCard">
+    <button class="modalClose" id="closeMember"><i class="fa fa-times"></i></button>
+    <div id="memberStep1">
+      <h2 style="margin:0 0 8px">Join Membership</h2>
+      <p class="subtle">₹200/month – training, projects, mentoring & job-connect</p>
+      <form id="memberForm" autocomplete="off" novalidate>
+        <div class="fl-group"><i class="fl-icon fa-regular fa-user"></i><input class="fl-input" name="name" placeholder=" " required><label class="fl-label">Full Name</label></div>
+        <div class="fl-group"><i class="fl-icon fa-solid fa-mobile-screen-button"></i><input class="fl-input" name="mobile" placeholder=" " pattern="[0-9]{10}" maxlength="10" required><label class="fl-label">Phone</label></div>
+        <div class="fl-group"><i class="fl-icon fa-regular fa-envelope"></i><input class="fl-input" type="email" name="email" placeholder=" " required><label class="fl-label">Email</label></div>
+        <!-- Project dropdown -> as per screenshot -->
+        <div class="fl-group">
+          <i class="fl-icon fa-solid fa-diagram-project"></i>
+          <select class="fl-input" name="project" required style="padding-left:48px;">
+            <option value="" hidden selected></option>
+            <option>Suraksha</option>
+            <option>Swachh Bharat</option>
+            <option>Happy Meal</option>
+            <option>Green Energy</option>
+            <option>DIY Crafts</option>
+            <option>Swachh Jal</option>
+            <option>Samman</option>
+            <option>Sweet Home</option>
+            <option>Hariyali</option>
+            <option>Worship</option>
+            <option>Shiksha</option>
+          </select>
+          <label class="fl-label">Select Project</label>
+        </div>
+        <button class="btn-primary" type="submit">Proceed to Payment</button>
+      </form>
+    </div>
+    <div id="memberStep2" style="display:none;">
+      <h2 class="payTitle">Complete Payment</h2>
+      <div class="qrBox"><img id="memberQR" src="D:/fwf-site/assets/images/QRimg.jpg" alt="FWF UPI QR"></div>
+      <div class="bankList"><div><b>UPI ID:</b> fwf10@kotak</div><div><b>Account number:</b> 9580118412</div><div><b>IFSC:</b> KKBK0005355</div></div>
+      <p class="note">Pay ₹200 and click below.</p>
+      <button id="memberPaid" class="btn-solid"><i class="fa-solid fa-check"></i> I have paid</button>
+      <div class="done-wrap" id="memberDone" style="display:none;">
+        <div class="done-grid"><input type="text" id="memberTxn" placeholder="Transaction / UTR Number" /><input type="file" id="memberShot" accept="image/*" /></div>
+        <button id="memberFinish" class="btn-done">Submit & Get Member ID</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Volunteer -->
+<div id="volModal" class="modal">
+  <div class="modalCard">
+    <button class="modalClose" id="closeVol"><i class="fa fa-times"></i></button>
+    <h2 style="margin:0 0 8px">Volunteer Sign Up</h2>
+    <p class="subtle">Tell us how you’d like to help</p>
+    <form id="volForm" autocomplete="off" novalidate>
+      <div class="fl-group"><i class="fl-icon fa-regular fa-user"></i><input class="fl-input" name="name" placeholder=" " required><label class="fl-label">Full Name</label></div>
+      <div class="fl-group"><i class="fl-icon fa-solid fa-mobile-screen-button"></i><input class="fl-input" name="mobile" placeholder=" " pattern="[0-9]{10}" maxlength="10" required><label class="fl-label">Phone</label></div>
+      <div class="fl-group"><i class="fl-icon fa-regular fa-envelope"></i><input class="fl-input" type="email" name="email" placeholder=" " required><label class="fl-label">Email</label></div>
+      <div class="fl-group"><i class="fl-icon fa-solid fa-diagram-project"></i>
+        <select class="fl-input" name="project" required style="padding-left:48px;">
+          <option value="" hidden selected></option>
+          <option>Teaching</option><option>Mentoring</option><option>Admin/Operations</option>
+          <option>Social Media</option><option>Fundraising</option><option>Other</option>
+        </select>
+        <label class="fl-label">Choose Project</label>
+      </div>
+      <div class="fl-group"><i class="fl-icon fa-regular fa-message"></i><textarea class="fl-input" name="message" placeholder=" " rows="4" style="height:120px; padding-top:18px;"></textarea><label class="fl-label">How would you like to help?</label></div>
+      <button class="btn-primary" type="submit">Submit</button>
+    </form>
+  </div>
+</div>
+
+<!-- CSR -->
+<div id="partnerModal" class="modal">
+  <div class="modalCard">
+    <button class="modalClose" id="closePartner"><i class="fa fa-times"></i></button>
+    <h2 style="margin:0 0 8px">CSR Partnership</h2>
+    <p class="subtle">Projects, internships, hiring or CSR programs</p>
+    <form id="partnerForm" autocomplete="off" novalidate>
+      <div class="fl-group"><i class="fl-icon fa-solid fa-building"></i><input class="fl-input" name="company" placeholder=" " required><label class="fl-label">Company / Org</label></div>
+      <div class="fl-group"><i class="fl-icon fa-regular fa-user"></i><input class="fl-input" name="contact" placeholder=" " required><label class="fl-label">Contact Person</label></div>
+      <div class="fl-group"><i class="fl-icon fa-solid fa-mobile-screen-button"></i><input class="fl-input" name="mobile" placeholder=" " pattern="[0-9]{10}" maxlength="10" required><label class="fl-label">Phone</label></div>
+      <div class="fl-group"><i class="fl-icon fa-regular fa-envelope"></i><input class="fl-input" type="email" name="email" placeholder=" " required><label class="fl-label">Email</label></div>
+      <div class="fl-group"><i class="fl-icon fa-solid fa-message"></i><input class="fl-input" name="message" placeholder=" "><label class="fl-label">Message / Need</label></div>
+      <button class="btn-primary" type="submit">Send Request</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  const header = document.getElementById('siteHeader');
+  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 6);
+  window.addEventListener('scroll', onScroll); onScroll();
+
+  const navToggle = document.getElementById('navToggle'), navList = document.getElementById('navList');
+  if(navToggle) navToggle.addEventListener('click', () => navList.classList.toggle('open'));
+
+  const dict={en:{"nav.home":"Home","nav.projects":"Projects","nav.about":"About Us","hero.badge":"Small gift. Big livelihood.","hero.title":"You can be the reason a family smiles","hero.desc":"Your small contribution is a new ray of hope for the unemployed."},hi:{"nav.home":"होम","nav.projects":"प्रोजेक्ट्स","nav.about":"हमारे बारे में","hero.badge":"छोटा योगदान, बड़ा रोज़गार","hero.title":"आप किसी परिवार की मुस्कान की वजह बन सकते हैं","hero.desc":"आपका छोटा सा सहयोग बेरोज़गारों के लिए नई उम्मीद है।"}};
+  function applyLang(lang){document.documentElement.setAttribute('data-lang',lang==='hi'?'hi':'en');document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(dict[lang]&&dict[lang][k]) el.textContent=dict[lang][k];});const enBtn=document.getElementById('btn-en'),hiBtn=document.getElementById('btn-hi');if(enBtn) enBtn.classList.toggle('active',lang==='en');if(hiBtn) hiBtn.classList.toggle('active',lang==='hi');}
+  const enBtn=document.getElementById('btn-en'), hiBtn=document.getElementById('btn-hi');
+  if(enBtn) enBtn.addEventListener('click', ()=>applyLang('en'));
+  if(hiBtn) hiBtn.addEventListener('click', ()=>applyLang('hi'));
+  applyLang('en');
+
+  const tabBtns = document.querySelectorAll('.tabBtn');
+  function setActive(btn){ tabBtns.forEach(b=>b.classList.toggle('active', b===btn)); }
+  tabBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const target = document.querySelector(btn.dataset.target);
+      if(target){ setActive(btn); const y = target.getBoundingClientRect().top + window.pageYOffset - 90; window.scrollTo({ top: y, behavior:'smooth' }); }
+    });
+  });
+
+  const sections = ['#donate','#rojgar','#volunteer','#csr'].map(s=>document.querySelector(s));
+  const spy = new IntersectionObserver((entries)=>{ entries.forEach(entry=>{ if(entry.isIntersecting){ const id = '#'+entry.target.id; tabBtns.forEach(b=> b.classList.toggle('active', b.dataset.target===id)); } }); }, { rootMargin:'-55% 0px -40% 0px', threshold:0 });
+  sections.forEach(s=>s && spy.observe(s));
+
+  function openModal(el){ el.style.display='flex'; }
+  function closeModal(el){ el.style.display='none'; }
+  function resetForm(form){ if(form) form.reset(); }
+
+  /* DONATION */
+  const donateModal=document.getElementById('donateModal');
+  document.getElementById('openDonate2').addEventListener('click', ()=>{ resetDonate(); openModal(donateModal); });
+  document.getElementById('closeDonateModal').addEventListener('click', ()=>{ closeModal(donateModal); resetDonate(); });
+  donateModal.addEventListener('click', (e)=>{ if(e.target===donateModal){ closeModal(donateModal); resetDonate(); }});
+
+  const donateForm=document.getElementById('donateForm');
+  const donateStep1=document.getElementById('donateStep1');
+  const donateStep2=document.getElementById('donateStep2');
+
+  function resetDonate(){ donateForm.reset(); donateStep2.style.display='none'; document.getElementById('doneWrap').style.display='none'; donateStep1.style.display='block'; document.getElementById('qrToggle').classList.remove('zoomed'); }
+
+  document.getElementById('amountChips').addEventListener('click', (e)=>{ const btn=e.target.closest('[data-amount]'); if(!btn) return; const amt=document.querySelector('input[name="amount"]'); amt.value=btn.dataset.amount; amt.dispatchEvent(new Event('input',{bubbles:true})); amt.focus(); });
+  donateForm.addEventListener('submit', (e)=>{ e.preventDefault(); if(!donateForm.checkValidity()){ donateForm.reportValidity(); return; } donateStep1.style.display='none'; donateStep2.style.display='block'; });
+  document.getElementById('qrToggle').addEventListener('click', e=> e.target.classList.toggle('zoomed'));
+  document.getElementById('toggleDone').addEventListener('click', ()=>{ const dw=document.getElementById('doneWrap'); dw.style.display = (dw.style.display==='block') ? 'none':'block'; });
+  document.getElementById('submitDone').addEventListener('click', ()=>{ const txn=document.getElementById('txnId').value.trim(); if(!txn){ alert('Please enter the Transaction / UTR Number.'); return; } alert('Thanks! Your payment details were submitted. We will verify and email the 80G receipt.'); closeModal(donateModal); resetDonate(); });
+
+  /* MEMBERSHIP (2-step) */
+  const memberModal=document.getElementById('memberModal');
+  const memberForm=document.getElementById('memberForm');
+  const memberStep1=document.getElementById('memberStep1');
+  const memberStep2=document.getElementById('memberStep2');
+
+  document.getElementById('openMember2').addEventListener('click', ()=>{ resetForm(memberForm); memberStep2.style.display='none'; memberStep1.style.display='block'; openModal(memberModal); });
+  document.getElementById('closeMember').addEventListener('click', ()=> closeModal(memberModal));
+  memberModal.addEventListener('click', (e)=>{ if(e.target===memberModal) closeModal(memberModal); });
+
+  memberForm.addEventListener('submit', (e)=>{ e.preventDefault(); if(!memberForm.checkValidity()){ memberForm.reportValidity(); return; } memberStep1.style.display='none'; memberStep2.style.display='block'; });
+  document.getElementById('memberQR').addEventListener('click', e=> e.target.classList.toggle('zoomed'));
+  document.getElementById('memberPaid').addEventListener('click', ()=>{ const box=document.getElementById('memberDone'); box.style.display = (box.style.display==='block') ? 'none':'block'; });
+  document.getElementById('memberFinish').addEventListener('click', ()=>{ const txn=document.getElementById('memberTxn').value.trim(); if(!txn){ alert('Please enter the Transaction / UTR Number.'); return; } const mid='FWF'+Math.floor(100000+Math.random()*900000); const pwd=Math.random().toString(36).slice(-8); alert(`Payment received!\nMember ID: ${mid}\nTemp Password: ${pwd}\n\n(Email with credentials has been sent.)`); closeModal(memberModal); });
+
+  /* VOLUNTEER */
+  const volModal=document.getElementById('volModal');
+  document.getElementById('openVolunteer2').addEventListener('click', ()=>{ resetForm(document.getElementById('volForm')); openModal(volModal); });
+  document.getElementById('closeVol').addEventListener('click', ()=> closeModal(volModal));
+  volModal.addEventListener('click', (e)=>{ if(e.target===volModal) closeModal(volModal); });
+  document.getElementById('volForm').addEventListener('submit', (e)=>{ e.preventDefault(); const f=e.target; if(!f.checkValidity()){ f.reportValidity(); return; } alert('Thanks! Your volunteer request has been sent to our support team and a thank-you email is on its way to you.'); closeModal(volModal); });
+
+  /* PARTNER */
+  const partnerModal=document.getElementById('partnerModal');
+  document.getElementById('openPartner2').addEventListener('click', ()=>{ resetForm(document.getElementById('partnerForm')); openModal(partnerModal); });
+  document.getElementById('closePartner').addEventListener('click', ()=> closeModal(partnerModal));
+  partnerModal.addEventListener('click', (e)=>{ if(e.target===partnerModal) closeModal(partnerModal); });
+  document.getElementById('partnerForm').addEventListener('submit', (e)=>{ e.preventDefault(); if(!e.target.checkValidity()){ e.target.reportValidity(); return;} alert('Thanks! CSR partnership request received. Our team will contact you.'); closeModal(partnerModal); });
+</script>
+</body>
+</html>

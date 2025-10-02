@@ -1,0 +1,433 @@
+<!DOCTYPE html>    
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FWF — Skills to Livelihood</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    :root{
+      --ink:#1e293b; --muted:#64748b; --soft:#f1f5f9;
+      --gA:#60a5fa; --gB:#a78bfa; --gC:#22c55e; --gD:#22d3ee; --gE:#f59e0b; --gF:#ef4444;
+      --card:#ffffff; --brd:#e2e8f0; --shadow:0 11px 32px rgba(50,86,144,.10);
+      --radius:20px; --success:#16a34a;
+    }
+    body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#f8fafc;color:var(--ink);font-size:16px;letter-spacing:.02em}
+    *{box-sizing:border-box}
+
+    /* HEADER */
+    .header{position:fixed;width:100%;height:74px;top:0;left:0;z-index:60;display:flex;align-items:center;justify-content:center;background:linear-gradient(90deg,rgba(96,165,250,.18),rgba(167,139,250,.14));transition:all .25s ease;border-bottom:1px solid transparent;box-shadow:0 2px 24px rgba(60,90,210,.09);backdrop-filter:blur(0)}
+    .header.scrolled{backdrop-filter:blur(14px) saturate(140%);background:rgba(255,255,255,.85);border-color:#c7d0e4}
+    .H{width:100%;max-width:1240px;padding:0 20px;display:flex;align-items:center;gap:15px}
+    .brand img{width:60px;height:60px;border-radius:16px;box-shadow:0 2px 8px #60a5fa4f}
+    nav{flex:1;display:flex;justify-content:flex-end;align-items:center;gap:10px}
+    nav ul{display:flex;align-items:center;gap:14px;list-style:none;margin:0;padding:0}
+    nav a{padding:10px 16px;border-radius:14px;font-weight:700;text-decoration:none;color:var(--ink)}
+    nav a:hover{background:rgba(240,240,255,.75);color:#374151}
+    .btn-join,.btn-donate{color:#fff;font-weight:700;border-radius:14px;padding:10px 20px;text-decoration:none}
+    .btn-join{background:linear-gradient(90deg,var(--gC),var(--gD))}
+    .btn-donate{background:linear-gradient(90deg,var(--gE),var(--gF))}
+
+    /* LANG */
+    .lang-switch{display:inline-flex;border:1px solid #c7d0e4;border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 4px 10px rgba(0,0,0,.06);margin-left:6px}
+    .lang-switch button{border:0;background:transparent;padding:8px 12px;font-weight:800;letter-spacing:.08em;cursor:pointer;color:#475569}
+    .lang-switch button.active{background:linear-gradient(90deg,#60a5fa22,#a78bfa22);color:#111827}
+    .lang-sep{width:1px;background:#e5e7eb}
+
+    /* HERO */
+    .hero{padding:160px 0 120px;position:relative;overflow:hidden;background:
+      radial-gradient(1000px 600px at 20% -20%, rgba(96,165,250,.25) 0%, rgba(96,165,250,0) 60%),
+      radial-gradient(900px 500px at 70% 0%, rgba(167,139,250,.25) 0%, rgba(167,139,250,0) 70%),
+      linear-gradient(135deg, rgba(224,242,254,.75) 0%, rgba(237,233,254,.55) 45%, rgba(248,250,252,.35) 100%),
+      url("D:/fwf-site/assets/images/elephants.png");
+      background-size:1000px 600px,900px 500px,cover,cover;background-position:20% -20%,70% 0%,center,center;background-repeat:no-repeat;display:flex;align-items:center;min-height:600px;z-index:2}
+    .heroInner{max-width:850px;margin:0 auto;text-align:center}
+    .tag{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(90deg,var(--gA),var(--gB));color:#fff;font-weight:700;border-radius:100px;padding:8px 22px;font-size:13px;box-shadow:0 4px 20px #60a5fa50;margin-bottom:25px;letter-spacing:.13em}
+    .h1{font-size:54px;line-height:1.07;margin:0 0 12px;font-weight:800;letter-spacing:-.8px;background:linear-gradient(90deg,#5b21b6,#0ea5e9 47%,#22c55e 73%,#f59e0b 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .lead{font-size:22px;color:var(--muted);max-width:760px;margin:0 auto 34px;font-weight:500}
+    .cta-row{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-top:28px}
+
+    /* Buttons */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:15px 28px;border-radius:999px;font-size:16px;font-weight:800;letter-spacing:.09em;border:0;text-decoration:none;transition:background .15s,box-shadow .15s,transform .1s,color .15s}
+    .btn.journey{background:linear-gradient(180deg,#fff 0%,#e9fbf7 100%);color:#0f8f56;border:2px solid #22c55e;box-shadow:0 8px 18px rgba(16,185,129,.15);padding:16px 34px}
+    .btn.journey:hover{color:#fff;background:linear-gradient(90deg,#22c55e,#22d3ee);box-shadow:0 18px 40px rgba(34,211,238,.35);transform:translateY(-2px)}
+
+    /* ========= HOW IT WORKS ========= */
+    .how{padding:84px 20px 60px;background:#e6f3f6;}
+    .howTitle{ text-align:center; margin:0 0 10px; }
+    .howTitle .main{ font-size:48px; line-height:1.05; font-weight:800; color:#1e3a8a; letter-spacing:-0.5px; }
+    .howTitle .accent{ font-size:40px; line-height:1.05; font-weight:700; color:#14b8a6; font-style:italic; margin-left:8px; }
+    .howSub {margin:2px auto 20px;text-align:center;color:#7492b3;font-size:15px;}
+    .steps {display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+    @media(max-width:950px){.steps{grid-template-columns:repeat(2,1fr);} .how{padding:70px 16px 48px;}}
+    @media(max-width:560px){.steps{grid-template-columns:1fr;} .how{padding:56px 16px 40px;} .howTitle .main{font-size:30px;} .howTitle .accent{font-size:26px; display:block; margin:6px 0 0;}}
+    .step {position:relative;background:rgba(255,255,255,0.86);border:1px solid #d5e3ec;border-radius:var(--radius);padding:32px 22px;box-shadow:0 10px 30px #09c8d336;min-height:200px;text-align:center;transition:.19s}
+    .step:hover{box-shadow:0 28px 52px #22d3ee40;transform:scale(1.03);}
+    .step::before{ content:attr(data-step); position:absolute;left:17px;top:14px;font-size:84px;font-weight:900;color:#22d3ee33;
+      text-shadow: 0 0 0 rgba(0,0,0,0); transition: text-shadow .22s ease, color .22s ease, filter .22s ease;}
+    .step:hover::before{ color:#22d3ee66; text-shadow: 0 0 28px rgba(34,211,238,0.95), 0 0 58px rgba(124,58,237,0.75), 0 0 90px rgba(14,165,233,0.65); filter: saturate(1.25);}
+    .sicon{font-size:43px;color:#3b82f6;margin-bottom:12px;display:inline-flex;align-items:center;justify-content:center;transition: transform .2s ease, filter .2s ease;}
+    @keyframes boing { 0%{transform: translateY(0) rotate(0deg);} 30%{transform: translateY(-6px) rotate(-6deg);} 60%{transform: translateY(0) rotate(0deg);} 85%{transform: translateY(-2px) rotate(3deg);} 100%{transform: translateY(0) rotate(0deg);} }
+    .step:hover .sicon{ animation: boing .7s ease both; filter: drop-shadow(0 6px 14px rgba(34,211,238,.45)); }
+
+    /* Generic sections */
+    .section{padding:72px 0}
+    .secTitle{font-weight:900;font-size:30px;letter-spacing:-.2px;margin:0 0 30px;text-align:center}
+
+    /* CTA tiles (with inline SVG icons) */
+    #cta{padding:96px 20px}
+    .ctaHead{text-align:center;margin:0 0 30px}
+    .ctaMain{margin:0;font-size:48px;line-height:1.06;font-weight:900;background:linear-gradient(90deg,#5b21b6 0%,#0ea5e9 50%,#10b981 85%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.4px}
+    .ctaSub{margin-top:8px;font-family:'Dancing Script',cursive;font-size:28px;line-height:1.1;color:#0ea5e9;letter-spacing:.3px}
+    .actionsGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:1240px;margin:0 auto}
+    @media(max-width:1100px){.actionsGrid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:560px){.actionsGrid{grid-template-columns:1fr}.ctaMain{font-size:32px}.ctaSub{font-size:24px}}
+    .actionCard{display:flex;align-items:stretch;gap:18px;padding:22px;background:#fff;border:1px solid #e5e7eb;border-radius:18px;box-shadow:0 14px 32px rgba(15,23,42,.08);transition:transform .15s,box-shadow .15s;min-height:160px}
+    .actionCard:hover{transform:translateY(-3px);box-shadow:0 24px 48px rgba(15,23,42,.12)}
+    .badge{width:64px;height:64px;min-width:64px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:#fff;border:1px solid #e5e7eb;box-shadow:0 8px 18px rgba(15,23,42,.08)}
+    .badge svg{width:44px;height:44px;display:block;filter:drop-shadow(0 6px 10px rgba(2,6,23,.10))}
+    .acContent{flex:1;display:flex;flex-direction:column;gap:8px}
+    .acTitle{margin:0;font-size:20px;font-weight:800;color:#0f172a;letter-spacing:.2px}
+    .acDesc{margin:0;color:#475569;font-size:15px;line-height:1.35}
+    /* keep buttons aligned & equal-sized */
+    .acActions{margin-top:auto; display:flex;}
+    .primaryBtn{
+      --btn-col:#22c55e;
+      --btn-grad:linear-gradient(90deg,#22c55e,#22d3ee);
+      display:inline-flex; align-items:center; justify-content:center;
+      height:56px; padding:0 28px; min-width:160px;   /* 👈 equal size */
+      border-radius:999px; text-decoration:none;
+      background:linear-gradient(180deg,#fff 0%,#f7fafc 100%); color:var(--btn-col);
+      border:2px solid var(--btn-col); font-weight:800; letter-spacing:.04em;
+      box-shadow:0 8px 18px rgba(2,132,199,.15);
+      transition:transform .15s,box-shadow .15s,background .15s,color .15s
+    }
+    .primaryBtn:hover{transform:translateY(-2px);background:var(--btn-grad);color:#fff;box-shadow:0 18px 40px rgba(2,132,199,.28)}
+    .b-donate{--btn-col:#ef4444;--btn-grad:linear-gradient(135deg,#f59e0b,#ef4444)}
+    .b-vol{--btn-col:#22c55e;--btn-grad:linear-gradient(135deg,#22c55e,#22d3ee)}
+    .b-part{--btn-col:#3b82f6;--btn-grad:linear-gradient(135deg,#3b82f6,#9333ea)}
+    .b-mem{--btn-col:#06b6d4;--btn-grad:linear-gradient(135deg,#06b6d4,#60a5fa)}
+    @media(max-width:560px){
+      .primaryBtn{min-width:140px;height:52px;padding:0 22px;}
+    }
+
+    /* ABOUT cards */
+    .aboutGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:24px}
+    @media(max-width:900px){.aboutGrid{grid-template-columns:1fr}}
+    .abox{position:relative;padding:34px 26px 24px;border-radius:22px;background:rgba(255,255,255,.71);box-shadow:0 8px 32px rgba(30,89,195,.10),0 1.5px 18px #7c3aed0c;border:1.6px solid rgba(96,165,250,.15);transition:box-shadow .24s,border-color .25s,backdrop-filter .32s;backdrop-filter:blur(16px) saturate(170%);overflow:hidden}
+    .abox::after{content:"";position:absolute;inset:0;border-radius:22px;pointer-events:none;background:linear-gradient(120deg,#60a5fa55 10%,#a78bfa44 60%,transparent 90%);opacity:.88;z-index:0;mask-image:linear-gradient(to bottom,rgba(255,255,255,1) 85%,rgba(255,255,255,0))}
+    .abox:hover{box-shadow:0 18px 70px #3b82f626,0 2px 30px #a78bfa0d;border-color:#7dd3fc;backdrop-filter:blur(22px) saturate(170%);transform:translateY(-8px) scale(1.028)}
+    .abox h4{position:relative;z-index:2;margin:0 0 16px;display:flex;align-items:center;gap:14px;font-size:19px;font-weight:800;color:#18181b;letter-spacing:.01em}
+    .abox h4 .ahdr{width:44px;height:44px;min-width:44px;border-radius:14px;background:linear-gradient(115deg,#60a5fa 10%,#a78bfa 90%);display:inline-flex;align-items:center;justify-content:center;font-size:23px;color:#fff;box-shadow:0 4px 18px #a78bfa33,0 1px 7px #60a5fa33;transition:transform .18s cubic-bezier(.7,.1,.4,1)}
+    .abox:hover h4 .ahdr{transform:scale(1.15) rotate(-4deg);background:linear-gradient(120deg,#14b8a6 30%,#6366f1 70%,#f59e0b 100%);box-shadow:0 8px 34px #22d3ee48}
+
+    /* FOCUS (ticker) */
+    .focusWrap{padding:0 20px}
+    .ticker{position:relative;overflow:hidden;background:#fff;border:1px solid var(--brd);border-radius:16px;box-shadow:var(--shadow);padding:10px 0;mask-image:linear-gradient(to right,transparent 0,#000 6%,#000 94%,transparent 100%);-webkit-mask-image:linear-gradient(to right,transparent 0,#000 6%,#000 94%,transparent 100%)}
+    .ticker__track{display:flex;align-items:center;gap:14px;width:max-content;animation:ticker-scroll 28s linear infinite}
+    .ticker:hover .ticker__track{animation-play-state:paused}
+    @keyframes ticker-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    .ticker__item{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;background:linear-gradient(180deg,#fff 0%,#f8fafc 100%);border:1px solid #e5e7eb;border-radius:14px;white-space:nowrap;box-shadow:0 6px 16px rgba(15,23,42,.06);font-weight:700;color:#0f172a;text-decoration:none;transition:transform .15s,box-shadow .15s}
+    .ticker__item i{font-size:22px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.08))}
+    .ticker__item em{font-style:normal;font-weight:600;color:#64748b;font-size:13px;margin-left:2px}
+    /* Focus icon colors */
+    .ico-skill{ color:#3b82f6 !important; }    /* blue  */
+    .ico-women{ color:#ec4899 !important; }    /* pink  */
+    .ico-youth{ color:#f59e0b !important; }    /* amber */
+    .ico-health{ color:#ef4444 !important; }   /* red   */
+    .ico-green{ color:#22c55e !important; }    /* green */
+    .ico-digital{ color:#06b6d4 !important; }  /* cyan  */
+
+    /* STORIES */
+    #stories{padding:90px 20px 100px}
+    .storiesHead{text-align:center;margin-bottom:26px}
+    .storiesTitle{margin:0;font-size:40px;line-height:1.1;font-weight:900;color:var(--success);text-shadow:0 6px 28px rgba(22,163,74,.12)}
+    .storiesSub{margin:8px 0 0;color:#64748b}
+    .storyWrap{max-width:1240px;margin:26px auto 0;overflow:hidden;position:relative;padding:6px 0}
+    .storyTrack{display:flex;gap:28px;will-change:transform}
+    .storyCard{min-width:360px;max-width:360px;background:#fff;border:1px solid #e6edf5;border-radius:24px;padding:28px;text-align:center;box-shadow:0 30px 60px rgba(2,6,23,.06),0 8px 20px rgba(2,6,23,.05)}
+    .storyIcon{font-size:40px;line-height:1;margin-bottom:14px;display:inline-block;filter:drop-shadow(0 10px 18px rgba(2,132,199,.18))}
+    .storyTitle{margin:2px 0 10px;font-size:20px;font-weight:900;color:#0f172a}
+    .storyTitle em{font-style:normal;font-weight:600;color:#475569}
+    .storyText{margin:0;color:#334155;line-height:1.55}
+
+    /* FOOTER */
+    footer{background:linear-gradient(135deg,#18181b 70%,#3b82f6 100%);color:#e2e8f0;padding:54px 0 26px}
+    .F{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.3fr .7fr .7fr;gap:32px}
+    @media(max-width:980px){.F{grid-template-columns:1fr;gap:16px}}
+    .footer-logo{width:56px;height:56px;border-radius:14px;box-shadow:0 2px 14px #60a5fa94;margin-bottom:8px}
+    .newsletter{display:flex;gap:11px;margin:18px 0 0}
+    .newsletter input{flex:1;padding:11px 13px;border-radius:12px;border:1px solid #334155;background:#262b3a;color:#e2e8f0;font-size:15px}
+    .newsletter button{padding:11px 21px;border-radius:12px;border:0;background:linear-gradient(90deg,#60a5fa,#a78bfa);color:#fff;font-weight:800;font-size:15px;cursor:pointer}
+    .footer-tagline{color:#cbd5e1;margin-top:10px;margin-bottom:12px;font-size:15px;line-height:1.4;font-weight:500}
+    .social{margin:17px 0 0;display:flex;gap:17px}
+    .social a{color:#cbd5e1;font-size:24px;transition:.14s}
+    .social a:hover{color:#22c55e}
+    .foot-links h4,.foot-contact h4{margin-bottom:19px}
+    .foot-links ul{list-style:none;padding:0;margin:0}
+    .foot-links a{color:#e2e8f0;text-decoration:none;font-size:15px}
+    .foot-links a:hover{color:#a78bfa}
+    .foot-contact div{margin-bottom:12px;color:#cbd5e1}
+    .footbar{margin-top:30px;padding-top:17px;border-top:1px solid #334155;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;color:#94a3b8;font-size:15px}
+    .footbar a{color:#9fb3c8;text-decoration:none}
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header" id="siteHeader">
+    <div class="H">
+      <a class="brand" href="#home"><img src="D:/fwf-site/assets/images/logo.png" alt="FWF"/></a>
+      <nav>
+        <ul>
+          <li><a href="#home" data-i18n="nav.home">Home</a></li>
+          <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
+          <li><a href="#about" data-i18n="nav.about">About Us</a></li>
+          <li><a class="btn-join" href="#cta" data-i18n="nav.join">Join</a></li>
+          <li><a class="btn-donate" href="#donate" data-i18n="nav.donate">Donate</a></li>
+        </ul>
+        <div class="lang-switch" role="group" aria-label="Language switch">
+          <button id="btn-hi" type="button">HI</button><div class="lang-sep"></div>
+          <button id="btn-en" type="button" class="active">EN</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="heroInner">
+      <span class="tag" data-i18n="hero.tag">FWF – Skills to Livelihood</span>
+      <h1 class="h1" data-i18n="hero.h1">From Skills to Stable Income</h1>
+      <p class="lead" data-i18n="hero.lead">We connect people with market-ready training and real business projects, so you can earn with dignity.<br><b>Training → Livelihood → Direct Earning Pipeline</b></p>
+      <div class="cta-row">
+        <a class="btn journey" href="#cta" data-i18n="hero.journeyBtn">Start Your Journey</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" aria-label="How it Works">
+    <h2 class="howTitle">
+      <span class="main">Get Started in</span>
+      <span class="accent">4 Easy Steps</span>
+    </h2>
+    <div class="howSub">We guide you — you stay worry-free.</div>
+    <div class="steps">
+      <div class="step" data-step="1">
+        <div class="sicon"><i class="fa-regular fa-rectangle-list"></i></div>
+        <h4>Enter Basic Details</h4>
+        <p>Quick sign-up and KYC</p>
+      </div>
+      <div class="step" data-step="2">
+        <div class="sicon" style="color:#06b6d4"><i class="fa-solid fa-diagram-project"></i></div>
+        <h4>Compare & Choose Project</h4>
+        <p>Pick what suits your time & interest</p>
+      </div>
+      <div class="step" data-step="3">
+        <div class="sicon" style="color:#22c55e"><i class="fa-solid fa-person-chalkboard"></i></div>
+        <h4>Join Training</h4>
+        <p>Hands-on, task-based learning</p>
+      </div>
+      <div class="step" data-step="4">
+        <div class="sicon" style="color:#9333ea"><i class="fa-solid fa-briefcase"></i></div>
+        <h4>Start Earning</h4>
+        <p>Work-links & project allotment</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / JOURNEY TILES -->
+  <section class="section" id="cta">
+    <div class="ctaHead">
+      <h2 class="ctaMain" data-i18n="cta.titleMain">Your support creates real change</h2>
+      <div class="ctaSub" data-i18n="cta.subtitle">Choose your next step</div>
+    </div>
+    <div class="actionsGrid">
+      <article class="actionCard">
+        <div class="badge" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f59e0b"/><stop offset="1" stop-color="#ef4444"/></linearGradient></defs><circle cx="44" cy="18" r="9" fill="url(#g1)" opacity="0.9"/><path d="M28 48c-9-8-18-14-18-24 0-6 4.5-10 10-10 4 0 7 2 8 5 1-3 4-5 8-5 5.5 0 10 4 10 10 0 10-9 16-18 24z" fill="#ef4444"/><path d="M44 14v8m4-4h-8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="acContent">
+          <h3 class="acTitle">Donate Now</h3>
+          <p class="acDesc">Your donation helps people access training and projects to earn their livelihood.</p>
+          <div class="acActions"><a class="primaryBtn b-donate" href="#donate">Donate</a></div>
+        </div>
+      </article>
+      <article class="actionCard">
+        <div class="badge" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22c55e"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs><path d="M10 38c6-2 10-2 14 2 4 4 8 4 12 2 3-1 7 0 9 2 2 3 1 6-2 8-8 5-17 6-26 0-6-4-8-10-7-14z" fill="url(#g2)"/><path d="M40 14c3 0 6 3 6 6s-3 6-6 6-6-3-6-6 3-6 6-6z" fill="#10b981"/><path d="M22 17c2 0 4 2 4 4s-2 4-4 4-4-2-4-4 2-4 4-4z" fill="#34d399"/></svg>
+        </div>
+        <div class="acContent">
+          <h3 class="acTitle">Join as Volunteer</h3>
+          <p class="acDesc">Mentor trainees, support events and help run local projects.</p>
+          <div class="acActions"><a class="primaryBtn b-vol" href="#volunteer">Join</a></div>
+        </div>
+      </article>
+      <article class="actionCard">
+        <div class="badge" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><defs><linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b82f6"/><stop offset="1" stop-color="#9333ea"/></linearGradient></defs><rect x="6" y="26" width="22" height="12" rx="6" fill="#93c5fd"/><rect x="36" y="26" width="22" height="12" rx="6" fill="#c4b5fd"/><path d="M18 32l8 6 6-4 6 4 8-6" stroke="url(#g3)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="acContent">
+          <h3 class="acTitle">Partner With Us</h3>
+          <p class="acDesc">CSR & outsourcing partnerships that create jobs where they matter.</p>
+          <div class="acActions"><a class="primaryBtn b-part" href="#partner">Partner</a></div>
+        </div>
+      </article>
+      <article class="actionCard">
+        <div class="badge" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><defs><linearGradient id="g4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#06b6d4"/><stop offset="1" stop-color="#60a5fa"/></linearGradient></defs><rect x="10" y="14" width="44" height="36" rx="6" fill="url(#g4)"/><circle cx="26" cy="30" r="6" fill="#fff"/><rect x="36" y="24" width="14" height="4" rx="2" fill="#e0f2fe"/><rect x="36" y="32" width="14" height="4" rx="2" fill="#e0f2fe"/><path d="M20 42c2-4 10-4 12 0" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>
+        </div>
+        <div class="acContent">
+          <h3 class="acTitle">Become a Member</h3>
+          <p class="acDesc">Get priority training, project access and business support.</p>
+          <div class="acActions"><a class="primaryBtn b-mem" href="#member">Apply</a></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- FOCUS -->
+  <section class="section" id="focus">
+    <h2 class="secTitle">Our Focus Areas</h2>
+    <div class="focusWrap">
+      <div class="ticker" role="marquee" aria-roledescription="scrolling list">
+        <div class="ticker__track">
+          <a class="ticker__item" href="#"><i class="fa-solid fa-person-chalkboard ico-skill"></i><span>Skill India</span><em> • NSDC/SSC aligned</em></a>
+          <a class="ticker__item" href="#"><i class="fa-solid fa-venus ico-women"></i><span>Women Empowerment</span><em> • Micro-units & SHGs</em></a>
+          <a class="ticker__item" href="#"><i class="fa-solid fa-briefcase ico-youth"></i><span>Youth Employment</span><em> • Job-linked training</em></a>
+          <a class="ticker__item" href="#"><i class="fa-solid fa-heart-pulse ico-health"></i><span>Healthcare Access</span><em> • Camps & screening</em></a>
+          <a class="ticker__item" href="#"><i class="fa-solid fa-leaf ico-green"></i><span>Green Jobs</span><em> • Waste & solar</em></a>
+          <a class="ticker__item" href="#"><i class="fa-solid fa-laptop-code ico-digital"></i><span>Digital Skills</span><em> • BPO & data</em></a>
+          <!-- duplicate -->
+          <a class="ticker__item" href="#"><i class="fa-solid fa-person-chalkboard ico-skill"></i><span>Skill India</span><em> • NSDC/SSC aligned</em></a>
+          <a class="ticker__item" href="#"><i class="fa-solid fa-venus ico-women"></i><span>Women Empowerment</span><em> • Micro-units & SHGs</em></a>
+          <a class="ticker__item" href="#"><i class="fa-solid fa-briefcase ico-youth"></i><span>Youth Employment</span><em> • Job-linked training</em></a>
+          <a class="ticker__item" href="#"><i class="fa-solid fa-heart-pulse ico-health"></i><span>Healthcare Access</span><em> • Camps & screening</em></a>
+          <a class="ticker__item" href="#"><i class="fa-solid fa-leaf ico-green"></i><span>Green Jobs</span><em> • Waste & solar</em></a>
+          <a class="ticker__item" href="#"><i class="fa-solid fa-laptop-code ico-digital"></i><span>Digital Skills</span><em> • BPO & data</em></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section about" id="about">
+    <h2 class="secTitle">About Us</h2>
+    <div class="aboutGrid">
+      <div class="abox">
+        <h4><span class="ahdr"><i class="fa-solid fa-bullseye"></i></span>Mission</h4>
+        <ul class="alist">
+          <li>Link Skills → Work → Income with a clear pathway</li>
+          <li>Direct earning opportunities via outsourced projects</li>
+          <li>Low-cost, high-impact livelihood models</li>
+        </ul>
+      </div>
+      <div class="abox">
+        <h4><span class="ahdr"><i class="fa-solid fa-eye"></i></span>Vision</h4>
+        <ul class="alist">
+          <li>Training + Project hubs in every district</li>
+          <li>Inclusive & gender-neutral ecosystem</li>
+          <li>Tech-enabled transparency & tracking</li>
+        </ul>
+      </div>
+      <div class="abox">
+        <h4><span class="ahdr"><i class="fa-solid fa-heart"></i></span>Values</h4>
+        <ul class="alist">
+          <li>Self-reliance, dignity and inclusion</li>
+          <li>Corporate-NGO-Community partnerships</li>
+          <li>Impact-first, data-driven decisions</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORIES -->
+  <section class="section" id="stories" aria-label="Success Stories">
+    <div class="storiesHead">
+      <h2 class="storiesTitle">Success Stories</h2>
+      <div class="storiesSub">Changing lives, one entrepreneur at a time.</div>
+    </div>
+    <div class="storyWrap" id="storyWrap">
+      <div class="storyTrack" id="storyTrack">
+        <article class="storyCard"><span class="storyIcon">🎉</span><h3 class="storyTitle"><strong>Kirti</strong> <em>| Home Bakery</em></h3><p class="storyText">Kirti made her dream a reality with FWF: “They believed in me and I believed in myself.”</p></article>
+        <article class="storyCard"><span class="storyIcon">🚚</span><h3 class="storyTitle"><strong>Rahul</strong> <em>| Delivery Service</em></h3><p class="storyText">Rahul provided jobs to youth with his FWF-supported startup—growth that builds his whole community.</p></article>
+        <article class="storyCard"><span class="storyIcon">🫧</span><h3 class="storyTitle"><strong>Rani</strong> <em>| Handmade Soaps</em></h3><p class="storyText">With FWF’s micro-investment, Rani’s soaps are now sold in 3 cities; her family’s life changed.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="F">
+      <div>
+        <img class="footer-logo" src="D:/fwf-site/assets/images/logo.png" alt="FWF" />
+        <div class="footer-tagline">Uniting skills, opportunities and livelihoods on one platform.</div>
+        <form class="newsletter" action="#" method="POST" autocomplete="off">
+          <input placeholder="Your email for updates" />
+          <button type="button">Subscribe</button>
+        </form>
+        <div class="social">
+          <a href="#"><i class="fa-brands fa-facebook"></i></a>
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="#"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="foot-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#cta">Join</a></li>
+          <li><a href="#donate">Donate</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </div>
+      <div class="foot-contact">
+        <h4>Contact</h4>
+        <div>Address: Your NGO address</div>
+        <div>Phone: +91-XXXXXXXXXX</div>
+        <div>Email: info@fwf.org</div>
+        <div><i class="fa-brands fa-whatsapp"></i> WhatsApp</div>
+        <div style="margin-top:10px;color:#94a3b8">Reg: 12A • 80G • CSR-1</div>
+      </div>
+    </div>
+    <div class="footbar">
+      <div>© <span id="year"></span> FWF – All Rights Reserved</div>
+      <div><a href="#">Privacy</a> • <a href="#">Terms</a></div>
+    </div>
+  </footer>
+
+  <script>
+    // Header effect + year
+    const header = document.getElementById('siteHeader');
+    const onScroll = () => { if (window.scrollY > 4) header.classList.add('scrolled'); else header.classList.remove('scrolled'); };
+    onScroll(); addEventListener('scroll', onScroll);
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Stories auto-scroll (extra slow)
+    (function(){
+      const wrap = document.getElementById('storyWrap');
+      const track = document.getElementById('storyTrack');
+      if(!wrap || !track) return;
+      Array.from(track.children).forEach(c => track.appendChild(c.cloneNode(true)));
+      let x = 0; const speed = 0.02; // px/ms ≈1.2 px/sec
+      let last = performance.now(); let paused = false;
+      function step(now){
+        if(!paused){
+          const dt = now - last; x -= speed * dt;
+          const first = track.children[0]; const gap = 28; const w = first.getBoundingClientRect().width;
+          if(Math.abs(x) >= w + gap){ track.appendChild(first); x += w + gap; }
+          track.style.transform = `translateX(${x}px)`;
+        }
+        last = now; requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+      wrap.addEventListener('mouseenter', ()=>paused=true);
+      wrap.addEventListener('mouseleave', ()=>paused=false);
+      wrap.addEventListener('touchstart', ()=>paused=true, {passive:true});
+      wrap.addEventListener('touchend', ()=>paused=false);
+    })();
+  </script>
+</body>
+</html>

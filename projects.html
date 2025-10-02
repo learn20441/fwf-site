@@ -1,0 +1,1376 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>FWF — Beneficiary Product Registration</title>
+
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Montserrat:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;700;800&family=Unbounded:wght@700;800;900&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+
+<style>
+:root{
+  --max-width:1200px;
+
+  /* Brand + text */
+  --primary:#F97316; --primary-dark:#EA580C;
+  --text-primary:#fff; --text-secondary:#d1d5db; --text-muted:#9ca3af;
+
+  /* Panels / borders */
+  --border:rgba(255,255,255,.10);
+  --panel:rgba(255,255,255,.06);
+  --panel-soft:rgba(255,255,255,.04);
+  --field-bg:#0f1720; --field-border:var(--border);
+
+  /* Theme base (evening default) */
+  --bg-primary:#0c1f21; --bg-secondary:#0c1f21;
+  --sky-1:#0b1220; --sky-2:#132a3a; --sky-3:#1a3b50;
+
+  /* Footer (evening default) */
+  --footer-bg: rgba(255,255,255,.06);
+  --footer-border: rgba(255,255,255,.14);
+  --footer-text: #e5e7eb;
+  --footer-muted: rgba(229,231,235,.8);
+  --footer-chip: rgba(255,255,255,.08);
+
+  --btn-outline-fg:#fff;
+  --shadow:0 20px 25px -5px rgba(0,0,0,.30),0 10px 10px -5px rgba(0,0,0,.20);
+  --radius:16px; --radius-lg:20px;
+  font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+}
+
+/* Morning */
+body.theme-morning{
+  --bg-primary:#1F2A37; --bg-secondary:#1F2A37;
+  --sky-1:#CBE7FF; --sky-2:#8FD0FF; --sky-3:#5FB9FF;
+  --text-primary:#0f172a; --text-secondary:#334155; --text-muted:#475569;
+  --panel:rgba(255,255,255,.90); --panel-soft:rgba(255,255,255,.82);
+  --border:rgba(15,23,42,.10); --field-bg:#fff; --field-border:rgba(15,23,42,.16);
+  --btn-outline-fg:#0f172a;
+
+  /* Footer light glass */
+  --footer-bg: rgba(255,255,255,.88);
+  --footer-border: rgba(15,23,42,.10);
+  --footer-text: #0f172a;
+  --footer-muted: #334155;
+  --footer-chip: rgba(15,23,42,.06);
+}
+
+/* Afternoon */
+body.theme-afternoon{
+  --bg-primary:#1F2A37; --bg-secondary:#1F2A37;
+  --sky-1:#FFF4D9; --sky-2:#FFDFAE; --sky-3:#FFB069;
+  --text-primary:#0f172a; --text-secondary:#334155; --text-muted:#64748b;
+  --panel:rgba(255,255,255,.86); --panel-soft:rgba(255,255,255,.78);
+  --border:rgba(15,23,42,.10); --field-bg:#fff; --field-border:rgba(15,23,42,.16);
+  --btn-outline-fg:#0f172a;
+
+  /* Footer warm light */
+  --footer-bg: rgba(255,255,255,.86);
+  --footer-border: rgba(15,23,42,.10);
+  --footer-text: #111827;
+  --footer-muted: #374151;
+  --footer-chip: rgba(17,24,39,.06);
+}
+
+/* Reset + base */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{min-height:100vh;color:var(--text-primary);line-height:1.6;background:var(--bg-primary);transition:background .8s ease,color .3s ease}
+
+/* Sky */
+.sky{position:fixed;inset:0;z-index:0;background:linear-gradient(180deg,var(--sky-1) 0%,var(--sky-2) 45%,var(--sky-3) 100%);pointer-events:none;transition:background 1.2s ease}
+.sky::before,.sky::after{content:"";position:absolute;inset:-20%;background:
+  radial-gradient(ellipse at 30% 20%,rgba(255,255,255,.06),transparent 40%),
+  radial-gradient(ellipse at 70% 50%,rgba(255,255,255,.05),transparent 45%),
+  radial-gradient(ellipse at 40% 80%,rgba(255,255,255,.04),transparent 50%);filter:blur(10px);animation:drift 60s linear infinite}
+.sky::after{animation-duration:90s;opacity:.6}
+@keyframes drift{0%{transform:translate3d(0,0,0) scale(1.05)}50%{transform:translate3d(-2%,-1%,0) scale(1.08)}100%{transform:translate3d(0,0,0) scale(1.05)}}
+
+.container{position:relative;z-index:1;max-width:var(--max-width);margin:0 auto;padding:0 24px}
+
+/* Header */
+header{margin:28px 0;position:sticky;top:18px;z-index:1000}
+.header-content{display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--panel);border-radius:12px;padding:12px 16px;border:1px solid var(--border);backdrop-filter:blur(10px);box-shadow:var(--shadow)}
+.brand{display:flex;gap:12px;align-items:center}
+
+/* LOGO */
+.logo-slot{width:56px;height:56px;border-radius:12px;position:relative;overflow:hidden;background:var(--panel-soft);border:1px solid var(--border);box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+.logo-layer{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.logo-img-layer img{width:100%;height:100%;object-fit:contain;border-radius:12px;background:#fff;padding:6px}
+.logo-img-layer,.logo-orb-layer{animation:none !important}
+.logo-orb-layer{display:none !important}
+.theme-evening .logo-slot{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.35);box-shadow:inset 0 1px 0 rgba(255,255,255,.24), 0 8px 18px rgba(0,0,0,.45)}
+
+.nav-menu{display:flex;gap:8px;list-style:none;align-items:center}
+.nav-menu a{position:relative;color:var(--text-secondary);text-decoration:none;padding:10px 14px;border-radius:10px;font-weight:700;letter-spacing:.2px;transition:color .18s ease,transform .18s ease,background .18s ease}
+.nav-menu a::after{content:"";position:absolute;left:12px;right:12px;bottom:6px;height:2px;background:linear-gradient(90deg,#f97316,#22c55e,#3b82f6);transform:scaleX(0);transform-origin:center;opacity:0;transition:transform .2s ease,opacity .2s ease;border-radius:2px}
+.nav-menu a:hover{color:var(--text-primary);background:var(--panel-soft);transform:translateY(-2px)}
+.nav-menu a:hover::after{transform:scaleX(1);opacity:1}
+
+.controls{display:flex;gap:12px;align-items:center}
+.lang-toggle{display:flex;border-radius:10px;overflow:hidden;border:1px solid var(--border);background:var(--panel-soft)}
+.lang-btn{padding:8px 10px;border:none;background:transparent;color:var(--text-secondary);cursor:pointer;font-weight:700}
+.lang-btn.active{background:var(--primary);color:#fff}
+.cta-btn{padding:10px 18px;border-radius:999px;background:var(--primary);color:#fff;border:1px solid transparent;cursor:pointer;font-weight:800;letter-spacing:.2px;box-shadow:0 6px 20px rgba(249,115,22,.25);transition:all .18s ease}
+.cta-btn:hover{background:var(--primary-dark);transform:translateY(-2px)}
+
+/* Hero */
+.hero{margin:44px 0;display:flex;justify-content:center;align-items:center}
+.hero-content{width:100%;max-width:1100px;padding:48px;border-radius:18px;background:var(--panel);border:1px solid var(--border);text-align:center;box-shadow:var(--shadow);backdrop-filter:blur(8px)}
+.hero-title{font-family:"Montserrat","Plus Jakarta Sans",system-ui,sans-serif;font-weight:900;font-size:clamp(32px,6vw,56px);line-height:1.05;margin-bottom:12px;letter-spacing:-.02em;color:var(--text-primary)}
+.hero-subtitle{color:var(--text-secondary);margin-bottom:22px;font-size:16px;max-width:900px;margin-inline:auto}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+.btn{padding:12px 22px;border-radius:12px;cursor:pointer;border:1px solid transparent;font-weight:800;letter-spacing:.2px}
+.btn-primary{background:var(--primary);color:#fff;border-color:transparent}
+.btn-primary:hover{background:var(--primary-dark);transform:translateY(-2px)}
+.btn-outline-orange{background:transparent;color:var(--btn-outline-fg);border:2px solid var(--primary);padding:11px 20px;font-weight:800;border-radius:999px;box-shadow:0 6px 20px rgba(249,115,22,.08);transition:all .18s ease;display:inline-flex;align-items:center;gap:8px}
+.btn-outline-orange:hover{background:var(--primary);color:#fff;transform:translateY(-3px);border-color:transparent}
+
+/* TOGETHER */
+.kick.modern{display:inline-flex;gap:4px;align-items:baseline;padding-inline:2px;font-family:"Unbounded",system-ui,sans-serif;font-weight:900;letter-spacing:-.018em;text-transform:uppercase}
+.kick.modern .L{display:inline-block;line-height:1;font-size:1.04em;text-shadow:0 1px 0 rgba(0,0,0,.10),0 8px 18px rgba(0,0,0,.18),0 0 1px rgba(255,255,255,.08)}
+.kick.modern .T{color:#f43f5e}.kick.modern .O{color:#fb923c}.kick.modern .G{color:#f59e0b}.kick.modern .E1{color:#10b981}.kick.modern .T2{color:#06b6d4}.kick.modern .H{color:#3b82f6}.kick.modern .E2{color:#8b5cf6}.kick.modern .R{color:#ec4899}
+
+/* Projects */
+.projects-section{margin:56px 0}
+.section-header{text-align:center;margin-bottom:36px}
+.section-title{font:900 32px "Plus Jakarta Sans",sans-serif}
+.section-subtitle{color:var(--text-secondary);margin-top:6px}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+.card{background:var(--panel);border-radius:24px;padding:18px;box-shadow:var(--shadow);border:1px solid var(--border);position:relative;overflow:hidden;display:flex;flex-direction:column;min-height:240px}
+.theme-evening .card{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.20)}
+.card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(2,6,23,.12)}
+.card .top{display:flex;gap:12px;align-items:flex-start}
+.logoBubble{inline-size:44px;block-size:44px;min-width:44px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(180deg,#fff7ed 0%,#ffe5d0 100%);border:1px solid #ffd7b2;color:#b45309;font-size:20px}
+.title{margin:2px 0 2px;font:700 18px/1.2 "Plus Jakarta Sans",Inter,system-ui}
+.subtitle{margin:0;color:var(--text-secondary);font-size:14px}
+.impacts{margin:10px 0 12px;display:flex;flex-wrap:wrap;gap:8px}
+.impact{background:#eef2ff;color:#4338ca;border:1px solid #e0e7ff;font-size:12px;font-weight:600;padding:6px 10px;border-radius:999px;display:inline-flex;align-items:center;gap:8px}
+.ctas{display:flex;justify-content:center;gap:10px;margin-top:auto}
+
+/* 1) View Details button outline WHITE */
+.btn-primary.accent-outline{border:1px solid #fff !important;box-shadow:0 0 0 1px #fff inset !important}
+.btn-primary.accent-outline:hover{box-shadow:0 0 0 1px #fff inset,0 8px 22px rgba(0,0,0,.22)}
+
+/* Modal */
+.modal-backdrop{position:fixed;inset:0;display:none;place-items:center;background:rgba(15,23,42,.45);padding:20px;z-index:50}
+.modal-backdrop.open{display:grid}
+.modalCard{max-width:98vw;width:100%;border-radius:20px;box-shadow:var(--shadow);overflow:hidden;border:1px solid var(--border);background:#fff;color:#0f172a}
+.modalHead{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;background:#f8fafc}
+.modalHead h3{margin:0;font:800 18px/1.2 "Plus Jakarta Sans"}
+.theme-evening .modalCard{background:rgba(11,18,32,1);color:#e5e7eb;border-color:rgba(255,255,255,.12)}
+.theme-evening .modalHead{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}
+.modalBody{padding:0}
+
+/* 3) Auto-adjust left pane width with screen */
+.unitLayout{
+  display:grid;
+  grid-template-columns:minmax(260px,34vw) 1fr;
+  min-height:540px;
+  gap:0;
+}
+@media (max-width:880px){.unitLayout{grid-template-columns:1fr}}
+
+/* Left & Right scrollable panels */
+.unitNav,.unitDetail{position:relative;overflow:auto}
+.unitNav{
+  background:#fff;padding:10px;
+  display:block; /* we use blocks now (accordion) */
+}
+.theme-evening .unitNav{background:rgba(255,255,255,.04)}
+.unitDetail{padding:16px 18px 18px;background:#fff}
+.theme-evening .unitDetail{background:rgba(255,255,255,.04)}
+
+/* LEFT: Unit accordion + product list */
+.unitBlock{border:1px solid #e5e7eb;border-radius:12px;background:#fff;margin-bottom:10px;overflow:hidden}
+.theme-evening .unitBlock{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}
+.unitHdr{
+  display:flex;align-items:center;gap:10px;width:100%;
+  background:transparent;border:none;padding:10px 12px;cursor:pointer;color:inherit;text-align:left
+}
+.unitHdr .unitIcon{width:36px;height:36px;display:grid;place-items:center;border-radius:10px;background:linear-gradient(180deg,#eef2ff 0%,#e0e7ff 100%);color:#4338ca;border:1px solid #c7d2fe}
+.uName{font-weight:900}
+.uMeta{font-size:12px;opacity:.8}
+.caret{margin-left:auto;color:#64748b;transition:transform .2s ease}
+.unitBlock.open .caret{transform:rotate(180deg)}
+.unitHdr.selected{box-shadow:0 0 0 2px rgba(59,130,246,.25) inset}
+
+.prodList{list-style:none;margin:0;padding:8px 10px 12px 54px;display:none}
+.unitBlock.open .prodList{display:block}
+.prodList li{margin:6px 0}
+.prodItem{
+  width:100%;text-align:left;padding:8px 10px;border:1px solid #e5e7eb;border-radius:10px;background:#f8fafc;cursor:pointer;font-weight:700;font-size:13px;color:#334155
+}
+.prodItem:hover{background:#eef2ff}
+.prodItem.active{border-color:#60a5fa;background:#eff6ff}
+
+/* Right detail */
+.detailTitle{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.detailTitle h4{margin:0;font:800 18px/1.2 "Plus Jakarta Sans",Inter}
+.detailBadge{background:#ecfdf5;color:#065f46;border:1px solid #bbf7d0;padding:6px 10px;border-radius:999px;font-weight:700;font-size:12px}
+.theme-evening .detailBadge{background:rgba(16,185,129,.18);border-color:rgba(16,185,129,.3);color:#86efac}
+.detailMeta{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 14px}
+.detailMeta span{display:inline-flex;gap:6px;align-items:center;background:#f8fafc;border:1px solid #e5e7eb;padding:6px 10px;border-radius:999px;font-size:13px;font-weight:700;color:#334155}
+.theme-evening .detailMeta span{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:#d1d5db}
+.detailBlock{background:#f9fafb;border:1px solid #eef2f7;border-radius:14px;padding:12px;margin-bottom:12px}
+.detailBlock h5{margin:0 0 8px;font:800 14px/1 "Plus Jakarta Sans"}
+.theme-evening .detailBlock{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.12)}
+.kv{display:grid;gap:8px}
+.kv .row{display:flex;justify-content:space-between;gap:12px;background:#fff;border:1px solid #e5e7eb;padding:8px 10px;border-radius:10px;font-size:13px}
+.kv .key{color:#475569;font-weight:800}
+.kv .val{color:#0f172a;font-weight:900}
+.theme-evening .kv .row{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}
+.theme-evening .kv .key{color:#cbd5e1}
+.theme-evening .kv .val{color:#e5e7eb}
+.tc{font-size:12px;color:#334155}
+.tc li{margin-left:16px}
+.theme-evening .tc{color:#cbd5e1}
+
+/* 2) Vertical slider styles - HIDDEN */
+.panelSlider{display:none !important}
+.hasSlider{padding-right:36px}
+/* vscroll HIDDEN */
+.vscroll{ display:none !important; }
+
+/* JOIN US etc. (unchanged) */
+.registration-section{margin:56px 0;background:var(--panel);border-radius:14px;padding:24px;border:1px solid var(--border)}
+.reg-head{margin-bottom:28px}
+.reg-head h3{text-align:center;font:900 clamp(30px,5vw,46px) "Unbounded","Plus Jakarta Sans",sans-serif;letter-spacing:-.02em;position:relative;display:inline-block;left:50%;transform:translateX(-50%)}
+.reg-head h3::after{content:"";position:absolute;left:10%;right:10%;bottom:-10px;height:6px;border-radius:8px;background:linear-gradient(90deg,#f97316,#22c55e,#3b82f6);filter:blur(3px);opacity:.9}
+.join-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:start}
+.video-wrap{position:relative;overflow:hidden;border-radius:12px;background:var(--panel-soft)}
+.video-wrap video{width:100%;height:auto;display:block;border-radius:12px;outline:none}
+
+.reg-form{background:var(--panel-soft);padding:16px;border-radius:12px;border:1px solid var(--border)}
+.form-group{margin:14px 0}
+.form-field{position:relative}
+.form-input,.form-select{width:100%;padding:14px 12px;border-radius:12px;background:var(--field-bg);border:1px solid var(--field-border);color:var(--text-primary);outline:none}
+.form-select{background-color:#fffbe8;color:#0f172a !important;border:2px solid #f97316;font-weight:700}
+.form-select.placeholder{color:#b45309 !important;background-color:#fffbe8}
+.form-select option{color:#0f172a;background-color:#fffbe8}
+.form-input::placeholder{color:transparent}
+.float-label{position:absolute;left:12px;top:50%;transform:translateY(-50%);padding:0 6px;border-radius:6px;line-height:1;font-weight:700;font-size:14px;pointer-events:none;color:var(--text-secondary);background:var(--field-bg);transition:all .16s ease}
+.form-input:focus,.form-select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(249,115,22,.20)}
+.form-input:not(:placeholder-shown)+.float-label,.form-input:focus+.float-label,.form-select:focus+.float-label{top:0;transform:translateY(-50%);font-size:12px;color:var(--primary);box-shadow:0 0 0 999px var(--field-bg) inset}
+.form-select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);background-position:calc(100% - 20px) 16px,calc(100% - 14px) 16px;background-size:6px 6px,6px 6px;background-repeat:no-repeat}
+.form-select.placeholder {color:transparent}
+
+@media (max-width:1024px){.join-grid{grid-template-columns:1fr}.hero-content{padding:28px}}
+@media (max-width:700px){.nav-menu{display:none}.hero-title{font-size:34px}.container{padding:0 12px}}
+
+/* ===== Compact modal size & layout ===== */
+.modal-backdrop .modalCard{
+  width: min(92vw, 920px) !important;   /* narrower */
+  max-width: 920px !important;
+  max-height: 78vh !important;          /* not full screen */
+  border-radius: 18px;
+}
+.modal-backdrop .modalHead{
+  padding: 10px 14px !important;
+}
+.modal-backdrop .modalBody{
+  padding: 0 !important;
+  max-height: calc(78vh - 48px);        /* keep header */
+  overflow: auto;                        /* scroll inside card */
+}
+
+/* Less tall master–detail area */
+.unitLayout{
+  grid-template-columns: 260px 1fr !important;
+  min-height: 420px !important;
+}
+@media (max-width: 880px){
+  .modal-backdrop .modalCard{
+    width: min(94vw, 720px) !important;
+    max-height: 82vh !important;
+  }
+  .unitLayout{ min-height: 380px !important; }
+}
+
+/* ===== Compact left pane ===== */
+.unitNav{ padding: 8px !important; }
+.unitBlock{ margin-bottom: 8px !important; border-radius: 12px !important; }
+.unitHdr{ padding: 8px 10px !important; }
+.unitHdr .unitIcon{ width:32px;height:32px; border-radius:8px; }
+.uName{ font-weight:800; font-size:14px; }
+.uMeta{ font-size:11px; }
+.prodList{ padding: 6px 8px 10px 44px !important; }
+.prodItem{ padding: 7px 9px !important; font-size:12px; }
+
+/* ===== Compact right pane ===== */
+.unitDetail{ padding: 14px !important; }
+.detailTitle h4{ font-size:18px !important; }
+.detailBadge{ padding:5px 8px !important; font-size:11px !important; }
+.btn.btn-primary.btn-register{ padding:10px 14px !important; font-size:14px !important; }
+
+.detailMeta{ gap:8px !important; margin:10px 0 12px !important; }
+.detailMeta span{ padding:6px 8px !important; font-size:12px !important; }
+
+.detailBlock{ padding:10px !important; margin-bottom:10px !important; border-radius:12px !important; }
+.detailBlock h5{ font-size:13px !important; margin-bottom:6px !important; }
+.kv .row{ padding:7px 9px !important; font-size:13px !important; }
+.kv .key{ font-weight:700 !important; }
+.kv .val{ font-weight:800 !important; }
+
+/* Vertical slider tighter - HIDDEN */
+.panelSlider{ display: none !important; }
+.vscroll{ display: none !important; }
+
+/* FOOTER */
+footer{position:relative;z-index:1;margin:28px 0 18px}
+footer .container{max-width:var(--max-width);margin:0 auto;padding:0 24px}
+.footer-wrap{background:var(--footer-bg);color:var(--footer-text);border:1px solid var(--footer-border);border-radius:22px;padding:32px 22px 20px;box-shadow:0 20px 40px rgba(0,0,0,.18);backdrop-filter: blur(10px)}
+.F{display:grid;grid-template-columns:1.2fr .9fr .9fr;gap:28px;align-items:start}
+@media (max-width:900px){.F{grid-template-columns:1fr;gap:22px}}
+.footer-logo{max-width:180px;height:56px;object-fit:contain;object-position:left;display:block;margin-bottom:14px;background:#fff;border-radius:10px;padding:6px;border:1px solid var(--footer-border)}
+.footer-tagline{font-size:16px;margin-bottom:14px;color:var(--footer-muted)}
+.newsletter{display:flex;gap:8px;max-width:520px;margin:10px 0 8px}
+.newsletter input{flex:1;padding:12px 14px;border-radius:12px;border:1px solid var(--footer-border);background:var(--footer-chip);color:var(--footer-text);outline:none}
+.newsletter button{padding:12px 16px;border-radius:12px;background:var(--primary);color:#fff;border:none;cursor:pointer;font-weight:800}
+.newsletter button:hover{background:var(--primary-dark)}
+.social{display:flex;gap:10px;margin-top:10px}
+.social a{width:36px;height:36px;border-radius:10px;background:var(--footer-chip);color:var(--footer-text);display:grid;place-items:center;transition:transform .15s ease,background .15s ease}
+.social a:hover{transform:translateY(-2px);background:rgba(255,255,255,.14)}
+.foot-links h4,.foot-contact h4{font-size:16px;margin-bottom:10px;position:relative;display:inline-block;color:var(--footer-text)}
+.foot-links h4::after,.foot-contact h4::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;background:linear-gradient(90deg,#f97316,#22c55e,#3b82f6)}
+.foot-links ul{list-style:none;display:grid;gap:8px}
+.foot-links a{color:var(--footer-muted);text-decoration:none}
+.foot-links a:hover{color:var(--footer-text)}
+.foot-contact div{margin-bottom:8px;display:flex;gap:8px;align-items:center;color:var(--footer-text)}
+
+/* contact row layout */
+.foot-contact .item{
+  display:flex; align-items:flex-start; gap:10px; margin-bottom:10px;
+  color:var(--footer-text);
+}
+.foot-contact .item i{
+  min-width:28px; min-height:28px; display:grid; place-items:center;
+  border-radius:8px; background:var(--footer-chip);
+  border:1px solid var(--footer-border);
+}
+.foot-contact .item .label{font-weight:800; min-width:84px}
+.foot-contact .item .value{color:var(--footer-text); text-decoration:none; font-weight:700}
+
+/* colorful icons - FORCE OVERRIDE */
+.foot-contact .item.addr i.fa-solid { color:#2563eb !important; }
+.foot-contact .item.phone i.fa-solid{ color:#0891b2 !important; }
+.foot-contact .item.mail i.fa-solid { color:#8b5cf6 !important; }
+.foot-contact .item.wa i.fa-brands  { color:#25D366 !important; }
+
+/* DEBUG: Test if CSS is working at all */
+.foot-contact .item i { 
+  font-size: 20px !important;
+  transform: scale(1.1) !important;
+}
+
+/* Alternative approach - direct class targeting */
+.fa-location-dot { color: #2563eb !important; }
+.fa-phone { color: #0891b2 !important; }
+.fa-envelope { color: #8b5cf6 !important; }
+.fa-whatsapp { color: #25D366 !important; }
+
+/* WhatsApp link styling (no separate "Chat") */
+.foot-contact .wa .wa-link{ color:#25D366; font-weight:900; text-decoration:none }
+.foot-contact .wa .wa-link:hover{ text-decoration:underline }
+
+/* ===== Contact card: make text like rest of footer, not bold ===== */
+.foot-contact .item { color: var(--footer-text); }
+
+.foot-contact .label,
+.foot-contact .value,
+.foot-contact .value a {
+  color: var(--footer-text) !important;   /* same color as footer text */
+  font-weight: 400 !important;            /* no bold */
+  text-decoration: none;
+  line-height: 1.55;
+}
+
+.foot-contact .value a:hover { text-decoration: underline; }
+
+/* WhatsApp: only the ICON green, not the text */
+.foot-contact .wa .value,
+.foot-contact .wa .value a,
+.foot-contact .wa .wa-link {
+  color: var(--footer-text) !important;   /* remove green text */
+  font-weight: 400 !important;
+}
+
+.theme-switch{display:flex;gap:10px;margin-top:14px;align-items:center;flex-wrap:wrap}
+.theme-switch .label{font-weight:800;color:var(--footer-text);opacity:.9}
+.theme-icon{width:38px;height:38px;border-radius:10px;border:1px solid var(--footer-border);background:var(--footer-chip);color:var(--footer-text);display:grid;place-items:center;cursor:pointer;transition:transform .15s ease,background .15s ease,border-color .15s ease}
+.theme-icon:hover{transform:translateY(-2px);background:rgba(255,255,255,.10)}
+.theme-icon.active{border-color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.16) inset}
+.footbar{margin-top:18px;padding-top:14px;border-top:1px solid var(--footer-border);display:flex;flex-direction:column;gap:8px;align-items:center}
+.footbar div{color:var(--footer-muted);font-size:14px;text-align:center}
+.footbar a{color:#9ec1ff;text-decoration:none}
+.footbar a:hover{color:#fff}
+
+/* BIRD sprite placeholder */
+#fwf-bird{position:fixed;top:0;left:0;width:120px;height:120px;z-index:60;pointer-events:none;filter:drop-shadow(0 6px 10px rgba(0,0,0,.25))}
+#fwf-bird img{width:100%;height:100%;object-fit:contain;image-rendering:auto}
+
+@media (max-width:500px){
+  .hero-title{font-size:28px}
+  .hero-subtitle{font-size:14px}
+  .btn{width:100%;padding:12px}
+  .newsletter{flex-direction:column}
+  .newsletter input{margin-bottom:10px}
+}
+</style>
+</head>
+<body class="theme-evening">
+  <div class="sky" aria-hidden="true"></div>
+
+  <div class="container">
+    <!-- HEADER -->
+    <header>
+      <div class="header-content">
+        <div class="brand">
+          <div class="logo-slot" role="img" aria-label="Evening indicator" title="Evening">
+            <div class="logo-layer logo-img-layer">
+              <a href="new-index.html">
+                <img src="assets/images/logo.png" alt="FWF logo" onerror="this.style.display='none'">
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <nav>
+          <ul class="nav-menu" role="menubar">
+            <li><a id="navHome" href="new-index.html">Home</a></li>
+            <li><a id="navCSR" href="csr.html">CSR</a></li>
+            <li><a id="navProjects" href="#projects">Project</a></li>
+            <li><a id="navAbout" href="about.html">About us</a></li>
+
+          </ul>
+        </nav>
+
+        <div class="controls">
+          <div class="lang-toggle" role="tablist" aria-label="Language switch">
+            <button class="lang-btn" type="button">HI</button>
+            <button class="lang-btn active" type="button">EN</button>
+          </div>
+          <button class="cta-btn" id="joinHeader" type="button">Join Now</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <span class="kick modern" aria-label="Together">
+            <span class="L T">T</span><span class="L O">O</span><span class="L G">G</span>
+            <span class="L E1">E</span><span class="L T2">T</span><span class="L H">H</span>
+            <span class="L E2">E</span><span class="L R">R</span>
+          </span>, We Turn Skills into Livelihoods
+        </h1>
+        <p class="hero-subtitle" id="heroSubtitle">From learning to earning — we're with you every step of the way.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" id="joinBtn" type="button">Start Your Journey</button>
+          <button class="btn-outline-orange" id="seeProjects" type="button">Explore Projects</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CSR ANCHOR -->
+    <section id="csr" aria-label="CSR anchor" style="margin-top:-20px; padding-top:20px;"></section>
+
+    <!-- PROJECTS -->
+    <section class="projects-section" id="projects">
+      <div class="section-header">
+        <h2 class="section-title" id="sectionTitle">Our Projects</h2>
+        <p class="section-subtitle" id="sectionSubtitle">Explore the initiatives making a difference</p>
+      </div>
+      <div id="cards" class="grid"></div>
+    </section>
+
+    <!-- JOIN US -->
+    <section class="registration-section" id="register">
+      <div class="reg-head"><h3 id="joinHeading">Join Us</h3></div>
+      <div class="join-grid">
+        <div class="video-wrap">
+          <video src="assets/images/Robot.mp4" autoplay muted loop playsinline controls></video>
+        </div>
+
+        <form id="regForm" class="reg-form" novalidate>
+          <div class="form-group">
+            <div class="form-field">
+              <input class="form-input" id="name" name="name" type="text" placeholder=" " required>
+              <label class="float-label" for="name" id="labelName">Full Name</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-field">
+              <input class="form-input" id="phone" name="phone" type="tel" placeholder=" " required>
+              <label class="float-label" for="phone" id="labelPhone">Phone</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-field">
+              <input class="form-input" id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder=" ">
+              <label class="float-label" for="email" id="labelEmail">Email</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-field">
+              <select class="form-select placeholder" id="projectSelect" name="project" required>
+                <option value="" selected disabled hidden></option>
+              </select>
+              <label class="float-label" for="projectSelect" id="labelProject">Select Project</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-primary" id="registerNowBtn" type="submit">Register Now</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ABOUT ANCHOR -->
+    <section id="about" aria-label="About anchor" style="margin-top:-20px; padding-top:20px;"></section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <div class="footer-wrap">
+          <div class="F">
+            <div>
+              <img class="footer-logo" src="assets/images/logo.png" alt="FWF" />
+              <div class="footer-tagline" id="footerTagline">Uniting skills, opportunities and livelihoods on one platform.</div>
+
+              <form class="newsletter" action="#" method="POST" autocomplete="off" onsubmit="return false;">
+                <input id="nlph" type="email" name="email" placeholder="Your email for updates" aria-label="Email for updates"/>
+                <button type="submit" id="nlBtn">Subscribe</button>
+              </form>
+
+              <div class="social" aria-label="Social links">
+                <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+              </div>
+
+              <div class="theme-switch" aria-label="Theme switch">
+                <span class="label" id="themeLbl">Theme:</span>
+                <button class="theme-icon" type="button" data-theme="morning" title="Morning"><i class="fa-solid fa-sun"></i></button>
+                <button class="theme-icon" type="button" data-theme="afternoon" title="Afternoon"><i class="fa-solid fa-cloud-sun"></i></button>
+                <button class="theme-icon" type="button" data-theme="evening" title="Evening"><i class="fa-solid fa-moon"></i></button>
+              </div>
+            </div>
+
+            <div class="foot-links">
+              <h4 id="quickLinksHd">Quick Links</h4>
+              <ul>
+                <li><a href="#projects" id="lnkProjects">Projects</a></li>
+                <li><a href="#register" id="lnkJoin">Join</a></li>
+                <li><a href="donation.html" id="lnkDonate">Donate</a></li>
+                <li><a href="about.html" id="lnkAbout">About</a></li>
+              </ul>
+            </div>
+
+            <div class="foot-contact">
+              <h4 id="contactHd">Contact</h4>
+
+              <div class="item addr">
+                <i class="fa-solid fa-location-dot"></i>
+                <span class="label" id="addrLbl">Address:</span>
+                <address id="addrVal" class="value" style="font-style:normal">
+                  <span>1398/1850 KDA Colony,</span><br>
+                  <span>Sagarpuri, Kanpur,</span><br>
+                  <span>UP — 208021, India</span>
+                </address>
+              </div>
+
+              <div class="item phone">
+                <i class="fa-solid fa-phone"></i>
+                <span class="label" id="phoneLbl">Phone:</span>
+                <a id="phoneVal" class="value" href="tel:+919580118412">+91 9580118412</a>
+              </div>
+
+              <div class="item mail">
+                <i class="fa-solid fa-envelope"></i>
+                <span class="label" id="emailLbl">Email:</span>
+                <a id="emailVal" class="value" href="mailto:info@fwfindia.org">info@fwfindia.org</a>
+              </div>
+
+              <div class="item wa">
+                <i class="fa-brands fa-whatsapp"></i>
+                <a class="value wa-link" href="https://wa.me/919580118412" target="_blank" rel="noopener"
+                   aria-label="WhatsApp chat with FWF">
+                  <span id="waLbl">WhatsApp</span>
+                </a>
+              </div>
+
+              <div style="margin-top:10px;color:var(--footer-muted)" id="regCerts">
+                Reg: 12A • 80G • CSR-1
+              </div>
+            </div>
+          </div>
+
+          <div class="footbar">
+            <div>© <span id="year"></span> <span id="rightsTxt">FWF – All Rights Reserved</span></div>
+            <div><a href="#" id="privacyTxt">Privacy</a> • <a href="#" id="termsTxt">Terms</a></div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- MODAL -->
+  <div id="modal" class="modal-backdrop" aria-hidden="true" aria-labelledby="modalTitle" role="dialog">
+    <div class="modalCard">
+      <div class="modalHead">
+        <h3 id="modalTitle">Project Details</h3>
+        <button class="closeX" aria-label="Close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modalBody">
+        <div class="unitLayout">
+          <aside id="unitNav" class="unitNav" aria-label="Unit list"></aside>
+          <section id="unitDetail" class="unitDetail" aria-live="polite"></section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BIRD (kept but disabled) -->
+  <div id="fwf-bird" aria-hidden="true" style="display:none"><img id="birdFrame" alt="Blue bird"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js" defer></script>
+
+<script>
+(function(){
+  const body = document.body;
+  const logoSlot = document.querySelector('.logo-slot');
+  const cardsEl = document.getElementById('cards');
+  const projectSelect = document.getElementById('projectSelect');
+
+  /* Theme handling */
+  function detectThemeByHour(h){ if(h>=5 && h<12) return 'theme-morning'; if(h>=12 && h<17) return 'theme-afternoon'; return 'theme-evening'; }
+  function applyTheme(cls){
+    body.classList.remove('theme-morning','theme-afternoon','theme-evening'); body.classList.add(cls);
+    const label = cls.replace('theme-','');
+    if(logoSlot){ logoSlot.setAttribute('aria-label',label+' indicator'); logoSlot.title=label; }
+    document.querySelectorAll('.theme-icon').forEach(b=> b.classList.toggle('active', b.dataset.theme===label));
+  }
+  applyTheme(detectThemeByHour(new Date().getHours()));
+  setInterval(()=>applyTheme(detectThemeByHour(new Date().getHours())), 10*60*1000);
+  document.querySelectorAll('.theme-icon').forEach(btn=> btn.addEventListener('click', ()=> applyTheme('theme-'+btn.dataset.theme)));
+
+  /* Smooth scroll & year */
+  document.getElementById('seeProjects')?.addEventListener('click', ()=> document.querySelector('#projects')?.scrollIntoView({behavior:'smooth'}));
+  document.getElementById('joinBtn')?.addEventListener('click',()=>document.querySelector('#register')?.scrollIntoView({behavior:'smooth'}));
+  document.getElementById('joinHeader')?.addEventListener('click',()=>document.querySelector('#register')?.scrollIntoView({behavior:'smooth'}));
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* Newsletter submit */
+  document.querySelector('.newsletter')?.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const v = document.getElementById('nlph')?.value?.trim();
+    if(!v){ alert(curLang==='hi' ? 'कृपया ईमेल डालें।' : 'Please enter your email.'); return; }
+    alert(curLang==='hi' ? 'धन्यवाद! अपडेट भेजेंगे।' : 'Thanks! We will keep you posted.');
+    e.target.reset();
+  });
+
+  /* ---------- DATA (Units + product lists) ---------- */
+  const projectsData = [
+    /* SURAKSHA */
+    {key:"suraksha", name:"Suraksha", icon:"fa-shield-heart", subtitle:"Health & hygiene products for safer communities.",
+      impacts:["Employment","Women Empowerment","Health"],
+      units:[
+        {name:"MediSan Liquids Unit", space:"~260 sqft", workers:"4", profit:"₹60k–90k/m",
+          products:[
+            {name:"Handwash (gel/foam)"},{name:"Antiseptic liquid"},{name:"Hand rub (70% IPA)"},{name:"Disinfectant surface spray"}
+          ]},
+        {name:"FreshWipe Converting Unit", space:"~240 sqft", workers:"4", profit:"₹40k–65k/m",
+          products:[{name:"Hygiene wet wipes"},{name:"Alcohol wipes"},{name:"Surface wipes (multipurpose)"}]},
+        {name:"MedBand Unit", space:"~220 sqft", workers:"3", profit:"₹25k–40k/m",
+          products:[{name:"Crepe bandage 75/100mm"},{name:"Elastic bandage"},{name:"Bandage clips"}]},
+        {name:"SteriGauze Pack Unit", space:"~220 sqft", workers:"3", profit:"₹22k–35k/m",
+          products:[{name:"Gauze rolls"},{name:"Non-woven dressing pads"}]},
+        {name:"PPE Lite Pack Unit", space:"~200 sqft", workers:"3", profit:"₹25k–38k/m",
+          products:[{name:"Bouffant caps"},{name:"Shoe covers"}]},
+        {name:"FirstAid & ClinicKit Unit", space:"~220 sqft", workers:"3", profit:"₹22k–35k/m",
+          products:[{name:"First-aid kits"},{name:"Clinic starter kits"}]},
+        {name:"VectorGuard Repellent Unit", space:"~240 sqft", workers:"3", profit:"₹35k–55k/m",
+          products:[{name:"Mosquito cream/gel"},{name:"Roll-on repellent"},{name:"Patches"}]},
+        {name:"HomeShield Net & Mesh Unit", space:"~260 sqft", workers:"3", profit:"₹28k–45k/m",
+          products:[{name:"Bed nets"},{name:"Window/door mesh kits"},{name:"Velcro installer kit"}]}
+      ]},
+    /* SWACHH BHARAT */
+    {key:"swachh-bharat", name:"Swachh Bharat", icon:"fa-soap", subtitle:"Home & surface care units for cleaner cities.",
+      impacts:["Employment","Sustainability"],
+      units:[
+        {name:"HomeCare Liquids Blend–Fill", space:"~280 sqft", workers:"4", profit:"₹45k–70k/m",
+          products:[{name:"Floor/phenyl cleaner"},{name:"Glass cleaner"},{name:"Toilet cleaner"},{name:"Multi-surface cleaner"}]},
+        {name:"Dishwash & Kitchen Care", space:"~240 sqft", workers:"3", profit:"₹30k–50k/m",
+          products:[{name:"Dishwash gel"},{name:"Steel polish"},{name:"Descaler"}]},
+        {name:"Laundry Care", space:"~280 sqft", workers:"4", profit:"₹45k–70k/m",
+          products:[{name:"Liquid detergent"},{name:"Fabric conditioner"},{name:"Stain remover"}]},
+        {name:"SoftSheet Tissue Converting", space:"~300 sqft", workers:"4", profit:"₹35k–55k/m",
+          products:[{name:"Kitchen towels"},{name:"Toilet tissue"},{name:"Facial tissue"}]},
+        {name:"ScrubCraft Scrub & Scour", space:"~200 sqft", workers:"3", profit:"₹25k–40k/m",
+          products:[{name:"Scrub pads"},{name:"Metal/nylon scourers"}]},
+        {name:"CleanTools Assembly", space:"~220 sqft", workers:"3", profit:"₹25k–38k/m",
+          products:[{name:"Mops"},{name:"Wipers"},{name:"Caddies"}]},
+        {name:"AromaShield Block & Gel", space:"~220 sqft", workers:"3", profit:"₹35k–55k/m",
+          products:[{name:"Toilet blocks"},{name:"Gel air fresheners"}]},
+        {name:"EcoBag Seal (Garbage Bags)", space:"~240 sqft", workers:"3", profit:"₹28k–45k/m",
+          products:[{name:"Garbage bag rolls (S/M/L)"}]}
+      ]},
+    /* HAPPY MEAL */
+    {key:"happy-meal", name:"Happy Meal", icon:"fa-bowl-food", subtitle:"Safe & value-added foods made locally.",
+      impacts:["Nutrition","Local Economy","Employment"],
+      units:[
+        {name:"SpiceCrafter Masala", space:"~260 sqft", workers:"4", profit:"₹45k–70k/m",
+          products:[{name:"Single spices"},{name:"Blends (garam/chaat/etc.)"}]},
+        {name:"MixMaster RTC", space:"~280 sqft", workers:"4", profit:"₹55k–85k/m",
+          products:[{name:"Dosa/Idli"},{name:"Upma"},{name:"Dhokla"}]},
+        {name:"StaplePack", space:"~240 sqft", workers:"3", profit:"₹28k–40k/m",
+          products:[{name:"Atta"},{name:"Sooji"},{name:"Rice flour"}]},
+        {name:"Roast & Sweet", space:"~260 sqft", workers:"4", profit:"₹45k–70k/m",
+          products:[{name:"Roasted nuts/peanuts"},{name:"Khakhra"},{name:"Chikki/Ladoo"}]},
+        {name:"PulseGrain Branding", space:"~220 sqft", workers:"3", profit:"₹25k–38k/m",
+          products:[{name:"Dals"},{name:"Rice & millets"}]},
+        {name:"Dry Chutney & Condiments", space:"~220 sqft", workers:"3", profit:"₹35k–55k/m",
+          products:[{name:"Garlic/Peanut/Coconut powders"},{name:"Podi"},{name:"Pickle premix"}]},
+        {name:"Tea/Coffee & Herbal (dry)", space:"~240 sqft", workers:"4", profit:"₹35k–55k/m",
+          products:[{name:"Tea premix/bags"},{name:"Lemonade/Jaljeera sachets"}]},
+        {name:"Cloud Kitchen (dry base ops)", space:"~300 sqft", workers:"4", profit:"₹60k–90k/m",
+          products:[{name:"Dry gravy bases"},{name:"Marinade/seasoning kits"}]}
+      ]},
+    /* GREEN ENERGY */
+    {key:"green-energy", name:"Green Energy", icon:"fa-solar-panel", subtitle:"Affordable clean-tech assembly & services.",
+      impacts:["Green Energy","Employment","Innovation"],
+      units:[
+        {name:"BrightLite LED Assembly", space:"~260 sqft", workers:"4", profit:"₹45k–70k/m",
+          products:[{name:"LED bulb"},{name:"Batten/tube"},{name:"Panel light"}]},
+        {name:"Solar Study Lamp & Lantern", space:"~260 sqft", workers:"4", profit:"₹40k–65k/m",
+          products:[{name:"Study lamp"},{name:"Solar lantern"}]},
+        {name:"Solar Home Lighting Kit", space:"~300 sqft", workers:"4", profit:"₹60k–95k/m",
+          products:[{name:"Controller"},{name:"LED lamps"},{name:"Battery pack"}]},
+        {name:"Street-Light Head & Battery-Swap", space:"~320 sqft", workers:"4", profit:"₹70k–1.1L/m",
+          products:[{name:"Street-light heads"},{name:"Battery swap service"}]},
+        {name:"Portable Power & DC-UPS", space:"~220 sqft", workers:"3", profit:"₹35k–55k/m",
+          products:[{name:"Router UPS"},{name:"USB/DC chargers"}]},
+        {name:"E-Cycle Conversion & Service", space:"~400 sqft", workers:"5", profit:"₹80k–1.2L/m",
+          products:[{name:"Hub-motor kits"},{name:"Install/AMC"}]},
+        {name:"Solar Components & Wiring Kits", space:"~220 sqft", workers:"3", profit:"₹30k–45k/m",
+          products:[{name:"MC4 leads"},{name:"Combiner boxes"}]},
+        {name:"O&M Cleaning & AMC", space:"~220 sqft", workers:"3", profit:"₹28k–45k/m",
+          products:[{name:"Panel cleaning"},{name:"Testing/repairs"}]}
+      ]},
+    /* DIY CRAFTS */
+    {key:"diy-crafts", name:"DIY Crafts", icon:"fa-gem", subtitle:"Creative & custom products with strong margins.",
+      impacts:["Women Empowerment","Skill Building"],
+      units:[
+        {name:"Jute & Canvas Bags Studio", space:"~260 sqft", workers:"4", profit:"₹30k–48k/m",
+          products:[{name:"Tote/Sling/Drawstring"},{name:"Custom print/branding"}]},
+        {name:"Jewellery Assembly & Carding", space:"~200 sqft", workers:"3", profit:"₹22k–35k/m",
+          products:[{name:"Beaded/oxidized sets"}]},
+        {name:"PaperCraft & Stationery", space:"~220 sqft", workers:"3", profit:"₹22k–35k/m",
+          products:[{name:"Cards"},{name:"Gift boxes"},{name:"Notepads"}]},
+        {name:"Macramé & Home Décor", space:"~220 sqft", workers:"3", profit:"₹22k–34k/m",
+          products:[{name:"Wall hangings"},{name:"Plant hangers"}]},
+        {name:"Personalised Print-on-Demand", space:"~260 sqft", workers:"4", profit:"₹35k–55k/m",
+          products:[{name:"Mugs"},{name:"T-shirts"},{name:"Cushions"}]},
+        {name:"Festive Hampers & Gifting", space:"~220 sqft", workers:"3", profit:"₹28k–45k/m",
+          products:[{name:"Torans"},{name:"Gift hampers"}]},
+        {name:"Eco & Upcycled Craft", space:"~220 sqft", workers:"3", profit:"₹25k–40k/m",
+          products:[{name:"Denim upcycle"},{name:"Chindi rugs"}]},
+        {name:"Candles & Bath Craft", space:"~220 sqft", workers:"3", profit:"₹30k–48k/m",
+          products:[{name:"Soy/Beeswax candles"},{name:"Bath salts"}]}
+      ]},
+    /* SWACHH JAL */
+    {key:"swachh-jal", name:"Swachh Jal", icon:"fa-droplet", subtitle:"Water purification & services for safe drinking.",
+      impacts:["Health","Sustainability"],
+      units:[
+        {name:"PureFlow Gravity & UF", space:"~260 sqft", workers:"4", profit:"₹35k–55k/m",
+          products:[{name:"Gravity purifiers"},{name:"UF purifiers"}]},
+        {name:"ROPro Assembly & QA", space:"~300 sqft", workers:"5", profit:"₹60k–95k/m",
+          products:[{name:"RO/UV/UF wall-mounts"}]},
+        {name:"CartroPack Cartridges & Spares", space:"~220 sqft", workers:"3", profit:"₹35k–55k/m",
+          products:[{name:"PP/GAC/CTO cartridges"},{name:"Housings"}]},
+        {name:"MediaMix Filtration Repack", space:"~220 sqft", workers:"3", profit:"₹30k–48k/m",
+          products:[{name:"Carbon"},{name:"Resin"},{name:"Iron-removal media"}]},
+        {name:"AquaTest QA & Field Kits", space:"~200 sqft", workers:"3", profit:"₹22k–34k/m",
+          products:[{name:"TDS/pH/Hardness kits"}]},
+        {name:"TankCare Cleaning & Disinfection", space:"~220 sqft", workers:"3", profit:"₹30k–45k/m",
+          products:[{name:"Tank cleaning service"}]},
+        {name:"HydroServe Install & AMC", space:"~220 sqft", workers:"3", profit:"₹30k–48k/m",
+          products:[{name:"Install packs"},{name:"AMC bundles"}]},
+        {name:"RainWise Harvest & Greywater", space:"~260 sqft", workers:"4", profit:"₹35k–55k/m",
+          products:[{name:"First-flush kits"},{name:"Filters"},{name:"Reuse kits"}]}
+      ]},
+    /* SAMMAN */
+    {key:"samman", name:"Samman", icon:"fa-shirt", subtitle:"Apparel manufacturing for steady livelihoods.",
+      impacts:["Employment","Women Empowerment"],
+      units:[
+        {name:"Women’s Basics Stitching", space:"~260 sqft", workers:"4", profit:"₹28k–45k/m",
+          products:[{name:"Petticoat"},{name:"Maxi"},{name:"Simple blouse"}]},
+        {name:"Men’s/Unisex Knits", space:"~280 sqft", workers:"4", profit:"₹40k–65k/m",
+          products:[{name:"T-shirts"},{name:"Track pants"},{name:"Shorts"}]},
+        {name:"Innerwear Stitching", space:"~240 sqft", workers:"3", profit:"₹30k–48k/m",
+          products:[{name:"Briefs/Trunks"},{name:"Camisoles"}]},
+        {name:"Kids & School Uniform", space:"~300 sqft", workers:"4", profit:"₹40k–65k/m",
+          products:[{name:"Shirts/Pants/Skirts"},{name:"House-T"}]},
+        {name:"Workwear & Institutional", space:"~300 sqft", workers:"4", profit:"₹45k–70k/m",
+          products:[{name:"Housekeeping"},{name:"Security"},{name:"Aprons/Caps"}]},
+        {name:"Footwear Assembly", space:"~300 sqft", workers:"4", profit:"₹55k–85k/m",
+          products:[{name:"EVA/PU sandals"},{name:"School sandals"}]},
+        {name:"Accessories & Small Goods", space:"~220 sqft", workers:"3", profit:"₹22k–35k/m",
+          products:[{name:"Scrunchies"},{name:"Belts"},{name:"Cloth bags"}]},
+        {name:"Branding & Finishing", space:"~220 sqft", workers:"3", profit:"₹25k–40k/m",
+          products:[{name:"Labels"},{name:"Ironing"},{name:"QC & Packing"}]}
+      ]},
+    /* SWEET HOME */
+    {key:"sweet-home", name:"Sweet Home", icon:"fa-house-chimney", subtitle:"Home utility products — stitched & assembled.",
+      impacts:["Employment","Local Economy"],
+      units:[
+        {name:"Bed & Bath Linen", space:"~280 sqft", workers:"4", profit:"₹40k–60k/m",
+          products:[{name:"Bedsheets"},{name:"Pillow covers"},{name:"Towel branding"}]},
+        {name:"Kitchen & Dining Textiles", space:"~240 sqft", workers:"3", profit:"₹30k–48k/m",
+          products:[{name:"Tablecloths"},{name:"Runners"},{name:"Aprons/Mitts"}]},
+        {name:"Curtains & Soft Furnishings", space:"~300 sqft", workers:"4", profit:"₹35k–55k/m",
+          products:[{name:"Curtains"},{name:"Cushion/Bolster covers"}]},
+        {name:"Storage & Organizers", space:"~240 sqft", workers:"3", profit:"₹30k–48k/m",
+          products:[{name:"Collapsible boxes"},{name:"Under-bed bags"},{name:"Wardrobe hangers"}]},
+        {name:"Floor & Mats", space:"~240 sqft", workers:"3", profit:"₹30k–48k/m",
+          products:[{name:"Doormats"},{name:"Rag rugs"},{name:"Bath mats"}]},
+        {name:"Cushion & Pillow", space:"~220 sqft", workers:"3", profit:"₹28k–45k/m",
+          products:[{name:"Fillers"},{name:"Outer covers"},{name:"Sofa protectors"}]},
+        {name:"Home Tool & Repair Kits", space:"~220 sqft", workers:"3", profit:"₹22k–35k/m",
+          products:[{name:"Basic tool kit"},{name:"Hook kit"},{name:"Sewing repair kit"}]},
+        {name:"Laundry & Organizing Accessories", space:"~220 sqft", workers:"3", profit:"₹25k–40k/m",
+          products:[{name:"Laundry bags"},{name:"Hampers"},{name:"Shoe organizers"}]}
+      ]},
+    /* HARIYALI */
+    {key:"hariyali", name:"Hariyali", icon:"fa-seedling", subtitle:"Green livelihoods with compost & small agri tools.",
+      impacts:["Sustainability","Local Economy"],
+      units:[
+        {name:"Compost & Potting Media", space:"~260 sqft", workers:"3", profit:"₹25k–40k/m",
+          products:[{name:"Vermicompost"},{name:"Potting mix"},{name:"Cocopeat"}]},
+        {name:"Seedling & Nursery Kits", space:"~240 sqft", workers:"3", profit:"₹25k–40k/m",
+          products:[{name:"Seed trays"},{name:"Grow bags"},{name:"Starter kits"}]},
+        {name:"Neem & Bio-inputs", space:"~220 sqft", workers:"3", profit:"₹28k–45k/m",
+          products:[{name:"Neem pesticide"},{name:"Bio-fertilizers"},{name:"Micro mix"}]},
+        {name:"Irrigation & Drip Kits", space:"~260 sqft", workers:"3", profit:"₹35k–55k/m",
+          products:[{name:"Drip/micro sprinklers"},{name:"Timer kits"}]},
+        {name:"Garden Tools & Hardware", space:"~220 sqft", workers:"3", profit:"₹22k–35k/m",
+          products:[{name:"Trowel/Pruner"},{name:"Watering can"},{name:"Gloves"}]},
+        {name:"Home Composting Systems", space:"~220 sqft", workers:"3", profit:"₹25k–40k/m",
+          products:[{name:"Home composter"},{name:"Accelerator"},{name:"Odour mix"}]},
+        {name:"Garden QA & Test Kits", space:"~200 sqft", workers:"3", profit:"₹20k–30k/m",
+          products:[{name:"pH/TDS pens"},{name:"Hardness/RC kits"}]},
+        {name:"Community Green Bundles", space:"~240 sqft", workers:"3", profit:"₹25k–40k/m",
+          products:[{name:"Kitchen garden box"},{name:"School garden kit"}]}
+      ]},
+    /* WORSHIP */
+    {key:"worship", name:"Worship", icon:"fa-hands-praying", subtitle:"Puja samagri & incense products with local branding.",
+      impacts:["Local Economy","Women Empowerment"],
+      units:[
+        {name:"Agarbatti & Dhoop", space:"~220 sqft", workers:"3", profit:"₹28k–45k/m",
+          products:[{name:"Sticks"},{name:"Cones"},{name:"Carding & pack"}]},
+        {name:"Camphor & Sambrani", space:"~220 sqft", workers:"3", profit:"₹28k–45k/m",
+          products:[{name:"Camphor tablets"},{name:"Sambrani cups/blends"}]},
+        {name:"Fragrance Blend & Attar Fill", space:"~220 sqft", workers:"3", profit:"₹30k–50k/m",
+          products:[{name:"Temple blends"},{name:"Attar/Oils"}]},
+        {name:"Puja Essentials Pack", space:"~220 sqft", workers:"3", profit:"₹25k–40k/m",
+          products:[{name:"Wicks"},{name:"Kumkum/Haldi/Chandan"},{name:"Diya sets"}]},
+        {name:"Puja Vastra & Décor", space:"~220 sqft", workers:"3", profit:"₹28k–45k/m",
+          products:[{name:"Altar cloths"},{name:"Chunri"},{name:"Torans"}]},
+        {name:"Thali & Metalware Kitting", space:"~220 sqft", workers:"3", profit:"₹30k–50k/m",
+          products:[{name:"Steel/Brass sets"},{name:"Branding"}]},
+        {name:"Festival & Ritual Kits", space:"~220 sqft", workers:"3", profit:"₹30k–48k/m",
+          products:[{name:"Diwali/Navratri kits"}]},
+        {name:"Temple/B2B Supply", space:"~240 sqft", workers:"3", profit:"₹35k–55k/m",
+          products:[{name:"Bulk agarbatti/dhoop/camphor"}]}
+      ]},
+    /* SHIKSHA */
+    {key:"shiksha", name:"Shiksha", icon:"fa-pen-ruler", subtitle:"Affordable stationery & learning essentials.",
+      impacts:["Education","Employment"],
+      units:[
+        {name:"Notebook Printing & Binding", space:"~300 sqft", workers:"4", profit:"₹45k–70k/m",
+          products:[{name:"A5/A4 notebooks"},{name:"Long books"},{name:"Graph/Practical"}]},
+        {name:"Pen/Pencil & Geometry Kitting", space:"~240 sqft", workers:"3", profit:"₹30k–48k/m",
+          products:[{name:"Pens/Pencils"},{name:"Geometry box"}]},
+        {name:"Art & Craft Supplies Pack", space:"~220 sqft", workers:"3", profit:"₹25k–40k/m",
+          products:[{name:"Crayons/Colours"},{name:"Brush/Paper kits"}]},
+        {name:"Folders & PP Stationery", space:"~260 sqft", workers:"3", profit:"₹28k–45k/m",
+          products:[{name:"PP Button/Slider"},{name:"L-Folders"}]},
+        {name:"School Bag Branding & Pouches", space:"~260 sqft", workers:"3", profit:"₹30k–48k/m",
+          products:[{name:"School bags"},{name:"Pencil pouches"}]},
+        {name:"Teaching Aids & Charts", space:"~220 sqft", workers:"3", profit:"₹25k–40k/m",
+          products:[{name:"Charts/Maps"},{name:"Flashcards"}]},
+        {name:"Ready School/CSR Kits", space:"~220 sqft", workers:"3", profit:"₹22k–35k/m",
+          products:[{name:"School/Exam/Art kits"}]},
+        {name:"Classroom Hardware Branding", space:"~280 sqft", workers:"3", profit:"₹30k–50k/m",
+          products:[{name:"White/Notice boards"}]}
+      ]}
+  ];
+
+  /* Project-level cost ranges for finance block */
+  const COSTS = {
+    "suraksha":{setup:"₹1.2–1.8L",working:"₹0.30–0.50L",upfront:"₹10k–25k"},
+    "swachh-bharat":{setup:"₹1.0–1.8L",working:"₹0.25–0.45L",upfront:"₹10k–20k"},
+    "happy-meal":{setup:"₹1.3–1.8L",working:"₹0.25–0.45L",upfront:"₹12k–25k"},
+    "green-energy":{setup:"₹2.4–6.0L",working:"₹0.60–1.50L",upfront:"₹25k–60k"},
+    "diy-crafts":{setup:"₹0.9–1.3L",working:"₹0.15–0.30L",upfront:"₹8k–15k"},
+    "swachh-jal":{setup:"₹1.7–6.0L",working:"₹0.50–1.50L",upfront:"₹20k–50k"},
+    "samman":{setup:"₹1.6–2.7L",working:"₹0.30–0.60L",upfront:"₹15k–30k"},
+    "sweet-home":{setup:"₹1.1–2.2L",working:"₹0.25–0.50L",upfront:"₹10k–22k"},
+    "hariyali":{setup:"₹0.6–2.4L",working:"₹0.15–0.45L",upfront:"₹6k–20k"},
+    "worship":{setup:"₹0.96–1.5L",working:"₹0.15–0.35L",upfront:"₹8k–18k"},
+    "shiksha":{setup:"₹1.2–1.6L",working:"₹0.25–0.40L",upfront:"₹10k–20k"},
+  };
+
+  const ACCENTS = ['#22c55e','#3b82f6','#8b5cf6','#ec4899','#eab308','#06b6d4','#f97316','#14b8a6','#a3e635'];
+
+  // ========== Money helpers (parse ranges like ₹1.2–1.8L) ==========
+  const scale = s => /l/i.test(s)?100000:/k/i.test(s)?1000:1;
+  function parsePart(p, implied){ const m=String(p).match(/[\d.]+/); return m?parseFloat(m[0])*(implied||1):0; }
+  function avgFromRange(str){
+    if(!str) return 0;
+    const s=String(str).toLowerCase();
+    const parts=s.split(/[–-]/);
+    const scl=scale(parts[parts.length-1]||s);
+    if(parts.length===1) return Math.round(parsePart(parts[0], scl));
+    const a=parsePart(parts[0], scl), b=parsePart(parts[1], scl);
+    return Math.round((a+b)/2);
+  }
+  const inr = n => n?('₹'+Number(Math.round(n)).toLocaleString('en-IN')):'—';
+
+  // Render project cards + select options
+  projectsData.forEach((p,i)=>{
+    const card=document.createElement('article'); card.className='card';
+    card.innerHTML=`<div class="top">
+        <div class="logoBubble"><i class="fa-solid ${p.icon}"></i></div>
+        <div><div class="title">${p.name}</div><p class="subtitle">${p.subtitle}</p></div>
+      </div>
+      <div class="impacts">${p.impacts.map(x=>`<span class="impact"><i class="fa-solid fa-circle-check"></i>${x}</span>`).join('')}</div>
+      <div class="ctas"><button class="btn btn-primary accent-outline" data-key="${p.key}">View Details</button></div>`;
+    cardsEl.appendChild(card);
+    card.querySelector('.accent-outline').style.setProperty('--accent', ACCENTS[i % ACCENTS.length]);
+    const opt=document.createElement('option'); opt.value=p.key; opt.textContent=p.name; projectSelect.appendChild(opt);
+  });
+
+  /* ===== Modal (master–detail with accordion left) ===== */
+  const modal=document.getElementById('modal'),
+        unitNav=document.getElementById('unitNav'),
+        unitDetail=document.getElementById('unitDetail'),
+        modalTitle=document.getElementById('modalTitle');
+
+  let currentProject=null, currentUnitIndex=0, currentProductName=null;
+
+  function openModal(){ modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+  function closeModal(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+  window.closeModal=closeModal;
+  modal.addEventListener('click',e=>{ if(e.target===modal) closeModal(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape' && modal.classList.contains('open')) closeModal(); });
+
+  // Scroll slider attach
+  function attachScrollSlider(panel){
+    panel.querySelector('.panelSlider')?.remove();
+    panel.classList.add('hasSlider');
+    const holder=document.createElement('div'); holder.className='panelSlider';
+    holder.innerHTML='<input type="range" class="vscroll" orient="vertical" min="0" max="1000" value="0" aria-label="Scroll">';
+    panel.appendChild(holder);
+    const slider=holder.querySelector('.vscroll');
+
+    const syncFromPanel=()=>{
+      const max=Math.max(1,panel.scrollHeight - panel.clientHeight);
+      slider.value=Math.round(panel.scrollTop/max*1000);
+    };
+    const syncFromSlider=()=>{
+      const max=Math.max(1,panel.scrollHeight - panel.clientHeight);
+      panel.scrollTop=(slider.value/1000)*max;
+    };
+    panel.addEventListener('scroll',syncFromPanel);
+    slider.addEventListener('input',syncFromSlider);
+    new ResizeObserver(syncFromPanel).observe(panel);
+    setTimeout(syncFromPanel,50);
+  }
+
+  function showProject(project){
+    currentProject=project; currentUnitIndex=0; currentProductName=null;
+    modalTitle.textContent = project.name + ' — ' + L10N[curLang].unitsLabel;
+    unitNav.innerHTML=''; unitDetail.innerHTML='';
+
+    project.units.forEach((u,idx)=>{
+      const block=document.createElement('div');
+      block.className='unitBlock'+(idx===0?' open':'');
+      block.dataset.index=idx;
+
+      const hdr=document.createElement('button');
+      hdr.className='unitHdr'+(idx===0?' selected':''); hdr.type='button';
+      hdr.innerHTML=`<div class="unitIcon"><i class="fa-solid fa-industry"></i></div>
+        <div><div class="uName">${u.name}</div><div class="uMeta">${u.space} • ${u.workers} ${L10N[curLang].workersLabel}</div></div>
+        <i class="fa-solid fa-chevron-down caret"></i>`;
+      block.appendChild(hdr);
+
+      const ul=document.createElement('ul'); ul.className='prodList';
+      (u.products||[]).forEach(p=>{
+        const li=document.createElement('li');
+        li.innerHTML=`<button class="prodItem" type="button" data-index="${idx}" data-prod="${p.name}">${p.name}</button>`;
+        ul.appendChild(li);
+      });
+      block.appendChild(ul);
+      unitNav.appendChild(block);
+    });
+
+    // events
+    unitNav.addEventListener('click',onLeftClick);
+    attachScrollSlider(unitNav);
+    renderDetail('unit',0); // default: first unit cumulative
+  }
+
+  function onLeftClick(e){
+    const prodBtn=e.target.closest('.prodItem');
+    if(prodBtn){
+      const idx=parseInt(prodBtn.dataset.index,10);
+      const pname=prodBtn.dataset.prod;
+      unitNav.querySelectorAll('.prodItem').forEach(b=>b.classList.remove('active'));
+      prodBtn.classList.add('active');
+      unitNav.querySelectorAll('.unitHdr').forEach(h=>h.classList.remove('selected'));
+      unitNav.querySelector(`.unitBlock[data-index="${idx}"] .unitHdr`)?.classList.add('selected');
+      renderDetail('product',idx,pname);
+      return;
+    }
+    const hdr=e.target.closest('.unitHdr');
+    if(hdr){
+      const block=hdr.parentElement;
+      const idx=parseInt(block.dataset.index,10);
+      block.classList.toggle('open');
+      unitNav.querySelectorAll('.unitHdr').forEach(h=>h.classList.remove('selected'));
+      hdr.classList.add('selected');
+      unitNav.querySelectorAll('.prodItem').forEach(b=>b.classList.remove('active'));
+      renderDetail('unit',idx);
+    }
+  }
+
+  function computeCosts(mode, unit, projectKey, productCount){
+    const base=COSTS[projectKey]||{};
+    const totalSetup = avgFromRange(base.setup);
+    const totalWork  = avgFromRange(base.working);
+    const totalUp    = avgFromRange(base.upfront);
+
+    // If product object has explicit cost, use it (setup/working/upfront numbers)
+    if(mode==='product' && typeof unit._selectedProduct==='object' && unit._selectedProduct.cost){
+      const c=unit._selectedProduct.cost;
+      return {
+        setup: c.setup ?? Math.round(totalSetup/(productCount||1)),
+        working: c.working ?? Math.round(totalWork/(productCount||1)),
+        upfront: c.upfront ?? Math.round(totalUp/(productCount||1))
+      };
+    }
+
+    if(mode==='product'){
+      const n=Math.max(1, productCount||1);
+      return { setup: Math.round(totalSetup/n), working: Math.round(totalWork/n), upfront: Math.round(totalUp/n) };
+    }
+    // mode==='unit' cumulative (all products)
+    return { setup: totalSetup, working: totalWork, upfront: totalUp };
+  }
+
+  function renderDetail(mode, idx, prodName=null){
+    currentUnitIndex=idx; currentProductName = (mode==='product')?prodName:null;
+    const t=L10N[curLang], u=currentProject.units[idx];
+    const prodCount=(u.products||[]).length;
+
+    // store selected product ref (for explicit cost, if provided later)
+    if(mode==='product'){
+      u._selectedProduct = (u.products||[]).find(p=>p.name===prodName) || {name:prodName};
+    }else{
+      u._selectedProduct = null;
+    }
+
+    const cost = computeCosts(mode, u, currentProject.key, prodCount);
+
+    unitDetail.innerHTML=`
+      <div class="detailTitle">
+        <h4>${u.name}${mode==='product' && prodName?` — ${prodName}`:''}</h4>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="detailBadge"><i class="fa-solid fa-circle-check"></i>&nbsp; ${mode==='product' ? (t.profitable) : (t.profitable+' • All Products')}</span>
+          <button class="btn btn-primary btn-register" type="button">${t.registerNow}</button>
+        </div>
+      </div>
+
+      <div class="detailMeta">
+        <span><i class="fa-solid fa-vector-square"></i> ${u.space}</span>
+        <span><i class="fa-solid fa-user-group"></i> ${u.workers} ${t.workersLabel}</span>
+        <span><i class="fa-solid fa-layer-group"></i> ${mode==='product'?'1 of '+prodCount: (prodCount||1)+' products'}</span>
+        ${u.profit?`<span><i class="fa-solid fa-indian-rupee-sign"></i> ${u.profit}</span>`:''}
+      </div>
+
+      <div class="detailBlock">
+        <h5>${t.setupFinance} ${mode==='product' ? '(Selected Product)' : '(Cumulative Unit)'}</h5>
+        <div class="kv">
+          <div class="row"><span class="key">${t.startCost}</span><span class="val">${inr(cost.setup)}</span></div>
+          <div class="row"><span class="key">${t.workingCapital}</span><span class="val">${inr(cost.working)}</span></div>
+          <div class="row"><span class="key">${t.upfront}</span><span class="val">${inr(cost.upfront)}</span></div>
+        </div>
+      </div>
+
+      <div class="detailBlock">
+        <h5>${t.productList}</h5>
+        <ul>${(u.products||[]).map(p=>`<li>${p.name}</li>`).join('')}</ul>
+      </div>
+
+      <div class="detailBlock">
+        <h5>${t.tc}</h5>
+        <div class="tc"><ol><li>${t.tc1}</li><li>${t.tc2}</li><li>${t.tc3}</li></ol></div>
+      </div>`;
+
+    unitDetail.querySelector('.btn-register')?.addEventListener('click',()=>{
+      const selected = (mode==='product' && prodName) ? `${u.name} → ${prodName}` : `${u.name} (All products)`;
+      openQuickRegister(currentProject, u, selected);
+    });
+
+    attachScrollSlider(unitDetail);
+  }
+
+  cardsEl.addEventListener('click',e=>{
+    const btn=e.target.closest('button[data-key]'); if(!btn) return;
+    const project=projectsData.find(x=>x.key===btn.dataset.key); if(!project) return;
+    showProject(project); openModal();
+  });
+
+  /* ===== Quick Register (unit/product specific) ===== */
+  function openQuickRegister(project, unit, refLabel){
+    document.getElementById('quickReg')?.remove();
+    const wrap=document.createElement('div');
+    wrap.id='quickReg';
+    Object.assign(wrap.style,{
+      position:'fixed', inset:'0', background:'rgba(15,23,42,.75)', zIndex:9999,
+      display:'flex', alignItems:'center', justifyContent:'center'
+    });
+
+    wrap.innerHTML=`
+      <div style="background:#fff;max-width:520px;width:96vw;border-radius:18px;padding:20px 18px 16px;position:relative;color:#0f172a;box-shadow:0 10px 30px rgba(0,0,0,.25)">
+        <button id="qrClose" style="position:absolute;right:10px;top:8px;border:none;background:none;font-size:22px;color:#f97316;cursor:pointer">×</button>
+        <h3 style="margin:0 0 4px;font:800 20px 'Plus Jakarta Sans'">Register for: ${project.name}</h3>
+        <div style="margin:0 0 12px;color:#334155;font-weight:700">Unit/Product: ${refLabel}</div>
+
+        <div style="display:grid;gap:10px">
+          <input id="qrName" placeholder="Full Name" style="padding:12px;border:1px solid #e5e7eb;border-radius:10px">
+          <input id="qrPhone" placeholder="Mobile (10 digits)" inputmode="numeric" style="padding:12px;border:1px solid #e5e7eb;border-radius:10px">
+          <input id="qrEmail" placeholder="Email" type="email" style="padding:12px;border:1px solid #e5e7eb;border-radius:10px">
+          <input id="qrAadhaar" placeholder="Aadhaar No (12 digits)" inputmode="numeric" style="padding:12px;border:1px solid #e5e7eb;border-radius:10px">
+          <input id="qrPAN" placeholder="PAN (ABCDE1234F)" style="padding:12px;border:1px solid #e5e7eb;border-radius:10px;text-transform:uppercase">
+          <button id="qrSubmit" class="btn btn-primary" style="width:100%;margin-top:4px">Proceed to Payment</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(wrap);
+
+    wrap.querySelector('#qrClose').onclick=()=>wrap.remove();
+    wrap.addEventListener('click',e=>{ if(e.target===wrap) wrap.remove(); });
+
+    wrap.querySelector('#qrSubmit').onclick=()=>{
+      const name=wrap.querySelector('#qrName').value.trim();
+      const phone=wrap.querySelector('#qrPhone').value.trim();
+      const email=wrap.querySelector('#qrEmail').value.trim();
+      const aadhaar=wrap.querySelector('#qrAadhaar').value.trim();
+      const pan=(wrap.querySelector('#qrPAN').value.trim()||'').toUpperCase();
+
+      const okPhone=/^\d{10}$/.test(phone);
+      const okAadhaar=/^\d{12}$/.test(aadhaar);
+      const okPAN=/^[A-Z]{5}\d{4}[A-Z]$/.test(pan);
+      const okEmail = email ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) : false;
+
+      if(!name || !okPhone || !okEmail || !okAadhaar || !okPAN){
+        alert('Please enter valid details: Name, Mobile (10), Email, Aadhaar (12), PAN (ABCDE1234F).');
+        return;
+      }
+      wrap.remove();
+      showPaymentPopup({name, phone, email, project: project.key, unit: refLabel, aadhaar, pan});
+    };
+  }
+
+  /* ===== Main Join form (header section) ===== */
+  document.getElementById('regForm')?.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const project = document.getElementById('projectSelect').value;
+
+    if(!name || !phone || !project){
+      alert(curLang==='hi' ? 'कृपया सभी डिटेल भरें।' : 'Please fill all required details.');
+      return;
+    }
+
+    showPaymentPopup({name, phone, email, project});
+  });
+
+  function showPaymentPopup(details) {
+    document.getElementById('paymentPopup')?.remove();
+
+    const popup = document.createElement('div');
+    popup.id = 'paymentPopup';
+    Object.assign(popup.style,{
+      position:'fixed',top:'0',left:'0',width:'100vw',height:'100vh',
+      background:'rgba(15,23,42,0.75)',zIndex:'9999',display:'flex',
+      alignItems:'center',justifyContent:'center'
+    });
+
+    const meta = (details.unit)
+      ? `<div style="font-size:13px;color:#334155;margin:6px 0 10px"><b>Project:</b> ${details.project} &nbsp; | &nbsp; <b>Unit:</b> ${details.unit}</div>`
+      : '';
+
+    popup.innerHTML = `
+      <div style="background:#fff;max-width:420px;width:96vw;padding:28px 18px 18px;border-radius:18px;box-shadow:0 8px 32px rgba(0,0,0,.18);position:relative;color:#0f172a;">
+        <button id="closePayPopup" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:22px;cursor:pointer;color:#f97316;">×</button>
+        <h2 style="margin-bottom:6px;font-size:22px;font-weight:900;color:#f97316;">${curLang==='hi' ? 'पेमेंट करें' : 'Complete Payment'}</h2>
+        ${meta}
+        <img src="assets/images/QRimg.jpg" alt="Payment QR" style="width:180px;display:block;margin:0 auto 12px;border-radius:10px;border:1px solid #eee;">
+        <div style="font-size:15px;margin-bottom:10px;">
+          <b>Account number:</b> 9580118412<br>
+          <b>Account type:</b> Current<br>
+          <b>Account holder:</b> FOUNDRIS WELFARE FOUNDATION<br>
+          <b>UPI ID:</b> fwf10@kotak<br>
+          <b>Branch IFSC:</b> KKBK0005355
+        </div>
+        <div style="margin-bottom:12px;color:#0f172a;font-size:14px;">
+          ${curLang==='hi' ? 'कृपया पेमेंट करें और नीचे बटन दबाएं।' : 'Please make payment and click below.'}
+        </div>
+        <button id="confirmPaymentBtn" style="background:#22c55e;color:#fff;font-weight:800;padding:10px 18px;border-radius:8px;border:none;cursor:pointer;font-size:16px;">
+          ${curLang==='hi' ? 'पेमेंट हो गया' : 'I have paid'}
+        </button>
+        <div id="txnInputWrap" style="display:none;margin-top:16px;">
+          <label for="txnNumber" style="font-weight:700;display:block;margin-bottom:6px;">${curLang==='hi' ? 'ट्रांजेक्शन नंबर डालें:' : 'Enter Transaction Number:'}</label>
+          <input id="txnNumber" type="text" style="width:100%;padding:10px;border-radius:8px;border:1px solid #ddd;font-size:15px;margin-bottom:10px;">
+          <button id="finalSubmitBtn" style="background:#f97316;color:#fff;font-weight:800;padding:10px 18px;border-radius:8px;border:none;cursor:pointer;font-size:16px;">
+            ${curLang==='hi' ? 'सबमिट करें' : 'Submit'}
+          </button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(popup);
+
+    document.getElementById('closePayPopup').onclick = () => popup.remove();
+    document.getElementById('confirmPaymentBtn').onclick = function() {
+      document.getElementById('txnInputWrap').style.display = 'block';
+      this.style.display = 'none';
+    };
+    document.getElementById('finalSubmitBtn').onclick = function() {
+      const txn = document.getElementById('txnNumber').value.trim();
+      if (!txn) {
+        alert(curLang==='hi' ? 'कृपया ट्रांजेक्शन नंबर डालें।' : 'Please enter transaction number.');
+        return;
+      }
+      popup.remove();
+      alert(curLang==='hi'
+        ? 'धन्यवाद! आपका रजिस्ट्रेशन पूरा हुआ। जल्द ही स्वागत मेल भेजा जाएगा।'
+        : 'Thank you! Registration complete. Welcome mail will be sent soon.');
+      document.getElementById('regForm')?.reset();
+      document.getElementById('projectSelect')?.classList.add('placeholder');
+    };
+  }
+
+  /* ---------- LANGUAGE SWITCH ---------- */
+  const L10N = {
+    en:{
+      navHome:'Home', navCSR:'CSR', navProjects:'Project', navAbout:'About us',
+      heroSubtitle:"From learning to earning — we're with you every step of the way.",
+      joinHeader:'Join Now', startJourney:'Start Your Journey', explore:'Explore Projects',
+      sectionTitle:'Our Projects', sectionSubtitle:'Explore the initiatives making a difference',
+      joinHeading:'Join Us', labelName:'Full Name', labelPhone:'Phone', labelEmail:'Email', labelProject:'Select Project',
+      registerNow:'Register Now', viewDetails:'View Details',
+      modalTitle:'Project Details', unitsLabel:'Units', workersLabel:'workers',
+      profitable:'Profitable',
+      productList:'Product List', setupFinance:'Setup & Finance',
+      startCost:'Project Start Cost', workingCapital:'Working Capital', upfront:'Beneficiary Upfront',
+      tc:'T&C', tc1:'Beneficiary membership must be active.', tc2:'Eligible for project funding after 12 months.', tc3:'Must participate in NGO welfare projects.',
+      footerTag:'Uniting skills, opportunities and livelihoods on one platform.',
+      quick:'Quick Links', contact:'Contact', addr:'Address:', phone:'Phone:', email:'Email:',
+      whatsapp:'WhatsApp', rights:'FWF – All Rights Reserved', privacy:'Privacy', terms:'Terms', theme:'Theme:', subscribe:'Subscribe', emailPH:'Your email for updates'
+    },
+    hi:{
+      navHome:'होम', navCSR:'CSR', navProjects:'प्रोजेक्ट', navAbout:'हमारे बारे में',
+      heroSubtitle:'सीखने से कमाने तक — हर कदम पर हम साथ हैं।',
+      joinHeader:'अभी जुड़ें', startJourney:'यात्रा शुरू करें', explore:'प्रोजेक्ट देखें',
+      sectionTitle:'हमारे प्रोजेक्ट', sectionSubtitle:'जो काम सच में असर ला रहे हैं',
+      joinHeading:'हमसे जुड़ें', labelName:'पूरा नाम', labelPhone:'फोन', labelEmail:'ईमेल', labelProject:'प्रोजेक्ट चुनें',
+      registerNow:'रजिस्टर करें', viewDetails:'डिटेल देखें',
+      modalTitle:'प्रोजेक्ट डिटेल', unitsLabel:'यूनिट', workersLabel:'लोग',
+      profitable:'कमाई वाला', productList:'उत्पाद सूची', setupFinance:'सेटअप और फाइनेंस',
+      startCost:'शुरुआती खर्च', workingCapital:'वर्किंग कैपिटल', upfront:'लाभार्थी का एडवांस',
+      tc:'नियम', tc1:'लाभार्थी की मेंबरशिप एक्टिव हो।', tc2:'12 महीने बाद फंडिंग की पात्रता।', tc3:'NGO के वेलफेयर कामों में भाग ज़रूर लें।',
+      footerTag:'कौशल, मौके और रोज़गार — सब एक प्लेटफ़ॉर्म पर।',
+      quick:'क्विक लिंक', contact:'संपर्क', addr:'पता:', phone:'फोन:', email:'ईमेल:',
+      whatsapp:'व्हाट्सऐप', rights:'FWF – सर्वाधिकार सुरक्षित', privacy:'प्राइवेसी', terms:'टर्म्स', theme:'थीम:', subscribe:'सब्सक्राइब', emailPH:'अपडेट के लिए ईमेल'
+    }
+  };
+  let curLang='en';
+
+  function setLang(lang){
+    curLang=(lang==='hi'||lang==='en')?lang:'en';
+
+    document.querySelectorAll('.lang-btn').forEach(b=> b.classList.toggle('active', b.textContent.trim().toLowerCase()===curLang));
+
+    const t=L10N[curLang], $=(id)=>document.getElementById(id);
+
+    $('navHome')&&($('navHome').textContent=t.navHome);
+    $('navCSR')&&($('navCSR').textContent=t.navCSR);
+    $('navProjects')&&($('navProjects').textContent=t.navProjects);
+    $('navAbout')&&($('navAbout').textContent=t.navAbout);
+
+    $('heroSubtitle')&&($('heroSubtitle').textContent=t.heroSubtitle);
+    $('joinHeader')&&($('joinHeader').textContent=t.joinHeader);
+    $('joinBtn')&&($('joinBtn').textContent=t.startJourney);
+    $('seeProjects')&&($('seeProjects').textContent=t.explore);
+
+    $('sectionTitle')&&($('sectionTitle').textContent=t.sectionTitle);
+    $('sectionSubtitle')&&($('sectionSubtitle').textContent=t.sectionSubtitle);
+
+    $('joinHeading')&&($('joinHeading').textContent=t.joinHeading);
+    $('labelName')&&($('labelName').textContent=t.labelName);
+    $('labelPhone')&&($('labelPhone').textContent=t.labelPhone);
+    $('labelEmail')&&($('labelEmail').textContent=t.labelEmail);
+    $('labelProject')&&($('labelProject').textContent=t.labelProject);
+    $('registerNowBtn')&&($('registerNowBtn').textContent=t.registerNow);
+
+    document.querySelectorAll('.accent-outline').forEach(btn=> btn.textContent=t.viewDetails);
+
+    $('modalTitle')&&($('modalTitle').textContent=t.modalTitle);
+    if(currentProject){ $('modalTitle').textContent = currentProject.name + ' — ' + t.unitsLabel; renderDetail(currentProductName?'product':'unit', currentUnitIndex, currentProductName); }
+
+    $('footerTagline')&&($('footerTagline').textContent=t.footerTag);
+    $('quickLinksHd')&&($('quickLinksHd').textContent=t.quick);
+    $('contactHd')&&($('contactHd').textContent=t.contact);
+    $('addrLbl')&&($('addrLbl').textContent=t.addr);
+    $('phoneLbl')&&($('phoneLbl').textContent=t.phone);
+    $('emailLbl')&&($('emailLbl').textContent=t.email);
+    $('waLbl')&&($('waLbl').textContent=t.whatsapp);
+    $('rightsTxt')&&($('rightsTxt').textContent=t.rights);
+    $('privacyTxt')&&($('privacyTxt').textContent=t.privacy);
+    $('termsTxt')&&($('termsTxt').textContent=t.terms);
+    $('themeLbl')&&($('themeLbl').textContent=t.theme);
+    $('lnkProjects')&&($('lnkProjects').textContent=t.navProjects);
+    $('lnkJoin')&&($('lnkJoin').textContent=t.joinHeader);
+    $('lnkDonate')&&($('lnkDonate').textContent=curLang==='hi'?'डोनेट':'Donate');
+    $('lnkAbout')&&($('lnkAbout').textContent=t.navAbout);
+
+    const nl=document.getElementById('nlph'); if(nl){ nl.placeholder=t.emailPH; }
+    const nb=document.getElementById('nlBtn'); if(nb){ nb.textContent=t.subscribe; }
+  }
+
+  document.querySelectorAll('.lang-btn').forEach(btn=>{
+    btn.addEventListener('click',()=> setLang(btn.textContent.trim().toLowerCase()));
+  });
+  setLang(document.querySelector('.lang-btn.active')?.textContent.trim().toLowerCase()||'en');
+
+  /* ===== BIRD (disabled, code retained) ===== */
+  const BIRD_ENABLED=false;
+  if(BIRD_ENABLED){
+    /* original bird animation code here (kept disabled) */
+  }
+
+})();
+</script>
+</body>
+</html>

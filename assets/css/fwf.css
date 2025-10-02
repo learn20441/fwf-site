@@ -1,0 +1,56 @@
+:root{
+--brand1:#1e3a8a; /* royal blue */
+--brand2:#0f766e; /* teal */
+--accent:#f59e0b; /* amber */
+--ink:#0f172a; /* slate-900 */
+--muted:#64748b; /* slate-500 */
+--bg:#f8fafc; /* slate-50 */
+--card:#ffffff;
+--border:#e2e8f0;
+--grad: linear-gradient(135deg,var(--brand1) 0%, var(--brand2) 50%, #22c55e 100%);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.container{width:100%;max-width:1160px;margin:0 auto;padding:0 16px}
+
+
+/* Topbar */
+.topbar{background:var(--grad);color:#fff}
+.topbar .row{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{width:40px;height:40px;object-fit:contain;border-radius:10px;background:rgba(255,255,255,.2)}
+.brand .title{font-weight:800;letter-spacing:.2px}
+.brand .tag{font-size:12px;opacity:.9;margin-top:-4px}
+
+
+.nav{display:flex;align-items:center;gap:18px}
+.nav a{padding:8px 10px;border-radius:10px;color:#fff;opacity:.95}
+.nav a:hover{background:rgba(255,255,255,.15)}
+.nav a.active{background:#fff;color:var(--brand1);font-weight:700}
+
+
+.cta{display:flex;align-items:center;gap:10px}
+.btn{display:inline-block;padding:10px 14px;border-radius:12px;border:1px solid transparent;cursor:pointer;transition:.2s}
+.btn-light{background:#fff;color:var(--brand1);border-color:#fff}
+.btn-accent{background:var(--accent);color:#111}
+.btn-dark{background:#0f172a;color:#fff}
+.btn:hover{transform:translateY(-1px)}
+
+
+/* Mobile nav */
+.nav-toggle{display:none;background:#fff;color:var(--brand1);border-radius:10px;padding:8px 10px}
+@media (max-width:900px){
+.nav{display:none}
+.nav.show{display:flex;position:absolute;top:64px;left:0;right:0;background:#0b1d5a;color:#fff;padding:14px;border-bottom:1px solid rgba(255,255,255,.2)}
+.nav-toggle{display:inline-block}
+}
+
+
+/* Hero */
+.hero{position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:var(--grad);opacity:.12}
+.hero .hero__grid{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;padding:48px 0}
+@media (max-width:900px){.footer .row{grid-template-columns:1fr}}

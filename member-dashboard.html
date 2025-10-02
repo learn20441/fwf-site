@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Member Dashboard — FWF</title>
+<link rel="stylesheet" href="style.css"/>
+<style>
+.wrap{max-width:1100px;margin:24px auto;padding:0 16px}
+.card{background:linear-gradient(180deg,#101623,#0d1320);border:1px solid #1f2937;border-radius:16px;padding:20px}
+.row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.kpi{display:flex;flex-direction:column;gap:6px;background:#0b1220;border:1px solid #1f2937;border-radius:12px;padding:14px}
+.kpi .val{font-size:22px;font-weight:800;color:#fff}
+.kpi .lab{color:#94a3b8}
+.btn{background:#f97316;color:#fff;padding:12px 18px;border-radius:12px;border:none;cursor:pointer;font-weight:700}
+</style>
+</head><body>
+<div class="wrap">
+  <div class="card">
+    <h2 style="color:#fff;margin:0 0 10px">Welcome, <span id="name">Member</span> <span style="color:#93c5fd;font-size:14px;">(<span id="memberId"></span>)</span></h2>
+    <p style="color:#cbd5e1;margin-top:0">Wallet सिर्फ project target adjust करने के लिए है (cash-out नहीं).</p>
+    <div class="row">
+      <div class="kpi"><span class="lab">Wallet Balance (₹)</span><span class="val" id="wbal">0</span></div>
+      <div class="kpi"><span class="lab">Target 60% (₹)</span><span class="val" id="tgt">0</span></div>
+      <div class="kpi"><span class="lab">Applied from Wallet (₹)</span><span class="val" id="wap">0</span></div>
+      <div class="kpi"><span class="lab">Cash Collected (₹)</span><span class="val" id="cash">0</span></div>
+    </div>
+    <br>
+    <button class="btn" id="applyBtn">Apply Wallet to Project</button>
+    <button class="btn" style="background:#111827;border:1px solid #334155;margin-left:10px" id="logoutBtn">Logout</button>
+  </div>
+</div>
+<script src="auth.js"></script>
+<script>
+async function load(){
+  try{
+    const data = await AUTH.api('/api/member/me');
+    document.getElementById('name').textContent = data.user.name || 'Member';
+    document.getElementById('memberId').textContent = data.user.member_id;
+    document.getElementById('wbal').textContent = (data.wallet.balance_inr||0).toFixed(0);
+    if(data.project){
+      document.getElementById('tgt').textContent = (data.project.target60_inr||0).toFixed(0);
+      document.getElementById('wap').textContent = (data.project.wallet_applied_inr||0).toFixed(0);
+      document.getElementById('cash').textContent = (data.project.cash_credited_inr||0).toFixed(0);
+    }
+  }catch(e){ location.href='member-login.html'; }
+}
+document.getElementById('applyBtn').onclick = async ()=>{
+  const amt = prompt('Enter wallet amount to apply:');
+  if(!amt) return;
+  try{
+    await AUTH.api('/api/member/apply-wallet',{method:'POST', body:{amount:Number(amt)}});
+    alert('Applied!');
+    load();
+  }catch(e){ alert(e.message); }
+};
+document.getElementById('logoutBtn').onclick = async ()=>{
+  await AUTH.api('/api/auth/logout',{method:'POST'});
+  location.href='member-login.html';
+};
+load();
+</script>
+</body></html>

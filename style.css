@@ -1,0 +1,19 @@
+body {
+  font-family: Arial, sans-serif; margin: 0; background: #f3f6fa;
+}
+nav {
+  background: #0077b6; padding: 16px; display: flex; gap: 12px;
+}
+nav a { color: #fff; text-decoration: none; font-weight: 600; }
+section.hero { background: #caf0f8; padding: 40px; text-align: center; }
+section.about, section.highlights, footer, form { margin: 24px; }
+section.highlights { display: flex; gap: 16px; }
+section.highlights div { background: #fff; padding: 18px; border-radius: 8px; box-shadow: 0 2px 8px #ccc; flex: 1; }
+footer { background: #0077b6; color: #fff; text-align: center; padding: 18px 0; margin: 0; }
+
+h1,h2,h3 { color: #0077b6; }
+button { background: #0077b6; color: #fff; border: none; padding: 8px 18px; border-radius: 5px; cursor: pointer; }
+form label { display: inline-block; width: 120px; margin-bottom: 10px; }
+form input, form textarea { padding: 7px; margin-bottom: 16px; border-radius: 5px; border: 1px solid #aaa; }
+form textarea { width: 220px; height: 70px; }
+div#response, div#thankyou, div#partnerResponse, div#contactResponse { color: green; margin-top: 12px; font-weight: bold; }
