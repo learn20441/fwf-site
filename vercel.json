@@ -1,12 +1,72 @@
 {
+  "cleanUrls": true,
+  "trailingSlash": false,
   "rewrites": [
     {
       "source": "/api/(.*)",
       "destination": "/api/$1"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
     },
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "source": "/about.html",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/csr.html",
+      "destination": "/csr",
+      "permanent": true
+    },
+    {
+      "source": "/projects.html",
+      "destination": "/projects",
+      "permanent": true
+    },
+    {
+      "source": "/donation.html",
+      "destination": "/donation",
+      "permanent": true
+    },
+    {
+      "source": "/join.html",
+      "destination": "/join",
+      "permanent": true
+    },
+    {
+      "source": "/member-login.html",
+      "destination": "/member-login",
+      "permanent": true
+    },
+    {
+      "source": "/admin-login.html",
+      "destination": "/admin-login",
+      "permanent": true
+    },
+    {
+      "source": "/member-dashboard.html",
+      "destination": "/member-dashboard",
+      "permanent": true
+    },
+    {
+      "source": "/admin-dashboard.html",
+      "destination": "/admin-dashboard",
+      "permanent": true
+    },
+    {
+      "source": "/Privacy Policy.html",
+      "destination": "/privacy-policy",
+      "permanent": true
+    },
+    {
+      "source": "/t&c.html",
+      "destination": "/terms",
+      "permanent": true
     }
   ]
 }
