@@ -1,203 +1,292 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Terms & Conditions — [[foundris welfare foundation]]</title>
-  <meta name="description" content="Terms & Conditions for [[YOUR BRAND]]" />
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Terms & Conditions — foundris welfare foundation</title>
+<link rel="icon" href="assets/favicon.ico" type="image/x-icon"/>
 
-  <style>
-    :root{
-      --bg:#0b0f1a; 
-      --panel:#111827;
-      --text:#e5e7eb;
-      --muted:#9ca3af;
-      --accent:#f97316;
-      --border:#1f2937;
-      --link:#93c5fd;
-      --max: 980px;
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:linear-gradient(180deg,#0b0f1a,#0b0f1a 50%,#0f172a);color:var(--text);font:400 16px/1.65 "Plus Jakarta Sans", system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans", Arial, "Helvetica Neue", sans-serif;}
-    a{color:var(--link);text-decoration:none}
-    a:hover{text-decoration:underline}
-    .wrap{max-width:var(--max);margin:32px auto;padding:0 16px}
-    header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
-    .brand{font-weight:800;letter-spacing:0.2px}
-    .badge{background:rgba(249,115,22,.12);color:var(--accent);border:1px solid rgba(249,115,22,.35);padding:3px 8px;border-radius:999px;font-size:12px}
-    .card{background:rgba(17,24,39,.6);backdrop-filter: blur(6px);border:1px solid var(--border);border-radius:16px;overflow:hidden}
-    .hero{padding:20px;border-bottom:1px solid var(--border)}
-    .hero h1{margin:0 0 6px 0;font-size:28px;line-height:1.2}
-    .meta{color:var(--muted);font-size:14px}
-    .content{padding:20px}
-    h2{font-size:18px;margin:28px 0 8px}
-    p{margin:10px 0}
-    ul{margin:8px 0 16px 20px}
-    li{margin:6px 0}
-    .note{font-size:14px;color:var(--muted)}
-    .toc{background:rgba(255,255,255,.02);border:1px dashed var(--border);padding:12px;border-radius:12px;margin:8px 0 20px}
-    .toc a{display:inline-block;margin:4px 10px 4px 0;font-size:14px}
-    footer{margin:22px 0 12px;color:var(--muted);font-size:13px}
-    code.placeholder{background:#111827;border:1px solid #374151;color:#e5e7eb;padding:2px 6px;border-radius:8px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Plus+Jakarta+Sans:wght@400;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700;800&family=Mukti:wght@400;700;800&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 
-    /* Print styles */
-    @media print{
-      :root{--bg:#ffffff; --panel:#ffffff; --text:#111827; --muted:#374151; --border:#e5e7eb; --link:#1d4ed8;}
-      body{background:#fff;color:#111827}
-      .badge{border-color:#e5e7eb;background:#fff;color:#111827}
-      .card{border-color:#e5e7eb;box-shadow:none}
-      a{text-decoration:none;color:#111827}
-      header,.toc{display:none}
-      .hero h1{font-size:22px}
-      .content{padding-top:0}
+<style>
+  :root{
+    --bg:#0b1220; --panel:#101a2b; --muted:#94a3b8; --text:#e5ecf5;
+    --accent:#60a5fa; --border:#1e293b; --warn:#fde68a; --warn-text:#b45309;
+    --primary:#6153ff; --accent-green:#22c55e; --blue:#3b82f6;
+    --deep:#0f172a; --soft:#f1f5f9; --brd:#e3e8f5;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth; background:linear-gradient(120deg,#f6f8ff 0%,#eef2ff 50%,#f8fafc 100%)}
+  body{
+    margin:0; padding-top:90px; height:100%;
+    font-family:'Plus Jakarta Sans',Montserrat,system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+    background:var(--bg);color:var(--text);line-height:1.65; overflow-x:hidden; letter-spacing:.01em;
+  }
+  html[data-lang="hi"] body{font-family:'Noto Sans Devanagari','Mukti','Plus Jakarta Sans',system-ui,sans-serif}
+  
+  /* ========= HEADER STYLES ========= */
+  .header{
+    position:fixed; inset:0 0 auto 0; height:78px; z-index:200; display:flex; align-items:center; justify-content:center;
+    background:rgba(255,255,255,.78); backdrop-filter:blur(14px) saturate(140%); border-bottom:1px solid #dbe3f3; transition:.22s
+  }
+  .header.scrolled{ height:64px; background:rgba(255,255,255,.88); box-shadow:0 10px 30px rgba(2,6,23,.06) }
+  .header .H {
+    max-width:1240px; width:100%; padding:0 18px; display:flex; align-items:center; gap:0; justify-content:space-between;
+  }
+  .brand { flex: 0 0 auto; margin-right: 0; }
+  .brand img { width: 52px; height: 52px; object-fit: contain; display: block; }
+  nav { flex: 1 1 0; display: flex; justify-content: center; align-items: center; }
+  .navList {
+    display: flex; gap: 32px; list-style: none; margin: 0; padding: 0; justify-content: center;
+    font-size: 1.25rem; font-weight: 700;
+  }
+  .navList a {
+    display: inline-flex; align-items: center; padding: 10px 14px; border-radius: 12px; font-weight: 800;
+    color: #0f172a; position: relative; transition: background .18s, color .18s;
+  }
+  .navList a:after {
+    content: ""; position: absolute; left: 12px; right: 12px; bottom: 6px; height: 3px; border-radius: 3px;
+    background: linear-gradient(90deg,#6366f1,#22c55e); opacity: 0; transform: translateY(4px); transition: .18s;
+  }
+  .navList a:hover { background: rgba(15,23,42,.06); }
+  .navList a:hover:after { opacity: 1; transform: translateY(0); }
+  .langDesktop { flex: 0 0 auto; display: flex; align-items: center; margin-left: 0; }
+  .lang-switch button {
+    font-weight: 800; font-size: 1rem; padding: 8px 18px; border-radius: 10px; border: 1.5px solid #e6eaf7;
+    background: #f8fafc; color: #334155; cursor: pointer; transition: background .18s, color .18s;
+  }
+  .lang-switch button.active {
+    background: linear-gradient(90deg,#22c55e,#3b82f6); color: #fff; border-color: #22c55e;
+  }
+  .lang-switch button:not(.active):hover { background: #e0e7ff; color: #22c55e; }
+  .lang-sep {
+    width: 2px; height: 22px; background: #e6eaf7; display: inline-block; margin: 0 4px; border-radius: 2px;
+  }
+  .navToggle {
+    background: none; border: none; font-size: 1.5rem; color: #0f172a; cursor: pointer;
+    padding: 8px; border-radius: 8px; transition: background .18s;
+  }
+  .navToggle:hover { background: rgba(15,23,42,.06); }
+  @media (min-width: 900px) { .navToggle { display: none; } }
+  @media (max-width: 900px) {
+    .header .H { gap: 12px; }
+    nav { justify-content: flex-start; }
+    .langDesktop { margin-left: auto; }
+    .navList {
+      position: absolute; top: 100%; left: 0; right: 0; background: rgba(255,255,255,.95);
+      backdrop-filter: blur(14px); border-bottom: 1px solid #dbe3f3; padding: 20px;
+      flex-direction: column; gap: 16px; display: none;
     }
-  </style>
+    .navList.open { display: flex; }
+  }
+  
+  /* ========= CONTENT STYLES ========= */
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:980px;margin:0 auto;padding:28px 16px}
+  header.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:22px 18px;position:relative}
+  h1{margin:0 0 8px;font-weight:800;font-size:28px}
+  .meta{color:var(--muted);font-size:13px;margin-bottom:10px}
+  .quick{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .quick a{background:#0e1526;border:1px solid var(--border);color:var(--muted);padding:6px 10px;border-radius:999px;font-size:12px}
+  main .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px 18px;margin-top:18px}
+  h2{margin:0 0 10px;font-size:20px}
+  h3{margin-top:18px;font-size:16px}
+  ul{padding-left:18px;margin:8px 0}
+  .note{background:#0f172a;border:1px dashed #334155;color:var(--muted);padding:10px 12px;border-radius:10px}
+  .warn{background:var(--warn);color:var(--warn-text);border:1px solid #f59e0b}
+  footer{color:var(--muted);font-size:12px;text-align:center;padding:24px 0}
+  @media (max-width:560px){ .quick{gap:6px} }
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div class="brand">[[foundris welfare foundation]]</div>
-      <span class="badge">Terms & Conditions</span>
-    </header>
 
-    <section class="card">
-      <div class="hero">
-        <h1>Terms & Conditions</h1>
-        <div class="meta">
-          Last updated: <strong>[[02 10 2025]]</strong> • Jurisdiction: <strong>India</strong>
-        </div>
-      </div>
-
-      <div class="content">
-        <div class="toc">
-          <strong>Quick links: </strong>
-          <a href="#about">About this Document</a>
-          <a href="#ownership">Platform & Ownership</a>
-          <a href="#acceptance">Acceptance & Scope</a>
-          <a href="#use">Use of Services</a>
-          <a href="#ip">Intellectual Property</a>
-          <a href="#warranty">Warranties & Liability</a>
-          <a href="#fees">Fees & Payments</a>
-          <a href="#links">Third-Party Links</a>
-          <a href="#indemnity">Indemnity</a>
-          <a href="#limitation">Limitation of Liability</a>
-          <a href="#force">Force Majeure</a>
-          <a href="#law">Governing Law & Jurisdiction</a>
-          <a href="#contact">Contact</a>
-        </div>
-
-        <section id="about">
-          <p>
-            This document is an electronic record in terms of the Information Technology Act, 2000 and the rules thereunder as applicable, and the amended provisions pertaining to electronic records in various statutes as amended by the Information Technology Act, 2000. This electronic record is generated by a computer system and does not require any physical or digital signatures.
-          </p>
-          <p>
-            This document is published in accordance with the provisions of Rule 3(1) of the Information Technology (Intermediaries Guidelines) Rules, 2011 that require publishing the rules and regulations, privacy policy and Terms of Use for access or usage of domain name <strong>[[ENTER DOMAIN NAME]]</strong> (“Website”), including any related mobile site and mobile application (hereinafter referred to as the “Platform”).
-          </p>
-        </section>
-
-        <section id="ownership">
-          <p>
-            The Platform is owned by <strong>[[foundris welfare foundation]]</strong>, a company incorporated under the Companies Act, 1956, with its registered office at <strong>[[58 sunder nagar sagarpuri gallmandi kanpur up 208021 india]]</strong> (hereinafter referred to as the “Platform Owner”, “we”, “us”, “our”).
-          </p>
-        </section>
-
-        <section id="acceptance">
-          <p>
-            Your use of the Platform and services and tools are governed by the following terms and conditions (“Terms of Use”) including the applicable policies which are incorporated herein by reference. If you transact on the Platform, you shall be subject to the policies that are applicable to the Platform for such transaction. By mere use of the Platform, you shall be contracting with the Platform Owner and these Terms of Use including the policies constitute your binding obligations with the Platform Owner.
-          </p>
-          <p>
-            These Terms of Use relate to your use of our website, goods (as applicable) or services (as applicable) (collectively, “Services”). Any terms and conditions proposed by you which are in addition to or which conflict with these Terms of Use are expressly rejected by the Platform Owner and shall be of no force or effect. These Terms of Use can be modified at any time without assigning any reason. It is your responsibility to periodically review these Terms of Use to stay informed of updates.
-          </p>
-          <p>
-            For the purpose of these Terms of Use, wherever the context so requires “you”, “your” or “user” shall mean any natural or legal person who has agreed to become a user/buyer on the Platform.
-          </p>
-          <p style="margin-top:10px"><strong>ACCESSING, BROWSING OR OTHERWISE USING THE PLATFORM INDICATES YOUR AGREEMENT TO ALL THE TERMS AND CONDITIONS UNDER THESE TERMS OF USE. PLEASE READ CAREFULLY BEFORE PROCEEDING.</strong></p>
-        </section>
-
-        <section id="use">
-          <h2>The use of Platform and/or availing of our Services is subject to the following Terms of Use:</h2>
-          <ul>
-            <li>To access and use the Services, you agree to provide true, accurate and complete information to us during and after registration, and you shall be responsible for all acts done through the use of your registered account on the Platform.</li>
-            <li>Neither we nor any third parties provide any warranty or guarantee as to the accuracy, timeliness, performance, completeness or suitability of the information and materials offered on this website or through the Services for any specific purpose. You acknowledge that such information and materials may contain inaccuracies or errors and we expressly exclude liability for any such inaccuracies or errors to the fullest extent permitted by law.</li>
-            <li>Your use of our Services and the Platform is solely and entirely at your own risk and discretion for which we shall not be liable to you in any manner. You are required to independently assess and ensure that the Services meet your requirements.</li>
-          </ul>
-        </section>
-
-        <section id="ip">
-          <h2>Intellectual Property</h2>
-          <p>
-            The contents of the Platform and the Services are proprietary to us and/or licensed to us. You will not have any authority to claim any intellectual property rights, title, or interest in the contents, including without limitation the design, layout, look and graphics.
-          </p>
-          <p>You acknowledge that unauthorized use of the Platform and/or the Services may lead to action against you as per these Terms of Use and/or applicable laws.</p>
-        </section>
-
-        <section id="fees">
-          <h2>Fees & Payments</h2>
-          <p>You agree to pay us the charges associated with availing the Services.</p>
-          <p>You agree not to use the Platform and/or Services for any purpose that is unlawful, illegal or forbidden by these Terms, or Indian or local laws that might apply to you.</p>
-        </section>
-
-        <section id="links">
-          <h2>Third-Party Links</h2>
-          <p>
-            You agree and acknowledge that the Website and the Services may contain links to other third-party websites. On accessing these links, you will be governed by the terms of use, privacy policy and such other policies of such third-party websites. These links are provided for your convenience to provide further information.
-          </p>
-        </section>
-
-        <section id="contract">
-          <h2>Binding Contract</h2>
-          <p>
-            You understand that upon initiating a transaction for availing the Services, you are entering into a legally binding and enforceable contract with the Platform Owner for the Services.
-          </p>
-        </section>
-
-        <section id="indemnity">
-          <h2>Indemnity</h2>
-          <p>
-            You shall indemnify and hold harmless the Platform Owner, its affiliates, group companies (as applicable) and their respective officers, directors, agents, and employees, from any claim or demand, or actions including reasonable attorneys’ fees, made by any third party or penalty imposed due to or arising out of your breach of these Terms of Use, Privacy Policy and other Policies, or your violation of any law, rules or regulations or the rights (including infringement of intellectual property rights) of a third party.
-          </p>
-        </section>
-
-        <section id="limitation">
-          <h2>Limitation of Liability</h2>
-          <p>
-            In no event will the Platform Owner be liable for any indirect, consequential, incidental, special or punitive damages, including without limitation damages for loss of profits or revenues, business interruption, loss of business opportunities, loss of data or loss of other economic interests, however caused and whether arising in contract, tort, negligence, warranty or otherwise. The aggregate liability of the Platform Owner for any claims relating to the Services shall not exceed the amount paid by you for using the Services giving rise to the cause of action or Rupees One Hundred (Rs. 100), whichever is less.
-          </p>
-        </section>
-
-        <section id="force">
-          <h2>Force Majeure</h2>
-          <p>
-            Notwithstanding anything contained in these Terms of Use, the parties shall not be liable for any failure to perform an obligation under these Terms if performance is prevented or delayed by a force majeure event.
-          </p>
-        </section>
-
-        <section id="law">
-          <h2>Governing Law & Jurisdiction</h2>
-          <p>
-            These Terms and any dispute or claim relating to it, or its enforceability, shall be governed by and construed in accordance with the laws of India.
-          </p>
-          <p>
-            All disputes arising out of or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts in <strong>[[ENTER CITY AND STATE]]</strong>.
-          </p>
-        </section>
-
-        <section id="contact">
-          <h2>Contact</h2>
-          <p>
-            All concerns or communications relating to these Terms must be sent to us using the contact information provided on this website or at <strong>[[SUPPORT EMAIL / CONTACT PAGE URL]]</strong>.
-          </p>
-        </section>
-
-        <p class="note">
-          <strong>Note:</strong> Replace all <code class="placeholder">[[PLACEHOLDER]]</code> fields with your actual legal details. Consider taking advice from a qualified lawyer to tailor these Terms for your specific business and compliance needs.
-        </p>
-      </div>
-    </section>
-
-    <footer>
-      © [[2025]] [[foundris welfare foundation]]. All rights reserved.
-    </footer>
+<!-- HEADER -->
+<header class="header" id="siteHeader">
+<div class="H">
+  <!-- HEADER LOGO -->
+  <a class="brand" href="index.html" aria-label="FWF Home">
+    <img src="./assets/images/logo.png" alt="FWF">
+  </a>
+  <nav>
+    <ul class="navList" id="navList">
+      <!-- NAV HOME LINK -->
+      <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+      <li><a href="csr.html">CSR</a></li>
+      <li><a href="projects.html" data-i18n="nav.projects">Projects</a></li>
+      <li><a href="about.html" data-i18n="nav.about">About Us</a></li>
+    </ul>
+  </nav>
+  <div class="langDesktop">
+    <div class="lang-switch" role="group" aria-label="Language switch">
+      <button id="btn-hi" type="button">HI</button>
+      <div class="lang-sep"></div>
+      <button id="btn-en" type="button">EN</button>
+    </div>
   </div>
+  <button class="navToggle" id="navToggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+</div>
+</header>
+
+<div class="wrap">
+  <header class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+      <div>
+        <div style="opacity:.8;font-size:12px">foundris welfare foundation</div>
+        <h1>Terms & Conditions</h1>
+        <div class="meta">Last updated: 02 Oct 2025 · Jurisdiction: India</div>
+      </div>
+      <span style="font-size:12px;background:#0e1526;border:1px solid var(--border);padding:6px 10px;border-radius:999px">Terms & Conditions</span>
+    </div>
+
+    <!-- Quick links -->
+    <div class="quick" aria-label="Quick links">
+      <a href="#about">About this Document</a>
+      <a href="#ownership">Platform & Ownership</a>
+      <a href="#scope">Acceptance & Scope</a>
+      <a href="#use">Use of Services</a>
+      <a href="#ip">Intellectual Property</a>
+      <a href="#fees">Fees & Payments</a>
+      <a href="#thirdparty">Third Party Links</a>
+      <a href="#indemnity">Indemnity</a>
+      <a href="#liability">Limitation of Liability</a>
+      <a href="#force">Force Majeure</a>
+      <a href="#governing">Governing Law & Jurisdiction</a>
+      <a href="#contact">Contact</a>
+      <!-- NEW -->
+      <a href="#cancel">Cancellation & Refund</a>
+    </div>
+  </header>
+
+  <!-- Intro / Preamble -->
+  <section id="about" class="card">
+    <p>This document is an electronic record under the Information Technology Act, 2000 and applicable rules. It governs your use of <fwfindia class="org"></fwfindia> fwfindia.org. </p>
+    <p><strong>ACCESSING, BROWSING OR OTHERWISE USING THE PLATFORM INDICATES YOUR AGREEMENT TO ALL THE TERMS.</strong></p>
+  </section>
+
+  <section id="ownership" class="card">
+    <h2>Platform & Ownership</h2>
+    <p>The Platform is owned by foundris welfare foundation, registered office at 1398/1850 Sagarpuri Gallamandi, Kanpur - 208021 U.P India .</p>
+  </section>
+
+  <section id="scope" class="card">
+    <h2>Acceptance & Scope</h2>
+    <ul>
+      <li>These Terms apply to your use of our website, goods (as applicable) or services (as applicable) (“Services”).</li>
+      <li>We may modify these Terms; the latest version will be posted here.</li>
+    </ul>
+  </section>
+
+  <section id="use" class="card">
+    <h2>Use of Services</h2>
+    <ul>
+      <li>You agree to provide true and accurate information and to safeguard your account credentials.</li>
+      <li>You use the Services at your own risk and discretion and must ensure they meet your requirements.</li>
+    </ul>
+  </section>
+
+  <section id="ip" class="card">
+    <h2>Intellectual Property</h2>
+    <p>Contents of the Platform are proprietary to and/or licensed to us. Unauthorized use may lead to action under these Terms and applicable laws.</p>
+  </section>
+
+  <section id="fees" class="card">
+    <h2>Fees & Payments</h2>
+    <ul>
+      <li>You agree to pay applicable charges for availing Services.</li>
+      <li>You will not use the Services for unlawful purposes or in violation of applicable laws.</li>
+    </ul>
+  </section>
+
+  <section id="thirdparty" class="card">
+    <h2>Third Party Links</h2>
+    <p>Links to third-party websites are provided for convenience. Their terms and privacy policies apply when you access them.</p>
+  </section>
+
+  <section id="indemnity" class="card">
+    <h2>Indemnity</h2>
+    <p>You shall indemnify and hold harmless the Platform Owner and its affiliates from claims arising out of your breach of these Terms or violation of law/rights of others.</p>
+  </section>
+
+  <section id="liability" class="card">
+    <h2>Limitation of Liability</h2>
+    <p>To the maximum extent permitted by law, the Platform Owner is not liable for indirect or consequential damages. Aggregate liability, if any, for claims relating to the Services shall not exceed the amount paid by you for using the Services giving rise to the claim or ₹100, whichever is less.</p>
+  </section>
+
+  <section id="force" class="card">
+    <h2>Force Majeure</h2>
+    <p>No party will be liable for failure to perform obligations if performance is prevented or delayed by a force majeure event.</p>
+  </section>
+
+  <!-- NEW: Cancellation & Refund -->
+  <section id="cancel" class="card">
+    <h2>Cancellation & Refund</h2>
+    <div class="note warn"><strong>Donations are non-refundable.</strong> </div>
+
+  </section>
+
+  <section id="governing" class="card">
+    <h2>Governing Law & Jurisdiction</h2>
+    <p>These Terms are governed by the laws of India. Courts at Kanpur Uttar Pradesh shall have exclusive jurisdiction.</p>
+  </section>
+
+  <section id="contact" class="card">
+    <h2>Contact</h2>
+    <p>For any concerns regarding these Terms, write to us at info@fwfindia.org .</p>
+      </section>
+
+  <footer>© 2025 foundris welfare foundation. All rights reserved.</footer>
+</div>
+
+<script>
+// ========= HEADER JS (scroll, nav, i18n) =========
+const siteHeader=document.getElementById('siteHeader');
+function doScrollHdr(){ if(siteHeader) siteHeader.classList.toggle('scrolled', window.scrollY>6); }
+window.addEventListener('scroll', doScrollHdr, {passive:true});
+const navToggle=document.getElementById('navToggle'), navList=document.getElementById('navList');
+if(navToggle) navToggle.addEventListener('click', ()=> navList.classList.toggle('open'));
+
+// ========= TRANSLATION SYSTEM =========
+const T = {
+  en: {
+    'nav.home': 'Home',
+    'nav.projects': 'Projects', 
+    'nav.about': 'About Us'
+  },
+  hi: {
+    'nav.home': 'होम',
+    'nav.projects': 'प्रोजेक्ट्स',
+    'nav.about': 'हमारे बारे में'
+  }
+};
+
+function setI18n(lang) {
+  const L = (lang === 'hi') ? 'hi' : 'en';
+  document.documentElement.setAttribute('lang', L);
+  document.documentElement.setAttribute('data-lang', L);
+
+  // textContent replacements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if (T[L][k] != null) el.textContent = T[L][k];
+  });
+
+  document.getElementById('btn-en').classList.toggle('active', L === 'en');
+  document.getElementById('btn-hi').classList.toggle('active', L === 'hi');
+}
+
+// Lang buttons
+const be = document.getElementById('btn-en'), bh = document.getElementById('btn-hi');
+if (be && bh) {
+  be.onclick = () => setI18n('en');
+  bh.onclick = () => setI18n('hi');
+}
+// initial
+setI18n(document.documentElement.getAttribute('data-lang') || 'en');
+</script>
+
 </body>
 </html>
