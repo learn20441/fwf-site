@@ -12,6 +12,9 @@
   <link rel="apple-touch-icon" href="assets/images/logo.png">
   <link rel="shortcut icon" href="assets/images/logo.png">
 
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <style>
     :root{
       --bg:#0b0f1a; --panel:#111827; --text:#e5e7eb; --muted:#9ca3af;
@@ -20,7 +23,64 @@
     *{box-sizing:border-box}
     body{margin:0;padding:0;background:linear-gradient(180deg,#0b0f1a,#0b0f1a 50%,#0f172a);color:var(--text);font:400 16px/1.65 "Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans",Arial,"Helvetica Neue",sans-serif}
     a{color:var(--link);text-decoration:none} a:hover{text-decoration:underline}
-    .wrap{max-width:var(--max);margin:32px auto;padding:0 16px}
+    
+    /* ========= HEADER STYLES ========= */
+    .header{
+      position:fixed; inset:0 0 auto 0; height:78px; z-index:200; display:flex; align-items:center; justify-content:center;
+      background:rgba(255,255,255,.78); backdrop-filter:blur(14px) saturate(140%); border-bottom:1px solid #dbe3f3; transition:.22s
+    }
+    .header.scrolled{ height:64px; background:rgba(255,255,255,.88); box-shadow:0 10px 30px rgba(2,6,23,.06) }
+    .header .H {
+      max-width:1240px; width:100%; padding:0 18px; display:flex; align-items:center; gap:0; justify-content:space-between;
+    }
+    .header .brand { flex: 0 0 auto; margin-right: 0; }
+    .header .brand img { width: 52px; height: 52px; object-fit: contain; display: block; }
+    .header nav { flex: 1 1 0; display: flex; justify-content: center; align-items: center; }
+    .navList {
+      display: flex; gap: 32px; list-style: none; margin: 0; padding: 0; justify-content: center;
+      font-size: 1.25rem; font-weight: 700;
+    }
+    .navList a {
+      display: inline-flex; align-items: center; padding: 10px 14px; border-radius: 12px; font-weight: 800;
+      color: #0f172a; position: relative; transition: background .18s, color .18s;
+    }
+    .navList a:after {
+      content: ""; position: absolute; left: 12px; right: 12px; bottom: 6px; height: 3px; border-radius: 3px;
+      background: linear-gradient(90deg,#6366f1,#22c55e); opacity: 0; transform: translateY(4px); transition: .18s;
+    }
+    .navList a:hover { background: rgba(15,23,42,.06); }
+    .navList a:hover:after { opacity: 1; transform: translateY(0); }
+    .langDesktop { flex: 0 0 auto; display: flex; align-items: center; margin-left: 0; }
+    .lang-switch button {
+      font-weight: 800; font-size: 1rem; padding: 8px 18px; border-radius: 10px; border: 1.5px solid #e6eaf7;
+      background: #f8fafc; color: #334155; cursor: pointer; transition: background .18s, color .18s;
+    }
+    .lang-switch button.active {
+      background: linear-gradient(90deg,#22c55e,#3b82f6); color: #fff; border-color: #22c55e;
+    }
+    .lang-switch button:not(.active):hover { background: #e0e7ff; color: #22c55e; }
+    .lang-sep {
+      width: 2px; height: 22px; background: #e6eaf7; display: inline-block; margin: 0 4px; border-radius: 2px;
+    }
+    .navToggle {
+      background: none; border: none; font-size: 1.5rem; color: #0f172a; cursor: pointer;
+      padding: 8px; border-radius: 8px; transition: background .18s;
+    }
+    .navToggle:hover { background: rgba(15,23,42,.06); }
+    @media (min-width: 900px) { .navToggle { display: none; } }
+    @media (max-width: 900px) {
+      .header .H { gap: 12px; }
+      .header nav { justify-content: flex-start; }
+      .langDesktop { margin-left: auto; }
+      .navList {
+        position: absolute; top: 100%; left: 0; right: 0; background: rgba(255,255,255,.95);
+        backdrop-filter: blur(14px); border-bottom: 1px solid #dbe3f3; padding: 20px;
+        flex-direction: column; gap: 16px; display: none;
+      }
+      .navList.open { display: flex; }
+    }
+    
+    .wrap{max-width:var(--max);margin:110px auto 32px;padding:0 16px}
     header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
     .brand{font-weight:800;letter-spacing:.2px}
     .badge{background:rgba(249,115,22,.12);color:var(--accent);border:1px solid rgba(249,115,22,.35);padding:3px 8px;border-radius:999px;font-size:12px}
@@ -57,16 +117,45 @@
   </style>
 </head>
 <body>
+
+<!-- HEADER -->
+<header class="header" id="siteHeader">
+<div class="H">
+  <!-- HEADER LOGO -->
+  <a class="brand" href="/" aria-label="FWF Home">
+    <img src="./assets/images/logo.png" alt="FWF">
+  </a>
+  <nav>
+    <ul class="navList" id="navList">
+      <!-- NAV HOME LINK -->
+      <li><a href="/" data-i18n="nav.home">Home</a></li>
+      <li><a href="/csr">CSR</a></li>
+      <li><a href="/projects" data-i18n="nav.projects">Projects</a></li>
+      <li><a href="/about" data-i18n="nav.about">About Us</a></li>
+    </ul>
+  </nav>
+  <div class="langDesktop">
+    <div class="lang-switch" role="group" aria-label="Language switch">
+      <button id="btn-hi" type="button">HI</button>
+      <div class="lang-sep"></div>
+      <button id="btn-en" type="button">EN</button>
+    </div>
+  </div>
+  <button class="navToggle" id="navToggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+</div>
+</header>
+
   <div class="wrap">
     <header>
-      <div class="brand">[[YOUR BRAND]]</div>
+      <div class="brand">Foundris Welfare Foundation
+</div>
       <span class="badge">Privacy Policy</span>
     </header>
 
     <section class="card">
       <div class="hero">
         <h1>Privacy Policy</h1>
-        <div class="meta">Effective: <strong>[[DD Month YYYY]]</strong> • Last updated: <strong>[[DD Month YYYY]]</strong></div>
+        <div class="meta">Effective: <strong>02 Oct 2025</strong> • Last updated: <strong>02 Oct</strong></div>
       </div>
 
       <div class="content">
@@ -88,7 +177,8 @@
 
         <section id="scope">
           <h2>1) Scope & Consent</h2>
-          <p>यह Privacy Policy बताती है कि <strong>[[YOUR BRAND]]</strong> (“we”, “us”, “our”) कैसे आपकी व्यक्तिगत जानकारी एकत्र, उपयोग, स्टोर और साझा करती है जब आप हमारी वेबसाइट/मोबाइल ऐप/सेवाओं (“Platform”) का उपयोग करते हैं। Platform का उपयोग करके, आप इस Policy और लागू नियमों के अनुरूप डेटा प्रोसेसिंग के लिए सहमति देते हैं।</p>
+          <p>यह Privacy Policy बताती है कि <strong>Foundris Welfare Foundation
+</div> </strong> (“we”, “us”, “our”) कैसे आपकी व्यक्तिगत जानकारी एकत्र, उपयोग, स्टोर और साझा करती है जब आप हमारी वेबसाइट/मोबाइल ऐप/सेवाओं (“Platform”) का उपयोग करते हैं। Platform का उपयोग करके, आप इस Policy और लागू नियमों के अनुरूप डेटा प्रोसेसिंग के लिए सहमति देते हैं।</p>
         </section>
 
         <section id="collect">
@@ -211,6 +301,9 @@
         </div>
         <div style="text-align: center; border-top: 1px solid var(--border-light); padding-top: 20px; color: var(--text-muted);">
           © 2025 foundris welfare foundation. All rights reserved.
+          <div style="margin-top: 10px;">
+            <a href="/privacy" style="color: var(--primary); text-decoration: none;">Privacy Policy</a> • <a href="/terms" style="color: var(--primary); text-decoration: none;">Terms & Conditions</a>
+          </div>
         </div>
       </div>
     </footer>
@@ -261,6 +354,39 @@
         P('c_mkt').checked = !!c.mkt;
       }
     })();
+  </script>
+
+  <!-- Header Navigation Scripts -->
+  <script>
+    // Mobile menu toggle
+    document.getElementById('navToggle')?.addEventListener('click', function() {
+      const navList = document.getElementById('navList');
+      navList.classList.toggle('open');
+    });
+
+    // Language switcher
+    document.getElementById('btn-en')?.addEventListener('click', function() {
+      document.getElementById('btn-en').classList.add('active');
+      document.getElementById('btn-hi')?.classList.remove('active');
+    });
+
+    document.getElementById('btn-hi')?.addEventListener('click', function() {
+      document.getElementById('btn-hi').classList.add('active');
+      document.getElementById('btn-en')?.classList.remove('active');
+    });
+
+    // Set initial language state
+    document.getElementById('btn-en')?.classList.add('active');
+
+    // Header scroll effect
+    window.addEventListener('scroll', function() {
+      const header = document.getElementById('siteHeader');
+      if (window.scrollY > 50) {
+        header?.classList.add('scrolled');
+      } else {
+        header?.classList.remove('scrolled');
+      }
+    });
   </script>
 </body>
 </html>
