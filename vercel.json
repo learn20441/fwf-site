@@ -1,6 +1,7 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "public": "fwf-site",
   "rewrites": [
     {
       "source": "/api/(.*)",
