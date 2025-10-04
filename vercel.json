@@ -24,8 +24,20 @@
     {
       "source": "/terms",
       "destination": "/terms-conditions.html"
+    },
+    {
+      "source": "/debug",
+      "destination": "/debug.html"
     }
   ],
+  "functions": {
+    "api/terms.js": {
+      "runtime": "nodejs18.x"
+    },
+    "api/privacy.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
   "redirects": [
     {
       "source": "/index.html",
