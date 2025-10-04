@@ -5,6 +5,14 @@
     {
       "source": "/api/(.*)",
       "destination": "/api/$1"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy-policy.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms-conditions.html"
     }
   ],
   "redirects": [
@@ -59,12 +67,12 @@
       "permanent": true
     },
     {
-      "source": "/Privacy Policy.html",
-      "destination": "/privacy-policy",
+      "source": "/privacy-policy.html",
+      "destination": "/privacy",
       "permanent": true
     },
     {
-      "source": "/t&c.html",
+      "source": "/terms-conditions.html", 
       "destination": "/terms",
       "permanent": true
     }
